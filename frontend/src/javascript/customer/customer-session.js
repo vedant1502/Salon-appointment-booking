@@ -80,10 +80,15 @@
         updateHeaderAction();
     };
 
+    const isLocalDevelopment = () => {
+        const localHosts = ["localhost", "127.0.0.1", "::1"];
+        return window.location.protocol === "file:" ? true : localHosts.includes(window.location.hostname);
+    };
+
     const getAuthUrls = (path) => {
         const urls = [`/api/auth${path}`];
 
-        if (window.location.origin !== "http://localhost:8000") {
+        if (isLocalDevelopment() && window.location.origin !== "http://localhost:8000") {
             urls.push(`${localAuthBase}${path}`);
         }
 
@@ -118,6 +123,10 @@
 
         if (lastError && lastError.name !== "TypeError") {
             throw lastError;
+        }
+
+        if (!isLocalDevelopment()) {
+            throw new Error("Online login is not connected yet. This deployment needs a hosted backend API and database.");
         }
 
         throw new Error("Cannot reach the login server. Open the site from http://localhost:8000 and make sure the backend is running.");
