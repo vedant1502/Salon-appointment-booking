@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | My Appointments</title>
+    <meta name="description" content="View upcoming, completed, and cancelled salon appointments at Glow & Grace Salon.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#fffaf7">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../javascript/customer/theme.js"></script>
+    <script src="../javascript/customer/customer-session.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/customer/my-appointments.css">
+    <link rel="stylesheet" href="../styles/customer/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <header class="site-header" data-header>
+        <a class="brand" href="home-page.html" aria-label="Glow and Grace Salon home">
+            <span class="brand-mark">G</span>
+            <span>
+                <strong>Glow & Grace</strong>
+                <small>Salon Studio</small>
+            </span>
+        </a>
+
+        <button class="nav-toggle" type="button" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="main-nav" data-nav-menu aria-label="Main navigation">
+            <a href="home-page.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="staff-stylist.html">Stylists</a>
+            <a href="booking.html">Booking</a>
+            <a href="my-appointments.html" class="active">Appointments</a>
+            <a href="reviews-ratings.html">Reviews</a>
+            <a href="contact-us.html">Contact</a>
+        </nav>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+            <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+        <a class="header-action" href="profile.html">Profile</a>
+    </header>
+
+    <main>
+        <section class="appointments-hero">
+            <div class="hero-copy reveal">
+                <p class="eyebrow">Customer appointments</p>
+                <h1>Track every salon visit in one calm view.</h1>
+                <p>
+                    Check upcoming bookings, revisit completed services, review cancelled visits,
+                    and continue actions like rescheduling, payment, or booking again.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn primary" href="booking.html">Book new appointment</a>
+                    <a class="btn secondary" href="#appointment-list">View appointments</a>
+                </div>
+            </div>
+
+            <aside class="summary-panel reveal" aria-label="Appointment summary">
+                <span class="panel-tag">Saved bookings</span>
+                <div class="summary-grid">
+                    <div>
+                        <strong data-count="upcoming">0</strong>
+                        <span>Upcoming</span>
+                    </div>
+                    <div>
+                        <strong data-count="completed">0</strong>
+                        <span>Completed</span>
+                    </div>
+                    <div>
+                        <strong data-count="cancelled">0</strong>
+                        <span>Cancelled</span>
+                    </div>
+                </div>
+            </aside>
+        </section>
+
+        <section class="toolbar reveal" aria-label="Appointment filters">
+            <div class="filter-tabs" role="tablist" aria-label="Filter appointments by status">
+                <button class="filter-btn active" type="button" data-status-filter="all" aria-pressed="true">All</button>
+                <button class="filter-btn" type="button" data-status-filter="upcoming" aria-pressed="false">Upcoming</button>
+                <button class="filter-btn" type="button" data-status-filter="completed" aria-pressed="false">Completed</button>
+                <button class="filter-btn" type="button" data-status-filter="cancelled" aria-pressed="false">Cancelled</button>
+            </div>
+
+            <label class="search-box">
+                <span>Search appointments</span>
+                <input type="search" data-appointment-search placeholder="Search service, stylist, date..." autocomplete="off">
+            </label>
+        </section>
+
+        <section class="section" id="appointment-list">
+            <div class="section-heading reveal">
+                <p class="eyebrow">Appointment history</p>
+                <h2>Upcoming, completed, and cancelled visits.</h2>
+                <p>Your booked appointments will appear here after you complete the booking and payment status step.</p>
+            </div>
+
+            <div class="appointment-layout">
+                <div class="appointment-list" data-appointment-list></div>
+
+                <aside class="side-panel reveal" aria-label="Appointment shortcuts">
+                    <h2>Quick options</h2>
+                    <a href="booking.html">
+                        <span>New booking</span>
+                        <strong>Reserve another salon slot</strong>
+                    </a>
+                    <a href="payment-status.html">
+                        <span>Payment</span>
+                        <strong>Check payment status</strong>
+                    </a>
+                    <a href="profile.html">
+                        <span>Profile</span>
+                        <strong>Update contact details</strong>
+                    </a>
+                    <a href="contact-us.html">
+                        <span>Support</span>
+                        <strong>Ask about an appointment</strong>
+                    </a>
+                </aside>
+            </div>
+
+            <div class="empty-state" data-empty-state hidden>
+                <strong>No appointments booked yet</strong>
+                <p>Book an appointment first, then it will appear here.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div>
+            <strong>Glow & Grace Salon</strong>
+            <p>Beauty appointments made simple, calm, and stylish.</p>
+        </div>
+        <div class="footer-links" aria-label="Footer links">
+            <a href="home-page.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="booking.html">Booking</a>
+            <a href="contact-us.html">Contact</a>
+            <a href="../admin/admin-login.html">Admin</a>
+        </div>
+    </footer>
+
+    <script src="../javascript/customer/my-appointments.js?v=activity-order-booked-at"></script>
+</body>
+</html>

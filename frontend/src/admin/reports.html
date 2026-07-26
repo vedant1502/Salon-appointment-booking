@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Admin Reports</title>
+    <meta name="description" content="View salon booking, revenue, service, stylist, customer, and payment reports.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f7f9fb">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="../javascript/admin/admin-theme.js"></script>
+    <script src="../javascript/admin/admin-auth.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/admin/reports.css">
+    <link rel="stylesheet" href="../styles/admin/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <a class="brand" href="dashboard.html" aria-label="Glow and Grace admin dashboard">
+                <span class="brand-mark">G</span>
+                <span>
+                    <strong>Glow & Grace</strong>
+                    <small>Admin Panel</small>
+                </span>
+            </a>
+
+            <nav class="admin-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="manage-appointments.html">Appointments</a>
+                <a href="manage-services.html">Services</a>
+                <a href="manage-staff.html">Staff</a>
+                <a href="customer-management.html">Customers</a>
+                <a href="manage-payments.html">Payments</a>
+                <a href="manage-reviews.html">Reviews</a>
+                <a class="active" href="reports.html">Reports</a>
+            </nav>
+
+            <div class="sidebar-card">
+                <span>Reports</span>
+                <strong>Use booking and payment data to review salon performance.</strong>
+                <a href="../customer/home-page.html">Customer site</a>
+            </div>
+        </aside>
+
+        <main class="reports-main">
+            <header class="admin-topbar">
+                <div>
+                    <p class="eyebrow">Reports</p>
+                    <h1>Salon performance reports</h1>
+                    <p>Track bookings, revenue, payments, services, and stylists from one report desk.</p>
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+                        <span class="theme-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="ghost-action" type="button" data-print-report>Print</button>
+                    <button class="primary-action" type="button" data-export-report>Export CSV</button>
+                </div>
+            </header>
+
+            <section class="summary-grid" aria-label="Report summary">
+                <article>
+                    <span>Revenue collected</span>
+                    <strong data-summary="revenue">Rs. 0</strong>
+                    <small>Paid amount in selected report</small>
+                </article>
+                <article>
+                    <span>Pending amount</span>
+                    <strong data-summary="pending-amount">Rs. 0</strong>
+                    <small>Remaining balance to collect</small>
+                </article>
+                <article>
+                    <span>Total bookings</span>
+                    <strong data-summary="bookings">0</strong>
+                    <small data-summary-note="bookings">All matching appointments</small>
+                </article>
+                <article>
+                    <span>Total customers</span>
+                    <strong data-summary="customers">0</strong>
+                    <small>Unique customer records</small>
+                </article>
+                <article>
+                    <span>Completion rate</span>
+                    <strong data-summary="completion-rate">0%</strong>
+                    <small>Completed visits from bookings</small>
+                </article>
+            </section>
+
+            <section class="report-controls" aria-label="Report filters">
+                <label>
+                    <span>Period</span>
+                    <select data-period-filter>
+                        <option value="all">All dates</option>
+                        <option value="today">Today</option>
+                        <option value="7">Last 7 days</option>
+                        <option value="30">Last 30 days</option>
+                        <option value="90">Last 90 days</option>
+                    </select>
+                </label>
+                <label>
+                    <span>Appointment status</span>
+                    <select data-status-filter>
+                        <option value="all">All statuses</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </label>
+                <label>
+                    <span>Payment status</span>
+                    <select data-payment-filter>
+                        <option value="all">All payments</option>
+                        <option value="paid">Paid</option>
+                        <option value="part-paid">Part paid</option>
+                        <option value="pending">Pending</option>
+                        <option value="failed">Failed</option>
+                        <option value="refunded">Refunded</option>
+                    </select>
+                </label>
+                <label class="search-box">
+                    <span>Search report</span>
+                    <input type="search" data-report-search placeholder="Customer, service, stylist, ID..." autocomplete="off">
+                </label>
+                <button class="ghost-action clear-filter" type="button" data-clear-filters>Clear filters</button>
+            </section>
+
+            <section class="report-grid">
+                <article class="report-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Bookings</p>
+                            <h2>Status breakdown</h2>
+                        </div>
+                        <span data-report-count>0 shown</span>
+                    </div>
+                    <div class="bar-list" data-status-report>
+                        <div class="empty-state">No appointment data yet.</div>
+                    </div>
+                </article>
+
+                <article class="report-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Payments</p>
+                            <h2>Payment breakdown</h2>
+                        </div>
+                    </div>
+                    <div class="bar-list" data-payment-report>
+                        <div class="empty-state">No payment data yet.</div>
+                    </div>
+                </article>
+
+                <article class="report-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Time</p>
+                            <h2>Period summary</h2>
+                        </div>
+                    </div>
+                    <div class="period-list" data-period-summary>
+                        <div class="empty-state">No period summary yet.</div>
+                    </div>
+                </article>
+
+                <article class="report-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Services</p>
+                            <h2>Most booked services</h2>
+                        </div>
+                        <a href="manage-services.html">Manage</a>
+                    </div>
+                    <div class="rank-list" data-service-report>
+                        <div class="empty-state">No service bookings yet.</div>
+                    </div>
+                </article>
+
+                <article class="report-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Stylists</p>
+                            <h2>Top stylists</h2>
+                        </div>
+                        <a href="manage-staff.html">Manage</a>
+                    </div>
+                    <div class="rank-list" data-stylist-report>
+                        <div class="empty-state">No stylist bookings yet.</div>
+                    </div>
+                </article>
+
+                <article class="report-panel action-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Quick links</p>
+                            <h2>Open management pages</h2>
+                        </div>
+                    </div>
+                    <div class="quick-links">
+                        <a href="manage-appointments.html"><span>01</span><strong>Appointments</strong></a>
+                        <a href="manage-payments.html"><span>02</span><strong>Payments</strong></a>
+                        <a href="customer-management.html"><span>03</span><strong>Customers</strong></a>
+                        <a href="manage-services.html"><span>04</span><strong>Services</strong></a>
+                        <a href="manage-staff.html"><span>05</span><strong>Staff</strong></a>
+                        <a href="manage-reviews.html"><span>06</span><strong>Reviews</strong></a>
+                    </div>
+                </article>
+
+                <article class="report-panel wide-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Booking records</p>
+                            <h2>Detailed appointment report</h2>
+                        </div>
+                        <span data-last-updated>Updated now</span>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Appointment</th>
+                                    <th>Customer</th>
+                                    <th>Service</th>
+                                    <th>Stylist</th>
+                                    <th>Status</th>
+                                    <th>Payment</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody data-report-table>
+                                <tr>
+                                    <td colspan="7">No customer bookings yet.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <script src="../javascript/admin/reports.js?v=booked-at"></script>
+</body>
+</html>

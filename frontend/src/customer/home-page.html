@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Home</title>
+    <meta name="description" content="Modern salon appointment booking homepage for hair, skin, nails, and bridal beauty services.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#fffaf7">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../javascript/customer/theme.js"></script>
+    <script src="../javascript/customer/customer-session.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/customer/home-page.css?v=remove-mini-booking">
+    <link rel="stylesheet" href="../styles/customer/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <header class="site-header" data-header>
+        <a class="brand" href="home-page.html" aria-label="Glow and Grace Salon home">
+            <span class="brand-mark">G</span>
+            <span>
+                <strong>Glow & Grace</strong>
+                <small>Salon Studio</small>
+            </span>
+        </a>
+
+        <button class="nav-toggle" type="button" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="main-nav" data-nav-menu aria-label="Main navigation">
+            <a href="home-page.html" class="active">Home</a>
+            <a href="services.html">Services</a>
+            <a href="staff-stylist.html">Stylists</a>
+            <a href="booking.html">Booking</a>
+            <a href="about-us.html">About</a>
+            <a href="reviews-ratings.html">Reviews</a>
+            <a href="contact-us.html">Contact</a>
+        </nav>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+            <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+        <a class="header-action" href="login-register.html">Sign in</a>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-overlay"></div>
+            <div class="hero-content reveal">
+                <p class="eyebrow">Premium beauty appointments</p>
+                <h1>Fresh hair, glowing skin, and effortless booking.</h1>
+                <p class="hero-copy">
+                    A modern salon experience for hair styling, skincare, makeup, nails, and bridal beauty.
+                    Choose your service, pick a stylist, and reserve your slot with ease.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn primary" href="booking.html">Book appointment</a>
+                    <a class="btn secondary" href="services.html">Explore services</a>
+                </div>
+            </div>
+
+            <div class="hero-highlights" aria-label="Salon highlights">
+                <div class="highlight reveal">
+                    <strong data-counter data-completed-clients data-target="0">0</strong>
+                    <span>Happy clients</span>
+                </div>
+                <div class="highlight reveal">
+                    <strong data-counter data-active-services data-target="0">0</strong>
+                    <span>Expert services</span>
+                </div>
+                <div class="highlight reveal">
+                    <strong data-average-rating>0.0</strong>
+                    <span>Average rating</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section intro-section" id="intro">
+            <div class="section-heading reveal">
+                <p class="eyebrow">Your beauty desk</p>
+                <h2>Everything guests need, connected from the homepage.</h2>
+                <p>
+                    Plan your visit from one place: browse services, choose a stylist, review appointments,
+                    continue payments, manage your profile, and reach the salon team.
+                </p>
+            </div>
+
+            <div class="quick-links" aria-label="Quick customer links">
+                <a class="quick-link reveal" href="my-appointments.html">
+                    <span>01</span>
+                    <strong>My appointments</strong>
+                    <small>Track upcoming visits</small>
+                </a>
+                <a class="quick-link reveal" href="booking.html">
+                    <span>02</span>
+                    <strong>Book appointment</strong>
+                    <small>Select service and slot</small>
+                </a>
+                <a class="quick-link reveal" href="payment-status.html">
+                    <span>03</span>
+                    <strong>Payment history</strong>
+                    <small>View payment records</small>
+                </a>
+                <a class="quick-link reveal" href="profile.html">
+                    <span>04</span>
+                    <strong>Profile</strong>
+                    <small>Manage your details</small>
+                </a>
+            </div>
+        </section>
+
+        <section class="section services-section" id="services">
+            <div class="section-heading reveal">
+                <p class="eyebrow">Signature services</p>
+                <h2>Salon favorites for every occasion.</h2>
+            </div>
+
+            <div class="service-grid">
+                <article class="service-card reveal">
+                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=80" alt="Hair stylist preparing salon hair service">
+                    <div>
+                        <p>Hair care</p>
+                        <h3>Cut, color, styling</h3>
+                        <span>From clean trims to event-ready blowouts.</span>
+                    </div>
+                    <a href="services.html">View</a>
+                </article>
+
+                <article class="service-card reveal">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=80" alt="Relaxing facial skincare treatment">
+                    <div>
+                        <p>Skin studio</p>
+                        <h3>Facials and glow care</h3>
+                        <span>Calming treatments for a fresh, polished look.</span>
+                    </div>
+                    <a href="services.html">View</a>
+                </article>
+
+                <article class="service-card reveal">
+                    <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=80" alt="Modern nail art manicure service">
+                    <div>
+                        <p>Nail bar</p>
+                        <h3>Manicure and nail art</h3>
+                        <span>Glossy finishes, soft neutrals, and statement looks.</span>
+                    </div>
+                    <a href="services.html">View</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="section split-section" id="stylists">
+            <div class="split-image reveal">
+                <img src="https://images.unsplash.com/photo-1559599101-f09722fb4948?auto=format&fit=crop&w=1000&q=80" alt="Salon stylist working with a client">
+            </div>
+            <div class="split-content reveal">
+                <p class="eyebrow">Meet the artists</p>
+                <h2>Friendly stylists, neat schedules, and a calm salon flow.</h2>
+                <p>
+                    Explore specialists for hair, skin, makeup, and nails before choosing the best fit for your appointment.
+                </p>
+                <div class="feature-list">
+                    <span>Hair specialists</span>
+                    <span>Makeup artists</span>
+                    <span>Skin consultants</span>
+                    <span>Nail technicians</span>
+                </div>
+                <a class="text-link" href="staff-stylist.html">View stylists</a>
+            </div>
+        </section>
+
+        <section class="section reviews-section" id="reviews">
+            <div class="section-heading reveal">
+                <p class="eyebrow">Client notes</p>
+                <h2>Soft glam, sharp service, happy guests.</h2>
+            </div>
+            <div class="review-grid" data-home-reviews>
+                <div class="review-empty">No customer reviews yet.</div>
+            </div>
+            <a class="center-link reveal" href="reviews-ratings.html">Read more reviews</a>
+        </section>
+
+        <section class="contact-strip reveal">
+            <div>
+                <p class="eyebrow">Need help?</p>
+                <h2>Questions about services, timing, or group bookings?</h2>
+            </div>
+            <a class="btn primary" href="contact-us.html">Contact salon</a>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div>
+            <strong>Glow & Grace Salon</strong>
+            <p>Beauty appointments made simple, calm, and stylish.</p>
+        </div>
+        <div class="footer-links" aria-label="Footer links">
+            <a href="about-us.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="booking.html">Booking</a>
+            <a href="payment-status.html">Payment history</a>
+            <a href="../admin/admin-login.html">Admin</a>
+        </div>
+    </footer>
+
+    <script src="../javascript/customer/home-page.js?v=remove-mini-booking"></script>
+</body>
+</html>

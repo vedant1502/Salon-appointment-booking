@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Payment Status</title>
+    <meta name="description" content="Check salon appointment payment status and next steps.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#fffaf7">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../javascript/customer/theme.js"></script>
+    <script src="../javascript/customer/customer-session.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/customer/payment-status.css?v=inline-payment-receipt">
+    <link rel="stylesheet" href="../styles/customer/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <header class="site-header" data-header>
+        <a class="brand" href="home-page.html" aria-label="Glow and Grace Salon home">
+            <span class="brand-mark">G</span>
+            <span>
+                <strong>Glow & Grace</strong>
+                <small>Salon Studio</small>
+            </span>
+        </a>
+
+        <button class="nav-toggle" type="button" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="main-nav" data-nav-menu aria-label="Main navigation">
+            <a href="home-page.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="booking.html">Booking</a>
+            <a href="my-appointments.html">Appointments</a>
+            <a href="payment-status.html" class="active">Status</a>
+            <a href="contact-us.html">Contact</a>
+        </nav>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+            <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+        <a class="header-action" href="profile.html">Profile</a>
+    </header>
+
+    <main>
+        <section class="payment-history reveal" aria-label="Payment history">
+            <div class="history-heading">
+                <div>
+                    <p class="eyebrow">All payments</p>
+                    <h2>Payment history</h2>
+                </div>
+                <span data-history-count>0 payments</span>
+            </div>
+
+            <div class="payment-list" data-payment-list>
+                <div class="empty-history">No payment records yet. Complete a booking to see payments here.</div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div>
+            <strong>Glow & Grace Salon</strong>
+            <p>Beauty appointments made simple, calm, and stylish.</p>
+        </div>
+        <div class="footer-links" aria-label="Footer links">
+            <a href="home-page.html">Home</a>
+            <a href="booking.html">Booking</a>
+            <a href="my-appointments.html">Appointments</a>
+            <a href="../admin/admin-login.html">Admin</a>
+        </div>
+    </footer>
+
+    <script src="../javascript/customer/payment-status.js?v=inline-payment-receipt"></script>
+</body>
+</html>

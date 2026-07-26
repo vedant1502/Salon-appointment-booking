@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Manage Staff</title>
+    <meta name="description" content="Add, edit, activate, and manage salon staff and stylists for Glow & Grace Salon.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f7f9fb">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="../javascript/admin/admin-theme.js"></script>
+    <script src="../javascript/admin/admin-auth.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/admin/manage-staff.css">
+    <link rel="stylesheet" href="../styles/admin/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <a class="brand" href="dashboard.html" aria-label="Glow and Grace admin dashboard">
+                <span class="brand-mark">G</span>
+                <span>
+                    <strong>Glow & Grace</strong>
+                    <small>Admin Panel</small>
+                </span>
+            </a>
+
+            <nav class="admin-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="manage-appointments.html">Appointments</a>
+                <a href="manage-services.html">Services</a>
+                <a class="active" href="manage-staff.html">Staff</a>
+                <a href="customer-management.html">Customers</a>
+                <a href="manage-payments.html">Payments</a>
+                <a href="manage-reviews.html">Reviews</a>
+                <a href="reports.html">Reports</a>
+            </nav>
+
+            <div class="sidebar-card">
+                <span>Stylist roster</span>
+                <strong>Available stylists are shown on the customer stylists page for booking.</strong>
+                <a href="../customer/staff-stylist.html">Customer stylists</a>
+            </div>
+        </aside>
+
+        <main class="staff-main">
+            <header class="admin-topbar">
+                <div>
+                    <p class="eyebrow">Staff</p>
+                    <h1>Manage staff and stylists</h1>
+                    <p>Add stylists, update specialization, rating, experience, image, and availability.</p>
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+                        <span class="theme-icon" aria-hidden="true"></span>
+                    </button>
+                    <a class="ghost-action" href="dashboard.html">Dashboard</a>
+                </div>
+            </header>
+
+            <section class="summary-grid" aria-label="Staff summary">
+                <article>
+                    <span>Total staff</span>
+                    <strong data-count="total">0</strong>
+                </article>
+                <article>
+                    <span>Available</span>
+                    <strong data-count="available">0</strong>
+                </article>
+                <article>
+                    <span>Unavailable</span>
+                    <strong data-count="unavailable">0</strong>
+                </article>
+                <article>
+                    <span>Average rating</span>
+                    <strong data-count="average">0.0</strong>
+                </article>
+            </section>
+
+            <section class="staff-workspace">
+                <form class="staff-form" data-staff-form>
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Staff editor</p>
+                            <h2 data-form-title>Add new stylist</h2>
+                        </div>
+                        <button class="ghost-action" type="button" data-reset-form>Clear</button>
+                    </div>
+
+                    <input type="hidden" name="id">
+
+                    <div class="form-grid">
+                        <label>
+                            <span>Stylist name</span>
+                            <input type="text" name="name" placeholder="Example: Aarohi Sharma" required>
+                        </label>
+                        <label>
+                            <span>Specialization area</span>
+                            <select name="category" required>
+                                <option value="hair">Hair</option>
+                                <option value="skin">Skin</option>
+                                <option value="makeup">Makeup</option>
+                                <option value="bridal">Bridal</option>
+                                <option value="spa">Spa</option>
+                                <option value="nails">Nails</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Role or expertise</span>
+                            <input type="text" name="specialization" placeholder="Example: Haircut & Color Stylist" required>
+                        </label>
+                        <label>
+                            <span>Experience</span>
+                            <input type="text" name="experience" placeholder="Example: 6 years" required>
+                        </label>
+                        <label>
+                            <span>Rating</span>
+                            <input type="number" name="rating" placeholder="4.8" min="0" max="5" step="0.1" required>
+                        </label>
+                        <label>
+                            <span>Image URL</span>
+                            <input type="text" name="image" placeholder="Paste image URL or upload below" data-image-url>
+                        </label>
+                    </div>
+
+                    <label>
+                        <span>Description</span>
+                        <textarea name="bio" rows="4" placeholder="Write a short customer-friendly stylist description" required></textarea>
+                    </label>
+
+                    <div class="image-upload">
+                        <label>
+                            <span>Upload stylist image</span>
+                            <input type="file" accept="image/*" data-staff-image>
+                        </label>
+                        <div class="image-preview" data-image-preview>
+                            <span>No image selected</span>
+                        </div>
+                    </div>
+
+                    <label class="status-check">
+                        <input type="checkbox" name="available" checked>
+                        <span>Stylist is available and visible to customers</span>
+                    </label>
+
+                    <div class="form-actions">
+                        <button class="save-btn" type="submit">Save stylist</button>
+                        <p class="form-message" data-form-message role="status"></p>
+                    </div>
+                </form>
+
+                <section class="catalog-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Roster</p>
+                            <h2>All staff</h2>
+                        </div>
+                        <button class="ghost-action" type="button" data-reset-staff>Restore defaults</button>
+                    </div>
+
+                    <div class="control-panel" aria-label="Staff filters">
+                        <div class="filter-tabs" role="tablist" aria-label="Filter staff">
+                            <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
+                            <button class="filter-btn" type="button" data-filter="available" aria-pressed="false">Available</button>
+                            <button class="filter-btn" type="button" data-filter="unavailable" aria-pressed="false">Unavailable</button>
+                            <button class="filter-btn" type="button" data-filter="hair" aria-pressed="false">Hair</button>
+                            <button class="filter-btn" type="button" data-filter="skin" aria-pressed="false">Skin</button>
+                            <button class="filter-btn" type="button" data-filter="makeup" aria-pressed="false">Makeup</button>
+                            <button class="filter-btn" type="button" data-filter="bridal" aria-pressed="false">Bridal</button>
+                            <button class="filter-btn" type="button" data-filter="spa" aria-pressed="false">Spa</button>
+                            <button class="filter-btn" type="button" data-filter="nails" aria-pressed="false">Nails</button>
+                        </div>
+
+                        <label class="search-box">
+                            <span>Search staff</span>
+                            <input type="search" data-search placeholder="Search name, role, rating, experience..." autocomplete="off">
+                        </label>
+                    </div>
+
+                    <div class="staff-list" data-staff-list>
+                        <div class="empty-state">No staff members yet.</div>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <script src="../javascript/admin/manage-staff.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Admin Login</title>
+    <meta name="description" content="Admin login for Glow & Grace Salon appointment booking management.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f7f9fb">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="../javascript/admin/admin-theme.js"></script>
+    <link rel="stylesheet" href="../styles/admin/admin-login.css">
+    <link rel="stylesheet" href="../styles/admin/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <header class="admin-topbar">
+        <a class="brand" href="dashboard.html" aria-label="Glow and Grace admin dashboard">
+            <span class="brand-mark">G</span>
+            <span>
+                <strong>Glow & Grace</strong>
+                <small>Admin Panel</small>
+            </span>
+        </a>
+
+        <div class="topbar-actions">
+            <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+                <span class="theme-icon" aria-hidden="true"></span>
+            </button>
+            <a href="../customer/home-page.html">Customer site</a>
+        </div>
+    </header>
+
+    <main class="login-shell">
+        <section class="login-visual" aria-label="Admin overview">
+            <div class="visual-content">
+                <p class="eyebrow">Salon operations</p>
+                <h1>Manage bookings, staff, services, and payments from one desk.</h1>
+                <p>
+                    Keep the salon schedule organized, check payment status, and prepare each stylist's day
+                    before customers arrive.
+                </p>
+
+                <div class="metric-grid" aria-label="Admin quick metrics">
+                    <div>
+                        <strong data-login-metric="today-bookings">0</strong>
+                        <span>Today bookings</span>
+                    </div>
+                    <div>
+                        <strong data-login-metric="available-staff">0</strong>
+                        <span>Stylists on duty</span>
+                    </div>
+                    <div>
+                        <strong data-login-metric="pending-payments">0</strong>
+                        <span>Pending payments</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="login-panel" aria-label="Admin sign in">
+            <div class="panel-heading">
+                <p class="eyebrow">Secure access</p>
+                <h2>Admin login</h2>
+                <p>Sign in to continue to the salon management dashboard.</p>
+            </div>
+
+            <form class="admin-form" data-admin-login-form>
+                <label>
+                    <span>Admin role</span>
+                    <select name="role" required>
+                        <option value="manager">Manager</option>
+                        <option value="reception">Receptionist</option>
+                        <option value="staff-admin">Staff admin</option>
+                    </select>
+                </label>
+
+                <label>
+                    <span>Email address</span>
+                    <input type="email" name="email" placeholder="admin@glowgrace.com" autocomplete="email" required>
+                </label>
+
+                <label>
+                    <span>Password</span>
+                    <div class="password-field">
+                        <input type="password" name="password" placeholder="Enter password" autocomplete="current-password" minlength="6" required data-password-input>
+                        <button type="button" data-password-toggle aria-label="Show password">Show</button>
+                    </div>
+                </label>
+
+                <div class="form-row">
+                    <label class="check-label">
+                        <input type="checkbox" name="remember">
+                        <span>Remember this device</span>
+                    </label>
+                    <a href="../customer/contact-us.html">Need help?</a>
+                </div>
+
+                <button class="submit-btn" type="submit">Login to dashboard</button>
+                <p class="form-message" data-login-message role="status"></p>
+            </form>
+
+            <div class="access-note">
+                <strong>Admin access</strong>
+                <p>Use this area to manage salon operations and review customer activity.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="../javascript/admin/admin-login.js?v=backend-auth"></script>
+</body>
+</html>

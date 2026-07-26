@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Services</title>
+    <meta name="description" content="Explore salon services with prices, durations, and details for haircuts, facials, spa care, bridal makeup, coloring, nails, and more.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#fffaf7">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../javascript/customer/theme.js"></script>
+    <script src="../javascript/customer/customer-session.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/customer/services.css">
+    <link rel="stylesheet" href="../styles/customer/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <header class="site-header" data-header>
+        <a class="brand" href="home-page.html" aria-label="Glow and Grace Salon home">
+            <span class="brand-mark">G</span>
+            <span>
+                <strong>Glow & Grace</strong>
+                <small>Salon Studio</small>
+            </span>
+        </a>
+
+        <button class="nav-toggle" type="button" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="main-nav" data-nav-menu aria-label="Main navigation">
+            <a href="home-page.html">Home</a>
+            <a href="services.html" class="active">Services</a>
+            <a href="staff-stylist.html">Stylists</a>
+            <a href="booking.html">Booking</a>
+            <a href="about-us.html">About</a>
+            <a href="reviews-ratings.html">Reviews</a>
+            <a href="contact-us.html">Contact</a>
+        </nav>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+            <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+        <a class="header-action" href="login-register.html">Sign in</a>
+    </header>
+
+    <main>
+        <section class="services-hero">
+            <div class="hero-copy reveal">
+                <p class="eyebrow">Salon service menu</p>
+                <h1>Choose your glow, see the time, know the price.</h1>
+                <p>
+                    Browse hair, skin, spa, bridal, color, and nail services with clear descriptions before starting your appointment booking.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn primary" href="booking.html">Book appointment</a>
+                    <a class="btn secondary" href="#service-list">View menu</a>
+                </div>
+            </div>
+
+            <aside class="hero-panel reveal" aria-label="Popular salon package">
+                <span class="panel-tag">Most loved</span>
+                <h2>Bridal Glow Package</h2>
+                <p>Makeup, hair styling, draping, and pre-event skin prep for the big day.</p>
+                <div class="panel-meta">
+                    <strong>Rs. 5,499</strong>
+                    <span>3 hr 30 min</span>
+                </div>
+                <a href="booking.html?service=Bridal%20Glow%20Package">Book package</a>
+            </aside>
+        </section>
+
+        <section class="category-strip reveal" aria-label="Service categories">
+            <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-btn" type="button" data-filter="hair" aria-pressed="false">Hair</button>
+            <button class="filter-btn" type="button" data-filter="skin" aria-pressed="false">Skin</button>
+            <button class="filter-btn" type="button" data-filter="spa" aria-pressed="false">Spa</button>
+            <button class="filter-btn" type="button" data-filter="bridal" aria-pressed="false">Bridal</button>
+            <button class="filter-btn" type="button" data-filter="nails" aria-pressed="false">Nails</button>
+            <button class="filter-btn" type="button" data-filter="makeup" aria-pressed="false">Makeup</button>
+        </section>
+
+        <section class="section" id="service-list">
+            <div class="section-heading reveal">
+                <p class="eyebrow">Detailed pricing</p>
+                <h2>Salon services designed for quick comparison.</h2>
+                <p>Select a category or book directly from any service card. Compare price, duration, and details before booking.</p>
+            </div>
+
+            <div class="services-grid" data-services-grid>
+                <article class="service-card reveal" data-category="hair">
+                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=80" alt="Salon haircut and styling service">
+                    <div class="service-body">
+                        <div class="service-topline">
+                            <span>Hair</span>
+                            <strong>Rs. 499</strong>
+                        </div>
+                        <h3>Haircut & Blow Dry</h3>
+                        <p>Face-framing haircut, shampoo, light conditioning, and a smooth blow dry finish.</p>
+                        <div class="service-meta">
+                            <span>45 min</span>
+                            <span>Stylist choice</span>
+                        </div>
+                        <a class="book-link" href="booking.html?service=Haircut%20and%20Blow%20Dry">Book now</a>
+                    </div>
+                </article>
+
+                <article class="service-card reveal" data-category="skin">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=80" alt="Facial skincare treatment">
+                    <div class="service-body">
+                        <div class="service-topline">
+                            <span>Skin</span>
+                            <strong>Rs. 899</strong>
+                        </div>
+                        <h3>Glow Facial</h3>
+                        <p>Gentle cleanse, exfoliation, massage, mask, and moisturizer for a fresh event-ready glow.</p>
+                        <div class="service-meta">
+                            <span>60 min</span>
+                            <span>Best for dull skin</span>
+                        </div>
+                        <a class="book-link" href="booking.html?service=Glow%20Facial">Book now</a>
+                    </div>
+                </article>
+
+                <article class="service-card reveal" data-category="spa">
+                    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=80" alt="Relaxing salon spa service">
+                    <div class="service-body">
+                        <div class="service-topline">
+                            <span>Spa</span>
+                            <strong>Rs. 1,499</strong>
+                        </div>
+                        <h3>Relaxing Body Spa</h3>
+                        <p>A calming oil massage and steam session to refresh tired muscles and reduce stress.</p>
+                        <div class="service-meta">
+                            <span>75 min</span>
+                            <span>Relaxation care</span>
+                        </div>
+                        <a class="book-link" href="booking.html?service=Relaxing%20Body%20Spa">Book now</a>
+                    </div>
+                </article>
+
+                <article class="service-card reveal featured" data-category="bridal">
+                    <img src="https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=900&q=80" alt="Bridal makeup service">
+                    <div class="service-body">
+                        <div class="service-topline">
+                            <span>Bridal</span>
+                            <strong>Rs. 5,499</strong>
+                        </div>
+                        <h3>Bridal Makeup</h3>
+                        <p>Long-lasting HD makeup with hairstyling, lashes, touch-up guidance, and saree or dupatta draping.</p>
+                        <div class="service-meta">
+                            <span>3 hr 30 min</span>
+                            <span>Trial available</span>
+                        </div>
+                        <a class="book-link" href="booking.html?service=Bridal%20Makeup">Book now</a>
+                    </div>
+                </article>
+
+                <article class="service-card reveal" data-category="hair">
+                    <img src="https://images.unsplash.com/photo-1582095133179-bfd08e2fc6b3?auto=format&fit=crop&w=900&q=80" alt="Hair coloring service in salon">
+                    <div class="service-body">
+                        <div class="service-topline">
+                            <span>Hair</span>
+                            <strong>Rs. 1,999</strong>
+                        </div>
+                        <h3>Global Hair Coloring</h3>
+                        <p>Full hair color consultation, application, wash, and finishing style for a fresh new shade.</p>
+                        <div class="service-meta">
+                            <span>2 hr 15 min</span>
+                            <span>Patch test advised</span>
+                        </div>
+                        <a class="book-link" href="booking.html?service=Global%20Hair%20Coloring">Book now</a>
+                    </div>
+                </article>
+
+                <article class="service-card reveal" data-category="nails">
+                    <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=80" alt="Nail art manicure service">
+                    <div class="service-body">
+                        <div class="service-topline">
+                            <span>Nails</span>
+                            <strong>Rs. 699</strong>
+                        </div>
+                        <h3>Manicure & Nail Art</h3>
+                        <p>Nail shaping, cuticle care, polish, and simple nail art for clean everyday elegance.</p>
+                        <div class="service-meta">
+                            <span>50 min</span>
+                            <span>Custom designs</span>
+                        </div>
+                        <a class="book-link" href="booking.html?service=Manicure%20and%20Nail%20Art">Book now</a>
+                    </div>
+                </article>
+
+                <article class="service-card reveal" data-category="hair">
+                    <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=900&q=80" alt="Hair spa treatment">
+                    <div class="service-body">
+                        <div class="service-topline">
+                            <span>Hair</span>
+                            <strong>Rs. 1,199</strong>
+                        </div>
+                        <h3>Hair Spa Therapy</h3>
+                        <p>Deep conditioning, scalp massage, steam, and rinse for softer, smoother hair texture.</p>
+                        <div class="service-meta">
+                            <span>70 min</span>
+                            <span>Dryness control</span>
+                        </div>
+                        <a class="book-link" href="booking.html?service=Hair%20Spa%20Therapy">Book now</a>
+                    </div>
+                </article>
+
+                <article class="service-card reveal" data-category="makeup">
+                    <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=900&q=80" alt="Makeup artist applying makeup">
+                    <div class="service-body">
+                        <div class="service-topline">
+                            <span>Makeup</span>
+                            <strong>Rs. 2,499</strong>
+                        </div>
+                        <h3>Party Makeup</h3>
+                        <p>Soft glam makeup with base, eyes, lips, and setting finish for birthdays, parties, and photos.</p>
+                        <div class="service-meta">
+                            <span>1 hr 30 min</span>
+                            <span>Event ready</span>
+                        </div>
+                        <a class="book-link" href="booking.html?service=Party%20Makeup">Book now</a>
+                    </div>
+                </article>
+
+                <article class="service-card reveal" data-category="skin">
+                    <img src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=900&q=80" alt="Eyebrow grooming and waxing service">
+                    <div class="service-body">
+                        <div class="service-topline">
+                            <span>Skin</span>
+                            <strong>Rs. 299</strong>
+                        </div>
+                        <h3>Threading & Waxing</h3>
+                        <p>Quick grooming for brows, upper lip, arms, or face with clean shaping and soothing aftercare.</p>
+                        <div class="service-meta">
+                            <span>25 min</span>
+                            <span>Quick visit</span>
+                        </div>
+                        <a class="book-link" href="booking.html?service=Threading%20and%20Waxing">Book now</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="package-section">
+            <div class="package-content reveal">
+                <p class="eyebrow">Service bundles</p>
+                <h2>Need more than one service?</h2>
+                <p>Packages are useful for weddings, birthdays, festivals, college events, and salon self-care days.</p>
+            </div>
+            <div class="package-grid">
+                <article class="package-card reveal">
+                    <span>Rs. 1,799</span>
+                    <h3>Fresh Start Combo</h3>
+                    <p>Haircut, blow dry, threading, and quick cleanup.</p>
+                    <a href="booking.html?service=Fresh%20Start%20Combo">Book combo</a>
+                </article>
+                <article class="package-card reveal">
+                    <span>Rs. 2,999</span>
+                    <h3>Glow Day Combo</h3>
+                    <p>Glow facial, hair spa, manicure, and light styling.</p>
+                    <a href="booking.html?service=Glow%20Day%20Combo">Book combo</a>
+                </article>
+                <article class="package-card reveal">
+                    <span>Rs. 7,499</span>
+                    <h3>Wedding Ready Combo</h3>
+                    <p>Bridal makeup, hairstyling, draping, facial, and nails.</p>
+                    <a href="booking.html?service=Wedding%20Ready%20Combo">Book combo</a>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div>
+            <strong>Glow & Grace Salon</strong>
+            <p>Beauty appointments made simple, calm, and stylish.</p>
+        </div>
+        <div class="footer-links" aria-label="Footer links">
+            <a href="home-page.html">Home</a>
+            <a href="staff-stylist.html">Stylists</a>
+            <a href="booking.html">Booking</a>
+            <a href="contact-us.html">Contact</a>
+            <a href="../admin/admin-login.html">Admin</a>
+        </div>
+    </footer>
+
+    <script src="../javascript/customer/services.js"></script>
+</body>
+</html>

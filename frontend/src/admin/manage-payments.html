@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Manage Payments</title>
+    <meta name="description" content="Manage salon appointment payments, pending balances, refunds, and payment methods.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f7f9fb">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="../javascript/admin/admin-theme.js"></script>
+    <script src="../javascript/admin/admin-auth.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/admin/manage-payments.css?v=admin-dates-method-lock">
+    <link rel="stylesheet" href="../styles/admin/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <a class="brand" href="dashboard.html" aria-label="Glow and Grace admin dashboard">
+                <span class="brand-mark">G</span>
+                <span>
+                    <strong>Glow & Grace</strong>
+                    <small>Admin Panel</small>
+                </span>
+            </a>
+
+            <nav class="admin-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="manage-appointments.html">Appointments</a>
+                <a href="manage-services.html">Services</a>
+                <a href="manage-staff.html">Staff</a>
+                <a href="customer-management.html">Customers</a>
+                <a class="active" href="manage-payments.html">Payments</a>
+                <a href="manage-reviews.html">Reviews</a>
+                <a href="reports.html">Reports</a>
+            </nav>
+
+            <div class="sidebar-card">
+                <span>Payments</span>
+                <strong>Payment updates are saved to appointment records and visible to customers.</strong>
+                <a href="../customer/my-appointments.html">Customer view</a>
+            </div>
+        </aside>
+
+        <main class="payments-main">
+            <header class="admin-topbar">
+                <div>
+                    <p class="eyebrow">Payments</p>
+                    <h1>Manage appointment payments</h1>
+                    <p>Track paid, pending, failed, and refunded payments across all customer bookings.</p>
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+                        <span class="theme-icon" aria-hidden="true"></span>
+                    </button>
+                    <a class="ghost-action" href="dashboard.html">Dashboard</a>
+                </div>
+            </header>
+
+            <section class="summary-grid" aria-label="Payment summary">
+                <article>
+                    <span>Total collected</span>
+                    <strong data-count="collected">Rs. 0</strong>
+                </article>
+                <article>
+                    <span>Pending amount</span>
+                    <strong data-count="pending-amount">Rs. 0</strong>
+                </article>
+                <article>
+                    <span>Paid payments</span>
+                    <strong data-count="paid">0</strong>
+                </article>
+                <article>
+                    <span>Pending payments</span>
+                    <strong data-count="pending">0</strong>
+                </article>
+            </section>
+
+            <section class="payment-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Payment records</p>
+                        <h2>All appointment payments</h2>
+                    </div>
+                    <span data-result-count>0 payments shown</span>
+                </div>
+
+                <div class="control-panel" aria-label="Payment filters">
+                    <div class="filter-tabs" role="tablist" aria-label="Filter payments">
+                        <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
+                        <button class="filter-btn" type="button" data-filter="paid" aria-pressed="false">Paid</button>
+                        <button class="filter-btn" type="button" data-filter="pending" aria-pressed="false">Pending</button>
+                        <button class="filter-btn" type="button" data-filter="failed" aria-pressed="false">Failed</button>
+                        <button class="filter-btn" type="button" data-filter="refunded" aria-pressed="false">Refunded</button>
+                    </div>
+
+                    <label class="date-filter">
+                        <span>Activity date</span>
+                        <input type="date" data-date-filter>
+                    </label>
+
+                    <label class="search-box">
+                        <span>Search payments</span>
+                        <input type="search" data-search placeholder="Customer, appointment ID, service, reference..." autocomplete="off">
+                    </label>
+                </div>
+
+                <div class="payment-list" data-payment-list>
+                    <div class="empty-state">No payment records yet.</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../javascript/admin/manage-payments.js?v=admin-dates-method-lock-date-paid-amount-persist"></script>
+</body>
+</html>

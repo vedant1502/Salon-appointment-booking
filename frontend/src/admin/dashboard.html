@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Admin Dashboard</title>
+    <meta name="description" content="Admin dashboard for Glow & Grace Salon appointments, customers, services, staff, payments, and reports.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f7f9fb">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="../javascript/admin/admin-theme.js"></script>
+    <script src="../javascript/admin/admin-auth.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/admin/dashboard.css?v=admin-dates">
+    <link rel="stylesheet" href="../styles/admin/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <a class="brand" href="dashboard.html" aria-label="Glow and Grace admin dashboard">
+                <span class="brand-mark">G</span>
+                <span>
+                    <strong>Glow & Grace</strong>
+                    <small>Admin Panel</small>
+                </span>
+            </a>
+
+            <nav class="admin-nav">
+                <a class="active" href="dashboard.html">Dashboard</a>
+                <a href="manage-appointments.html">Appointments</a>
+                <a href="manage-services.html">Services</a>
+                <a href="manage-staff.html">Staff</a>
+                <a href="customer-management.html">Customers</a>
+                <a href="manage-payments.html">Payments</a>
+                <a href="manage-reviews.html">Reviews</a>
+                <a href="reports.html">Reports</a>
+            </nav>
+
+            <div class="sidebar-card">
+                <span>Customer flow</span>
+                <strong>Customer bookings appear here when created in the customer site.</strong>
+                <a href="../customer/booking.html">Open booking</a>
+            </div>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dashboard-topbar">
+                <div>
+                    <p class="eyebrow">Admin dashboard</p>
+                    <h1>Salon control desk</h1>
+                    <p data-admin-greeting>Welcome back, admin.</p>
+                </div>
+
+                <div class="topbar-actions">
+                    <label class="date-filter">
+                        <span>Activity date</span>
+                        <input type="date" data-date-filter>
+                    </label>
+                    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+                        <span class="theme-icon" aria-hidden="true"></span>
+                    </button>
+                    <a class="ghost-action" href="../customer/home-page.html">Customer site</a>
+                    <button class="logout-btn" type="button" data-logout>Logout</button>
+                </div>
+            </header>
+
+            <section class="stats-grid" aria-label="Dashboard summary">
+                <article class="stat-card">
+                    <span>Total bookings</span>
+                    <strong data-stat="total-bookings">0</strong>
+                    <small data-stat-note="total-bookings">All saved customer bookings</small>
+                </article>
+                <article class="stat-card">
+                    <span>Revenue</span>
+                    <strong data-stat="revenue">Rs. 0</strong>
+                    <small data-stat-note="revenue">Paid appointment amount</small>
+                </article>
+                <article class="stat-card">
+                    <span>Pending appointments</span>
+                    <strong data-stat="pending-appointments">0</strong>
+                    <small data-stat-note="pending-appointments">Upcoming or waiting visits</small>
+                </article>
+                <article class="stat-card">
+                    <span>Completed appointments</span>
+                    <strong data-stat="completed-appointments">0</strong>
+                    <small data-stat-note="completed-appointments">Finished salon visits</small>
+                </article>
+            </section>
+
+            <section class="insights-grid" aria-label="Admin insights">
+                <article class="insight-card">
+                    <span>Selected date appointments</span>
+                    <strong data-insight="today-appointments">0</strong>
+                </article>
+                <article class="insight-card">
+                    <span>Total customers</span>
+                    <strong data-insight="total-customers">0</strong>
+                </article>
+                <article class="insight-card">
+                    <span>Pending payments</span>
+                    <strong data-insight="pending-payments">0</strong>
+                </article>
+                <article class="insight-card">
+                    <span>Active services</span>
+                    <strong data-insight="active-services">10</strong>
+                </article>
+                <article class="insight-card">
+                    <span>Available staff/stylists</span>
+                    <strong data-insight="available-staff">5</strong>
+                </article>
+            </section>
+
+            <section class="dashboard-grid">
+                <article class="panel today-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Selected date</p>
+                            <h2>Appointment flow</h2>
+                        </div>
+                        <a href="manage-appointments.html">Manage</a>
+                    </div>
+
+                    <div class="timeline-list" data-today-list>
+                        <div class="empty-line">No appointments booked yet.</div>
+                    </div>
+                </article>
+
+                <article class="panel image-panel">
+                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1000&q=82" alt="Salon stylist station ready for appointments">
+                    <div>
+                        <span>Salon floor</span>
+                        <strong>Prepare staff, rooms, and payments before peak slots.</strong>
+                    </div>
+                </article>
+
+                <article class="panel recent-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Bookings</p>
+                            <h2>Recent appointments</h2>
+                        </div>
+                        <a href="manage-appointments.html">View all</a>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Appointment</th>
+                                    <th>Service</th>
+                                    <th>Stylist</th>
+                                    <th>Status</th>
+                                    <th>Payment</th>
+                                </tr>
+                            </thead>
+                            <tbody data-recent-bookings>
+                                <tr>
+                                    <td colspan="5">No customer bookings yet.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+
+                <aside class="side-stack">
+                    <article class="panel payment-panel">
+                        <div class="panel-heading">
+                            <div>
+                                <p class="eyebrow">Payments</p>
+                                <h2>Snapshot</h2>
+                            </div>
+                        </div>
+
+                        <div class="payment-list">
+                            <div>
+                                <span>Paid</span>
+                                <strong data-payment="paid">0</strong>
+                            </div>
+                            <div>
+                                <span>Pending</span>
+                                <strong data-payment="pending">0</strong>
+                            </div>
+                            <div>
+                                <span>Cancelled</span>
+                                <strong data-payment="cancelled">0</strong>
+                            </div>
+                        </div>
+                    </article>
+                </aside>
+            </section>
+        </main>
+    </div>
+
+    <script src="../javascript/admin/dashboard.js?v=booking-date-filter"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Manage Services</title>
+    <meta name="description" content="Add, edit, activate, and deactivate salon services for Glow & Grace Salon.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f7f9fb">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="../javascript/admin/admin-theme.js"></script>
+    <script src="../javascript/admin/admin-auth.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/admin/manage-services.css">
+    <link rel="stylesheet" href="../styles/admin/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <a class="brand" href="dashboard.html" aria-label="Glow and Grace admin dashboard">
+                <span class="brand-mark">G</span>
+                <span>
+                    <strong>Glow & Grace</strong>
+                    <small>Admin Panel</small>
+                </span>
+            </a>
+
+            <nav class="admin-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="manage-appointments.html">Appointments</a>
+                <a class="active" href="manage-services.html">Services</a>
+                <a href="manage-staff.html">Staff</a>
+                <a href="customer-management.html">Customers</a>
+                <a href="manage-payments.html">Payments</a>
+                <a href="manage-reviews.html">Reviews</a>
+                <a href="reports.html">Reports</a>
+            </nav>
+
+            <div class="sidebar-card">
+                <span>Service catalog</span>
+                <strong>Active services are ready to power customer browsing and booking pages.</strong>
+                <a href="../customer/services.html">Customer services</a>
+            </div>
+        </aside>
+
+        <main class="services-main">
+            <header class="admin-topbar">
+                <div>
+                    <p class="eyebrow">Services</p>
+                    <h1>Manage salon services</h1>
+                    <p>Add services, update prices, set duration, write descriptions, and control active status.</p>
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+                        <span class="theme-icon" aria-hidden="true"></span>
+                    </button>
+                    <a class="ghost-action" href="dashboard.html">Dashboard</a>
+                </div>
+            </header>
+
+            <section class="summary-grid" aria-label="Service summary">
+                <article>
+                    <span>Total services</span>
+                    <strong data-count="total">0</strong>
+                </article>
+                <article>
+                    <span>Active services</span>
+                    <strong data-count="active">0</strong>
+                </article>
+                <article>
+                    <span>Inactive services</span>
+                    <strong data-count="inactive">0</strong>
+                </article>
+                <article>
+                    <span>Average price</span>
+                    <strong data-count="average">Rs. 0</strong>
+                </article>
+            </section>
+
+            <section class="service-workspace">
+                <form class="service-form" data-service-form>
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Service editor</p>
+                            <h2 data-form-title>Add new service</h2>
+                        </div>
+                        <button class="ghost-action" type="button" data-reset-form>Clear</button>
+                    </div>
+
+                    <input type="hidden" name="id">
+
+                    <div class="form-grid">
+                        <label>
+                            <span>Service name</span>
+                            <input type="text" name="name" placeholder="Example: Haircut and Blow Dry" required>
+                        </label>
+                        <label>
+                            <span>Category</span>
+                            <select name="category" required>
+                                <option value="hair">Hair</option>
+                                <option value="skin">Skin</option>
+                                <option value="spa">Spa</option>
+                                <option value="bridal">Bridal</option>
+                                <option value="nails">Nails</option>
+                                <option value="makeup">Makeup</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Price</span>
+                            <input type="number" name="price" placeholder="499" min="0" required>
+                        </label>
+                        <label>
+                            <span>Duration</span>
+                            <input type="text" name="duration" placeholder="45 min" required>
+                        </label>
+                    </div>
+
+                    <label>
+                        <span>Description</span>
+                        <textarea name="description" rows="4" placeholder="Write a short customer-friendly service description" required></textarea>
+                    </label>
+
+                    <div class="form-grid">
+                        <label>
+                            <span>Service note</span>
+                            <input type="text" name="note" placeholder="Example: Stylist choice">
+                        </label>
+                        <label>
+                            <span>Image URL</span>
+                            <input type="text" name="image" placeholder="Paste image URL or upload below" data-image-url>
+                        </label>
+                    </div>
+
+                    <div class="image-upload">
+                        <label>
+                            <span>Upload service image</span>
+                            <input type="file" accept="image/*" data-service-image>
+                        </label>
+                        <div class="image-preview" data-image-preview>
+                            <span>No image selected</span>
+                        </div>
+                    </div>
+
+                    <label class="status-check">
+                        <input type="checkbox" name="active" checked>
+                        <span>Service is active and visible to customers</span>
+                    </label>
+
+                    <div class="form-actions">
+                        <button class="save-btn" type="submit">Save service</button>
+                        <p class="form-message" data-form-message role="status"></p>
+                    </div>
+                </form>
+
+                <section class="catalog-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Catalog</p>
+                            <h2>All services</h2>
+                        </div>
+                        <button class="ghost-action" type="button" data-reset-services>Restore defaults</button>
+                    </div>
+
+                    <div class="control-panel" aria-label="Service filters">
+                        <div class="filter-tabs" role="tablist" aria-label="Filter services">
+                            <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
+                            <button class="filter-btn" type="button" data-filter="active" aria-pressed="false">Active</button>
+                            <button class="filter-btn" type="button" data-filter="inactive" aria-pressed="false">Inactive</button>
+                            <button class="filter-btn" type="button" data-filter="hair" aria-pressed="false">Hair</button>
+                            <button class="filter-btn" type="button" data-filter="skin" aria-pressed="false">Skin</button>
+                            <button class="filter-btn" type="button" data-filter="spa" aria-pressed="false">Spa</button>
+                            <button class="filter-btn" type="button" data-filter="bridal" aria-pressed="false">Bridal</button>
+                            <button class="filter-btn" type="button" data-filter="nails" aria-pressed="false">Nails</button>
+                            <button class="filter-btn" type="button" data-filter="makeup" aria-pressed="false">Makeup</button>
+                        </div>
+
+                        <label class="search-box">
+                            <span>Search services</span>
+                            <input type="search" data-search placeholder="Search name, category, description..." autocomplete="off">
+                        </label>
+                    </div>
+
+                    <div class="service-list" data-service-list>
+                        <div class="empty-state">No services yet.</div>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <script src="../javascript/admin/manage-services.js"></script>
+</body>
+</html>

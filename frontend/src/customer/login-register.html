@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Login & Register</title>
+    <meta name="description" content="Customer login and registration for Glow & Grace Salon appointment booking.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#fffaf7">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../javascript/customer/theme.js"></script>
+    <script src="../javascript/customer/customer-session.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/customer/login-register.css?v=security-question-reset">
+    <link rel="stylesheet" href="../styles/customer/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <header class="site-header" data-header>
+        <a class="brand" href="home-page.html" aria-label="Glow and Grace Salon home">
+            <span class="brand-mark">G</span>
+            <span>
+                <strong>Glow & Grace</strong>
+                <small>Salon Studio</small>
+            </span>
+        </a>
+
+        <button class="nav-toggle" type="button" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="main-nav" data-nav-menu aria-label="Main navigation">
+            <a href="home-page.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="staff-stylist.html">Stylists</a>
+            <a href="booking.html">Booking</a>
+            <a href="about-us.html">About</a>
+            <a href="reviews-ratings.html">Reviews</a>
+            <a href="contact-us.html">Contact</a>
+        </nav>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+            <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+        <a class="header-action active" href="login-register.html">Sign in</a>
+    </header>
+
+    <main>
+        <section class="auth-shell">
+            <div class="auth-story reveal">
+                <p class="eyebrow">Customer access</p>
+                <h1>Login to manage bookings, profile, and salon visits.</h1>
+                <p>
+                    Customers can register with email, mobile number, and password. After login, booking history,
+                    profile details, and appointment updates can be managed from the customer pages.
+                </p>
+
+                <div class="benefit-grid" aria-label="Account benefits">
+                    <article>
+                        <span>01</span>
+                        <strong>Manage bookings</strong>
+                        <small>View upcoming salon appointments and booking details.</small>
+                    </article>
+                    <article>
+                        <span>02</span>
+                        <strong>Faster checkout</strong>
+                        <small>Reuse contact details when booking services.</small>
+                    </article>
+                    <article>
+                        <span>03</span>
+                        <strong>Personal profile</strong>
+                        <small>Keep customer details ready for future visits.</small>
+                    </article>
+                </div>
+            </div>
+
+            <section class="auth-panel reveal" aria-label="Customer login and registration">
+                <div class="panel-tabs" role="tablist" aria-label="Account forms">
+                    <button class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="login-panel" data-auth-tab="login">Login</button>
+                    <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="register-panel" data-auth-tab="register">Register</button>
+                </div>
+
+                <div class="auth-view active" id="login-panel" role="tabpanel" data-auth-panel="login">
+                    <div class="panel-heading">
+                        <p class="eyebrow">Welcome back</p>
+                        <h2>Sign in to your account</h2>
+                    </div>
+
+                    <button class="google-btn" type="button" data-google-login>
+                        <span>G</span>
+                        Continue with Google
+                    </button>
+
+                    <div class="divider"><span>or sign in with email or mobile</span></div>
+
+                    <form class="auth-form active" data-login-form="email">
+                        <label>
+                            <span>Email address or mobile number</span>
+                            <input type="text" name="identifier" placeholder="you@example.com or +91 98765 43210" autocomplete="username" required>
+                        </label>
+
+                        <label>
+                            <span>Password</span>
+                            <div class="password-field">
+                                <input type="password" name="password" placeholder="Enter password" autocomplete="current-password" required minlength="6">
+                                <button type="button" data-password-toggle aria-label="Show password">Show</button>
+                            </div>
+                        </label>
+
+                        <div class="form-row">
+                            <label class="check-label">
+                                <input type="checkbox" name="remember">
+                                <span>Remember me</span>
+                            </label>
+                        </div>
+
+                        <button class="submit-btn" type="submit">Login</button>
+                        <p class="forgot-link">
+                            <a href="forgot-password.html">Forgot password?</a>
+                        </p>
+                    </form>
+
+                    <p class="form-message" data-login-message role="status"></p>
+                </div>
+
+                <div class="auth-view" id="register-panel" role="tabpanel" data-auth-panel="register">
+                    <div class="panel-heading">
+                        <p class="eyebrow">New customer</p>
+                        <h2>Create your salon account</h2>
+                    </div>
+
+                    <button class="google-btn" type="button" data-google-login>
+                        <span>G</span>
+                        Sign up with Google
+                    </button>
+
+                    <div class="divider"><span>or create manually</span></div>
+
+                    <form class="auth-form active" data-register-form>
+                        <label>
+                            <span>Full name</span>
+                            <input type="text" name="name" placeholder="Enter full name" autocomplete="name" required>
+                        </label>
+
+                        <div class="two-column">
+                            <label>
+                                <span>Email address</span>
+                                <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+                            </label>
+
+                            <label>
+                                <span>Mobile number</span>
+                                <input type="tel" name="mobile" placeholder="+91 98765 43210" autocomplete="tel" inputmode="tel" minlength="10" title="Enter a valid mobile number with at least 10 digits" required>
+                            </label>
+                        </div>
+
+                        <label>
+                            <span>Password</span>
+                            <div class="password-field">
+                                <input type="password" name="password" placeholder="Create password" autocomplete="new-password" required minlength="6">
+                                <button type="button" data-password-toggle aria-label="Show password">Show</button>
+                            </div>
+                        </label>
+
+                        <div class="two-column">
+                            <label>
+                                <span>Security question</span>
+                                <select name="recoveryQuestion" required>
+                                    <option value="">Select a question</option>
+                                    <option value="first-school">What was the name of your first school?</option>
+                                    <option value="birth-city">In which city were you born?</option>
+                                    <option value="favorite-teacher">What was your favorite teacher's name?</option>
+                                    <option value="childhood-nickname">What was your childhood nickname?</option>
+                                </select>
+                            </label>
+
+                            <label>
+                                <span>Security answer</span>
+                                <input type="text" name="recoveryAnswer" placeholder="Enter private answer" autocomplete="off" required minlength="2">
+                            </label>
+                        </div>
+
+                        <label class="check-label terms">
+                            <input type="checkbox" name="terms" required>
+                            <span>I agree to receive booking updates and salon appointment messages.</span>
+                        </label>
+
+                        <button class="submit-btn" type="submit">Create account</button>
+                    </form>
+
+                    <p class="form-message" data-register-message role="status"></p>
+                </div>
+            </section>
+        </section>
+
+        <section class="account-links reveal" aria-label="Customer account shortcuts">
+            <a href="my-appointments.html">
+                <span>Appointments</span>
+                <strong>View my bookings</strong>
+            </a>
+            <a href="profile.html">
+                <span>Profile</span>
+                <strong>Manage customer details</strong>
+            </a>
+            <a href="booking.html">
+                <span>Booking</span>
+                <strong>Reserve a new slot</strong>
+            </a>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div>
+            <strong>Glow & Grace Salon</strong>
+            <p>Beauty appointments made simple, calm, and stylish.</p>
+        </div>
+        <div class="footer-links" aria-label="Footer links">
+            <a href="home-page.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="booking.html">Booking</a>
+            <a href="contact-us.html">Contact</a>
+            <a href="../admin/admin-login.html">Admin</a>
+        </div>
+    </footer>
+
+    <script src="../javascript/customer/login-register.js?v=security-question-reset"></script>
+</body>
+</html>

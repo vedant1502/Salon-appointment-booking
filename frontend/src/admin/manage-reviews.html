@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Manage Reviews</title>
+    <meta name="description" content="Manage salon customer reviews, ratings, featured feedback, hidden feedback, and admin replies.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f7f9fb">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="../javascript/admin/admin-theme.js"></script>
+    <script src="../javascript/admin/admin-auth.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/admin/manage-reviews.css">
+    <link rel="stylesheet" href="../styles/admin/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <a class="brand" href="dashboard.html" aria-label="Glow and Grace admin dashboard">
+                <span class="brand-mark">G</span>
+                <span>
+                    <strong>Glow & Grace</strong>
+                    <small>Admin Panel</small>
+                </span>
+            </a>
+
+            <nav class="admin-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="manage-appointments.html">Appointments</a>
+                <a href="manage-services.html">Services</a>
+                <a href="manage-staff.html">Staff</a>
+                <a href="customer-management.html">Customers</a>
+                <a href="manage-payments.html">Payments</a>
+                <a class="active" href="manage-reviews.html">Reviews</a>
+                <a href="reports.html">Reports</a>
+            </nav>
+
+            <div class="sidebar-card">
+                <span>Feedback</span>
+                <strong>Feature strong reviews, hide unsuitable ones, and reply to customers.</strong>
+                <a href="../customer/reviews-ratings.html">Customer view</a>
+            </div>
+        </aside>
+
+        <main class="reviews-main">
+            <header class="admin-topbar">
+                <div>
+                    <p class="eyebrow">Reviews</p>
+                    <h1>Feedback management</h1>
+                    <p>Review customer ratings, highlight happy visits, and respond to service feedback.</p>
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+                        <span class="theme-icon" aria-hidden="true"></span>
+                    </button>
+                    <a class="ghost-action" href="dashboard.html">Dashboard</a>
+                </div>
+            </header>
+
+            <section class="summary-grid" aria-label="Review summary">
+                <article>
+                    <span>Total reviews</span>
+                    <strong data-count="total">0</strong>
+                </article>
+                <article>
+                    <span>Average rating</span>
+                    <strong data-count="average">0.0</strong>
+                </article>
+                <article>
+                    <span>Featured</span>
+                    <strong data-count="featured">0</strong>
+                </article>
+                <article>
+                    <span>Low rating alerts</span>
+                    <strong data-count="low">0</strong>
+                </article>
+                <article>
+                    <span>Hidden</span>
+                    <strong data-count="hidden">0</strong>
+                </article>
+            </section>
+
+            <section class="review-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Customer feedback</p>
+                        <h2>All reviews and ratings</h2>
+                    </div>
+                    <span data-result-count>0 reviews shown</span>
+                </div>
+
+                <div class="control-panel" aria-label="Review filters">
+                    <div class="filter-tabs" role="tablist" aria-label="Filter reviews">
+                        <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
+                        <button class="filter-btn" type="button" data-filter="featured" aria-pressed="false">Featured</button>
+                        <button class="filter-btn" type="button" data-filter="visible" aria-pressed="false">Visible</button>
+                        <button class="filter-btn" type="button" data-filter="hidden" aria-pressed="false">Hidden</button>
+                        <button class="filter-btn" type="button" data-filter="low" aria-pressed="false">Low rating</button>
+                    </div>
+
+                    <label class="rating-filter">
+                        <span>Rating</span>
+                        <select data-rating-filter>
+                            <option value="all">All ratings</option>
+                            <option value="5">5 star</option>
+                            <option value="4">4 star</option>
+                            <option value="3">3 star</option>
+                            <option value="2">2 star</option>
+                            <option value="1">1 star</option>
+                        </select>
+                    </label>
+
+                    <label class="search-box">
+                        <span>Search reviews</span>
+                        <input type="search" data-search placeholder="Customer, service, stylist, appointment ID..." autocomplete="off">
+                    </label>
+                </div>
+
+                <div class="review-list" data-review-list>
+                    <div class="empty-state">No customer reviews yet.</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../javascript/admin/manage-reviews.js"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Customer Management</title>
+    <meta name="description" content="View salon customers, booking history, contact details, status, and payment summaries.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f7f9fb">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="../javascript/admin/admin-theme.js"></script>
+    <script src="../javascript/admin/admin-auth.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/admin/customer-management.css">
+    <link rel="stylesheet" href="../styles/admin/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <a class="brand" href="dashboard.html" aria-label="Glow and Grace admin dashboard">
+                <span class="brand-mark">G</span>
+                <span>
+                    <strong>Glow & Grace</strong>
+                    <small>Admin Panel</small>
+                </span>
+            </a>
+
+            <nav class="admin-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="manage-appointments.html">Appointments</a>
+                <a href="manage-services.html">Services</a>
+                <a href="manage-staff.html">Staff</a>
+                <a class="active" href="customer-management.html">Customers</a>
+                <a href="manage-payments.html">Payments</a>
+                <a href="manage-reviews.html">Reviews</a>
+                <a href="reports.html">Reports</a>
+            </nav>
+
+            <div class="sidebar-card">
+                <span>Customers</span>
+                <strong>Customer records are built from profile details and appointment bookings.</strong>
+                <a href="../customer/profile.html">Customer profile</a>
+            </div>
+        </aside>
+
+        <main class="customers-main">
+            <header class="admin-topbar">
+                <div>
+                    <p class="eyebrow">Customers</p>
+                    <h1>Customer management</h1>
+                    <p>View customer contact details, booking count, appointment status, and payment health.</p>
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+                        <span class="theme-icon" aria-hidden="true"></span>
+                    </button>
+                    <a class="ghost-action" href="dashboard.html">Dashboard</a>
+                </div>
+            </header>
+
+            <section class="summary-grid" aria-label="Customer summary">
+                <article>
+                    <span>Total customers</span>
+                    <strong data-count="total">0</strong>
+                </article>
+                <article>
+                    <span>Active customers</span>
+                    <strong data-count="active">0</strong>
+                </article>
+                <article>
+                    <span>Total bookings</span>
+                    <strong data-count="bookings">0</strong>
+                </article>
+                <article>
+                    <span>Pending payments</span>
+                    <strong data-count="pending">0</strong>
+                </article>
+            </section>
+
+            <section class="customer-workspace">
+                <section class="customer-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Directory</p>
+                            <h2>All customers</h2>
+                        </div>
+                        <span data-result-count>0 customers shown</span>
+                    </div>
+
+                    <div class="control-panel" aria-label="Customer filters">
+                        <div class="filter-tabs" role="tablist" aria-label="Filter customers">
+                            <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
+                            <button class="filter-btn" type="button" data-filter="active" aria-pressed="false">Active</button>
+                            <button class="filter-btn" type="button" data-filter="inactive" aria-pressed="false">Inactive</button>
+                            <button class="filter-btn" type="button" data-filter="booked" aria-pressed="false">Has bookings</button>
+                            <button class="filter-btn" type="button" data-filter="pending-payment" aria-pressed="false">Pending payment</button>
+                        </div>
+
+                        <label class="search-box">
+                            <span>Search customers</span>
+                            <input type="search" data-search placeholder="Search name, email, mobile, service..." autocomplete="off">
+                        </label>
+                    </div>
+
+                    <div class="customer-list" data-customer-list>
+                        <div class="empty-state">No customers yet.</div>
+                    </div>
+                </section>
+
+                <aside class="detail-panel" data-customer-details aria-label="Customer details">
+                    <div class="empty-state">Select a customer to view full details.</div>
+                </aside>
+            </section>
+        </main>
+    </div>
+
+    <script src="../javascript/admin/customer-management.js?v=booked-at"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Payment</title>
+    <meta name="description" content="Simple salon appointment payment page.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#fffaf7">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../javascript/customer/theme.js"></script>
+    <script src="../javascript/customer/customer-session.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/customer/payment.css">
+    <link rel="stylesheet" href="../styles/customer/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <header class="site-header" data-header>
+        <a class="brand" href="home-page.html" aria-label="Glow and Grace Salon home">
+            <span class="brand-mark">G</span>
+            <span>
+                <strong>Glow & Grace</strong>
+                <small>Salon Studio</small>
+            </span>
+        </a>
+
+        <button class="nav-toggle" type="button" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="main-nav" data-nav-menu aria-label="Main navigation">
+            <a href="home-page.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="booking.html">Booking</a>
+            <a href="my-appointments.html">Appointments</a>
+            <a href="contact-us.html">Contact</a>
+        </nav>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+            <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+        <a class="header-action" href="profile.html">Profile</a>
+    </header>
+
+    <main>
+        <section class="payment-shell">
+            <div class="payment-intro reveal">
+                <p class="eyebrow">Payment</p>
+                <h1>Complete your booking payment.</h1>
+                <p>Choose a payment method after selecting appointment details from the booking flow.</p>
+            </div>
+
+            <form class="payment-box reveal" data-payment-form>
+                <section class="amount-card">
+                    <span>Amount to pay</span>
+                    <strong data-payable-amount>Rs. 0</strong>
+                    <small data-order-title>No booking selected</small>
+                </section>
+
+                <section class="method-card">
+                    <h2>Select payment method</h2>
+                    <div class="method-list" role="radiogroup" aria-label="Payment method">
+                        <label class="method-option active">
+                            <input type="radio" name="paymentMethod" value="upi" checked data-method-radio>
+                            <span>
+                                <strong>UPI</strong>
+                                <small>Pay using any UPI app</small>
+                            </span>
+                        </label>
+                        <label class="method-option">
+                            <input type="radio" name="paymentMethod" value="card" data-method-radio>
+                            <span>
+                                <strong>Card</strong>
+                                <small>Debit or credit card</small>
+                            </span>
+                        </label>
+                        <label class="method-option">
+                            <input type="radio" name="paymentMethod" value="salon" data-method-radio>
+                            <span>
+                                <strong>Pay at salon</strong>
+                                <small>Pay during your visit</small>
+                            </span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="detail-card">
+                    <div class="method-panel active" data-method-panel="upi">
+                        <label>
+                            <span>UPI ID</span>
+                            <input type="text" name="upiId" placeholder="name@upi" data-required>
+                        </label>
+                    </div>
+
+                    <div class="method-panel" data-method-panel="card" hidden>
+                        <label>
+                            <span>Card number</span>
+                            <input type="text" name="cardNumber" placeholder="1234 5678 9012 3456" inputmode="numeric" maxlength="19" data-card-number data-required>
+                        </label>
+                        <div class="two-column">
+                            <label>
+                                <span>Expiry</span>
+                                <input type="text" name="expiry" placeholder="MM/YY" inputmode="numeric" maxlength="5" data-expiry data-required>
+                            </label>
+                            <label>
+                                <span>CVV</span>
+                                <input type="password" name="cvv" placeholder="123" inputmode="numeric" maxlength="4" data-required>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="method-panel" data-method-panel="salon" hidden>
+                        <div class="pay-later-note">
+                            <strong>No online payment needed</strong>
+                            <p>Your booking will be marked as payment pending.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <button class="pay-btn" type="submit" data-pay-button>Pay now</button>
+                <a class="back-link" href="booking-summary.html">Back to summary</a>
+                <p class="form-message" data-form-message role="status"></p>
+            </form>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div>
+            <strong>Glow & Grace Salon</strong>
+            <p>Beauty appointments made simple, calm, and stylish.</p>
+        </div>
+        <div class="footer-links" aria-label="Footer links">
+            <a href="home-page.html">Home</a>
+            <a href="booking-summary.html">Summary</a>
+            <a href="payment-status.html">Payment status</a>
+            <a href="my-appointments.html">Appointments</a>
+            <a href="../admin/admin-login.html">Admin</a>
+        </div>
+    </footer>
+
+    <script src="../javascript/customer/payment.js?v=payment-confirms-booking"></script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Reviews & Ratings</title>
+    <meta name="description" content="Read and submit customer reviews and ratings for Glow & Grace Salon appointments.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#fffaf7">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../javascript/customer/theme.js"></script>
+    <script src="../javascript/customer/customer-session.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/customer/reviews-ratings.css">
+    <link rel="stylesheet" href="../styles/customer/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <header class="site-header" data-header>
+        <a class="brand" href="home-page.html" aria-label="Glow and Grace Salon home">
+            <span class="brand-mark">G</span>
+            <span>
+                <strong>Glow & Grace</strong>
+                <small>Salon Studio</small>
+            </span>
+        </a>
+
+        <button class="nav-toggle" type="button" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="main-nav" data-nav-menu aria-label="Main navigation">
+            <a href="home-page.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="staff-stylist.html">Stylists</a>
+            <a href="booking.html">Booking</a>
+            <a href="about-us.html">About</a>
+            <a href="reviews-ratings.html" class="active">Reviews</a>
+            <a href="contact-us.html">Contact</a>
+        </nav>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+            <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+        <a class="header-action" href="login-register.html">Sign in</a>
+    </header>
+
+    <main>
+        <section class="reviews-hero">
+            <div class="hero-copy reveal">
+                <p class="eyebrow">Customer reviews</p>
+                <h1>Real feedback from salon visits.</h1>
+                <p>
+                    Share your appointment experience and read visible customer feedback selected from actual submitted reviews.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn primary" href="#write-review">Write review</a>
+                    <a class="btn secondary" href="#review-list">Read reviews</a>
+                </div>
+            </div>
+
+            <aside class="rating-card reveal" aria-label="Review summary">
+                <span class="panel-tag">Live rating</span>
+                <strong data-average-rating>0.0</strong>
+                <p>Average customer rating</p>
+                <div class="rating-stats">
+                    <div>
+                        <span data-total-reviews>0</span>
+                        <small>Total reviews</small>
+                    </div>
+                    <div>
+                        <span data-featured-reviews>0</span>
+                        <small>Featured</small>
+                    </div>
+                </div>
+            </aside>
+        </section>
+
+        <section class="reviews-shell">
+            <section class="review-form-panel reveal" id="write-review" aria-label="Write a salon review">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Rate your visit</p>
+                        <h2>Share your review</h2>
+                    </div>
+                    <span data-completed-count>0 completed visits</span>
+                </div>
+
+                <form class="review-form" data-review-form>
+                    <label class="wide-field">
+                        <span>Completed appointment</span>
+                        <select name="appointmentId" data-appointment-select>
+                            <option value="">General salon visit</option>
+                        </select>
+                    </label>
+
+                    <div class="form-grid">
+                        <label>
+                            <span>Name</span>
+                            <input type="text" name="customerName" placeholder="Your name" autocomplete="name" required>
+                        </label>
+                        <label>
+                            <span>Email</span>
+                            <input type="email" name="customerEmail" placeholder="you@example.com" autocomplete="email">
+                        </label>
+                        <label>
+                            <span>Service</span>
+                            <input type="text" name="service" placeholder="Example: Glow Facial" required>
+                        </label>
+                        <label>
+                            <span>Stylist</span>
+                            <input type="text" name="stylist" placeholder="Salon team">
+                        </label>
+                    </div>
+
+                    <fieldset class="rating-control">
+                        <legend>Rating</legend>
+                        <label>
+                            <input type="radio" name="rating" value="5" required>
+                            <span>5</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="rating" value="4">
+                            <span>4</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="rating" value="3">
+                            <span>3</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="rating" value="2">
+                            <span>2</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="rating" value="1">
+                            <span>1</span>
+                        </label>
+                    </fieldset>
+
+                    <label class="wide-field">
+                        <span>Review title</span>
+                        <input type="text" name="title" placeholder="Short title for your review" required>
+                    </label>
+
+                    <label class="wide-field">
+                        <span>Your review</span>
+                        <textarea name="message" rows="5" placeholder="Write what went well, what could improve, or how your service felt." required></textarea>
+                    </label>
+
+                    <div class="form-actions">
+                        <button class="submit-btn" type="submit">Submit review</button>
+                        <button class="ghost-btn" type="reset">Clear</button>
+                    </div>
+
+                    <p class="form-message" data-form-message role="status"></p>
+                </form>
+            </section>
+
+            <section class="review-list-panel reveal" id="review-list" aria-label="Customer review list">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Feedback wall</p>
+                        <h2>Customer reviews</h2>
+                    </div>
+                    <span data-result-count>0 reviews shown</span>
+                </div>
+
+                <div class="review-controls" aria-label="Review filters">
+                    <div class="filter-tabs" role="tablist" aria-label="Filter reviews">
+                        <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
+                        <button class="filter-btn" type="button" data-filter="featured" aria-pressed="false">Featured</button>
+                        <button class="filter-btn" type="button" data-filter="mine" aria-pressed="false">My reviews</button>
+                    </div>
+
+                    <label>
+                        <span>Rating</span>
+                        <select data-rating-filter>
+                            <option value="all">All ratings</option>
+                            <option value="5">5 star</option>
+                            <option value="4">4 star</option>
+                            <option value="3">3 star</option>
+                            <option value="2">2 star</option>
+                            <option value="1">1 star</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="review-list" data-review-list>
+                    <div class="empty-state">No customer reviews yet.</div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div>
+            <strong>Glow & Grace Salon</strong>
+            <p>Beauty appointments made simple, calm, and stylish.</p>
+        </div>
+        <div class="footer-links" aria-label="Footer links">
+            <a href="home-page.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="booking.html">Booking</a>
+            <a href="contact-us.html">Contact</a>
+            <a href="../admin/admin-login.html">Admin</a>
+        </div>
+    </footer>
+
+    <script src="../javascript/customer/reviews-ratings.js"></script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Staff & Stylists</title>
+    <meta name="description" content="Meet available Glow & Grace Salon stylists with specialization, rating, experience, and booking links.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#fffaf7">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../javascript/customer/theme.js"></script>
+    <script src="../javascript/customer/customer-session.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/customer/staff-stylist.css?v=book-button-order">
+    <link rel="stylesheet" href="../styles/customer/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <header class="site-header" data-header>
+        <a class="brand" href="home-page.html" aria-label="Glow and Grace Salon home">
+            <span class="brand-mark">G</span>
+            <span>
+                <strong>Glow & Grace</strong>
+                <small>Salon Studio</small>
+            </span>
+        </a>
+
+        <button class="nav-toggle" type="button" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="main-nav" data-nav-menu aria-label="Main navigation">
+            <a href="home-page.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="staff-stylist.html" class="active">Stylists</a>
+            <a href="booking.html">Booking</a>
+            <a href="about-us.html">About</a>
+            <a href="reviews-ratings.html">Reviews</a>
+            <a href="contact-us.html">Contact</a>
+        </nav>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+            <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+        <a class="header-action" href="login-register.html">Sign in</a>
+    </header>
+
+    <main>
+        <section class="stylists-hero">
+            <div class="hero-copy reveal">
+                <p class="eyebrow">Meet your beauty team</p>
+                <h1>Choose the right stylist for your appointment.</h1>
+                <p>
+                    See available salon experts by specialization, rating, experience, and next available slot before you book.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn primary" href="booking.html">Book appointment</a>
+                    <a class="btn secondary" href="#stylists-list">View stylists</a>
+                </div>
+            </div>
+
+            <aside class="hero-panel reveal" aria-label="Stylist availability summary">
+                <span class="panel-tag">Today</span>
+                <h2 data-staff-count>6 stylists available</h2>
+                <p>Hair, skin, makeup, spa, and nail specialists are ready for appointments.</p>
+                <div class="panel-stats">
+                    <span><strong data-average-rating>4.8</strong> average rating</span>
+                    <span><strong data-average-experience>5+</strong> years avg. experience</span>
+                </div>
+            </aside>
+        </section>
+
+        <section class="filter-strip reveal" aria-label="Filter stylists by specialization">
+            <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-btn" type="button" data-filter="hair" aria-pressed="false">Hair</button>
+            <button class="filter-btn" type="button" data-filter="skin" aria-pressed="false">Skin</button>
+            <button class="filter-btn" type="button" data-filter="makeup" aria-pressed="false">Makeup</button>
+            <button class="filter-btn" type="button" data-filter="bridal" aria-pressed="false">Bridal</button>
+            <button class="filter-btn" type="button" data-filter="spa" aria-pressed="false">Spa</button>
+            <button class="filter-btn" type="button" data-filter="nails" aria-pressed="false">Nails</button>
+        </section>
+
+        <section class="section" id="stylists-list">
+            <div class="section-heading reveal">
+                <p class="eyebrow">Available stylists</p>
+                <h2>Specialists for every salon service.</h2>
+                <p>Each profile includes specialization, rating, experience, and an easy booking link.</p>
+            </div>
+
+            <div class="stylist-grid" data-stylist-grid>
+                <article class="stylist-card reveal" data-specialization="hair">
+                    <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80" alt="Aarohi Sharma hair stylist">
+                    <div class="stylist-body">
+                        <div class="availability">Available today</div>
+                        <h3>Aarohi Sharma</h3>
+                        <p class="role">Senior Hair Stylist</p>
+                        <p>Specializes in precision haircuts, blow dry styling, layers, and hair spa treatments.</p>
+                        <div class="stats-row">
+                            <span><strong>4.9</strong> rating</span>
+                            <span><strong>7 yrs</strong> experience</span>
+                        </div>
+                        <div class="tag-row">
+                            <span>Haircut</span>
+                            <span>Hair spa</span>
+                            <span>Styling</span>
+                        </div>
+                        <a href="booking.html?stylist=Aarohi%20Sharma&service=Haircut%20and%20Blow%20Dry">Book Aarohi</a>
+                    </div>
+                </article>
+
+                <article class="stylist-card reveal" data-specialization="skin">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=900&q=80" alt="Nisha Kapoor skin specialist">
+                    <div class="stylist-body">
+                        <div class="availability">Available today</div>
+                        <h3>Nisha Kapoor</h3>
+                        <p class="role">Skin & Facial Expert</p>
+                        <p>Known for glow facials, cleanup, hydration care, and gentle skin consultation.</p>
+                        <div class="stats-row">
+                            <span><strong>4.8</strong> rating</span>
+                            <span><strong>6 yrs</strong> experience</span>
+                        </div>
+                        <div class="tag-row">
+                            <span>Facial</span>
+                            <span>Cleanup</span>
+                            <span>Skin care</span>
+                        </div>
+                        <a href="booking.html?stylist=Nisha%20Kapoor&service=Glow%20Facial">Book Nisha</a>
+                    </div>
+                </article>
+
+                <article class="stylist-card reveal featured" data-specialization="makeup">
+                    <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=900&q=80" alt="Meera Rao makeup artist">
+                    <div class="stylist-body">
+                        <div class="availability">Bridal slots open</div>
+                        <h3>Meera Rao</h3>
+                        <p class="role">Bridal Makeup Artist</p>
+                        <p>Specializes in bridal makeup, party glam, draping, lashes, and photo-ready base work.</p>
+                        <div class="stats-row">
+                            <span><strong>5.0</strong> rating</span>
+                            <span><strong>9 yrs</strong> experience</span>
+                        </div>
+                        <div class="tag-row">
+                            <span>Bridal</span>
+                            <span>Makeup</span>
+                            <span>Draping</span>
+                        </div>
+                        <a href="booking.html?stylist=Meera%20Rao&service=Bridal%20Makeup">Book Meera</a>
+                    </div>
+                </article>
+
+                <article class="stylist-card reveal" data-specialization="spa">
+                    <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=900&q=80" alt="Riya Malhotra spa therapist">
+                    <div class="stylist-body">
+                        <div class="availability">Available tomorrow</div>
+                        <h3>Riya Malhotra</h3>
+                        <p class="role">Spa Therapist</p>
+                        <p>Focuses on relaxing body spa, head massage, stress relief, and calming salon care.</p>
+                        <div class="stats-row">
+                            <span><strong>4.7</strong> rating</span>
+                            <span><strong>5 yrs</strong> experience</span>
+                        </div>
+                        <div class="tag-row">
+                            <span>Spa</span>
+                            <span>Massage</span>
+                            <span>Relaxation</span>
+                        </div>
+                        <a href="booking.html?stylist=Riya%20Malhotra&service=Relaxing%20Body%20Spa">Book Riya</a>
+                    </div>
+                </article>
+
+                <article class="stylist-card reveal" data-specialization="hair">
+                    <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=900&q=80" alt="Kavya Sen hair color specialist">
+                    <div class="stylist-body">
+                        <div class="availability">Available today</div>
+                        <h3>Kavya Sen</h3>
+                        <p class="role">Hair Color Specialist</p>
+                        <p>Best for global color, highlights, root touch-up, shade matching, and style finishing.</p>
+                        <div class="stats-row">
+                            <span><strong>4.8</strong> rating</span>
+                            <span><strong>8 yrs</strong> experience</span>
+                        </div>
+                        <div class="tag-row">
+                            <span>Coloring</span>
+                            <span>Highlights</span>
+                            <span>Consultation</span>
+                        </div>
+                        <a href="booking.html?stylist=Kavya%20Sen&service=Global%20Hair%20Coloring">Book Kavya</a>
+                    </div>
+                </article>
+
+                <article class="stylist-card reveal" data-specialization="nails">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80" alt="Tara Joshi nail technician">
+                    <div class="stylist-body">
+                        <div class="availability">Available today</div>
+                        <h3>Tara Joshi</h3>
+                        <p class="role">Nail Technician</p>
+                        <p>Creates neat manicures, nail art, polish changes, and soft everyday nail looks.</p>
+                        <div class="stats-row">
+                            <span><strong>4.6</strong> rating</span>
+                            <span><strong>4 yrs</strong> experience</span>
+                        </div>
+                        <div class="tag-row">
+                            <span>Nails</span>
+                            <span>Manicure</span>
+                            <span>Nail art</span>
+                        </div>
+                        <a href="booking.html?stylist=Tara%20Joshi&service=Manicure%20and%20Nail%20Art">Book Tara</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="team-note reveal">
+            <div>
+                <p class="eyebrow">Need help choosing?</p>
+                <h2>Match the stylist to the service you want.</h2>
+                <p>Hair and makeup bookings can be paired with a stylist now, while full availability can be connected to the backend later.</p>
+            </div>
+            <a class="btn primary" href="contact-us.html">Ask the salon</a>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div>
+            <strong>Glow & Grace Salon</strong>
+            <p>Beauty appointments made simple, calm, and stylish.</p>
+        </div>
+        <div class="footer-links" aria-label="Footer links">
+            <a href="home-page.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="booking.html">Booking</a>
+            <a href="contact-us.html">Contact</a>
+            <a href="../admin/admin-login.html">Admin</a>
+        </div>
+    </footer>
+
+    <script src="../javascript/customer/staff-stylist.js"></script>
+</body>
+</html>

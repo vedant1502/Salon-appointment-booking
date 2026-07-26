@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Salon | Book Appointment</title>
+    <meta name="description" content="Book a salon appointment by selecting service, stylist, date, time slot, and notes.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#fffaf7">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../javascript/customer/theme.js"></script>
+    <script src="../javascript/customer/customer-session.js?v=persist-appointments"></script>
+    <link rel="stylesheet" href="../styles/customer/booking.css">
+    <link rel="stylesheet" href="../styles/customer/mobile-polish.css?v=picker-icons">
+</head>
+<body>
+    <header class="site-header" data-header>
+        <a class="brand" href="home-page.html" aria-label="Glow and Grace Salon home">
+            <span class="brand-mark">G</span>
+            <span>
+                <strong>Glow & Grace</strong>
+                <small>Salon Studio</small>
+            </span>
+        </a>
+
+        <button class="nav-toggle" type="button" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="main-nav" data-nav-menu aria-label="Main navigation">
+            <a href="home-page.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="staff-stylist.html">Stylists</a>
+            <a href="booking.html" class="active">Booking</a>
+            <a href="my-appointments.html">Appointments</a>
+            <a href="reviews-ratings.html">Reviews</a>
+            <a href="contact-us.html">Contact</a>
+        </nav>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+            <span class="theme-icon" aria-hidden="true"></span>
+        </button>
+        <a class="header-action" href="login-register.html">Sign in</a>
+    </header>
+
+    <main>
+        <section class="booking-hero">
+            <div class="hero-copy reveal">
+                <p class="eyebrow">Book appointment</p>
+                <h1>Select your service, stylist, date, and time slot.</h1>
+                <p>
+                    Build your salon visit step by step. The selected details will carry forward to the booking summary before payment.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn primary" href="#booking-form">Start booking</a>
+                    <a class="btn secondary" href="services.html">View services</a>
+                </div>
+            </div>
+
+            <aside class="hero-panel reveal" aria-label="Booking progress">
+                <span class="panel-tag">Step 2 of 4</span>
+                <div class="progress-list">
+                    <span class="done">Choose service</span>
+                    <span class="current">Pick date & time</span>
+                    <span>Review summary</span>
+                    <span>Payment</span>
+                </div>
+            </aside>
+        </section>
+
+        <section class="section" id="booking-form">
+            <div class="section-heading reveal">
+                <p class="eyebrow">Appointment details</p>
+                <h2>Tell us what you need.</h2>
+                <p>Choose from popular services, select your preferred stylist, pick a date, and choose a time slot.</p>
+            </div>
+
+            <div class="booking-layout">
+                <form class="booking-form reveal" data-booking-form>
+                    <section class="form-card">
+                        <div class="card-heading">
+                            <span>01</span>
+                            <div>
+                                <h3>Choose service</h3>
+                                <p>Prices and duration update automatically.</p>
+                            </div>
+                        </div>
+
+                        <label>
+                            <span>Service</span>
+                            <select name="service" data-service-select required>
+                                <option value="">Select a service</option>
+                                <option value="Haircut and Blow Dry">Haircut & Blow Dry</option>
+                                <option value="Glow Facial">Glow Facial</option>
+                                <option value="Relaxing Body Spa">Relaxing Body Spa</option>
+                                <option value="Bridal Makeup">Bridal Makeup</option>
+                                <option value="Global Hair Coloring">Global Hair Coloring</option>
+                                <option value="Manicure and Nail Art">Manicure & Nail Art</option>
+                                <option value="Hair Spa Therapy">Hair Spa Therapy</option>
+                                <option value="Party Makeup">Party Makeup</option>
+                                <option value="Threading and Waxing">Threading & Waxing</option>
+                                <option value="Bridal Glow Package">Bridal Glow Package</option>
+                                <option value="Fresh Start Combo">Fresh Start Combo</option>
+                                <option value="Glow Day Combo">Glow Day Combo</option>
+                                <option value="Wedding Ready Combo">Wedding Ready Combo</option>
+                            </select>
+                        </label>
+
+                        <div class="service-chips" aria-label="Quick service choices">
+                            <button type="button" data-service-chip="Haircut and Blow Dry">Haircut</button>
+                            <button type="button" data-service-chip="Glow Facial">Facial</button>
+                            <button type="button" data-service-chip="Bridal Makeup">Bridal</button>
+                            <button type="button" data-service-chip="Global Hair Coloring">Coloring</button>
+                            <button type="button" data-service-chip="Manicure and Nail Art">Nails</button>
+                            <button type="button" data-service-chip="Glow Day Combo">Combo</button>
+                        </div>
+                    </section>
+
+                    <section class="form-card">
+                        <div class="card-heading">
+                            <span>02</span>
+                            <div>
+                                <h3>Select stylist</h3>
+                                <p>Pick a specialist or use salon recommendation.</p>
+                            </div>
+                        </div>
+
+                        <label>
+                            <span>Preferred stylist</span>
+                            <select name="stylist" data-stylist-select required>
+                                <option value="">Select a stylist</option>
+                                <option value="Aarohi Sharma" data-specialty="Haircut and Blow Dry,Hair Spa Therapy">Aarohi Sharma - Hair styling</option>
+                                <option value="Nisha Kapoor" data-specialty="Glow Facial,Threading and Waxing">Nisha Kapoor - Skin care</option>
+                                <option value="Meera Rao" data-specialty="Bridal Makeup,Party Makeup">Meera Rao - Makeup</option>
+                                <option value="Riya Malhotra" data-specialty="Relaxing Body Spa">Riya Malhotra - Spa therapy</option>
+                                <option value="Kavya Sen" data-specialty="Global Hair Coloring,Haircut and Blow Dry">Kavya Sen - Hair color</option>
+                                <option value="Tara Joshi" data-specialty="Manicure and Nail Art">Tara Joshi - Nails</option>
+                            </select>
+                        </label>
+
+                        <div class="stylist-grid" aria-label="Stylist suggestions">
+                            <button type="button" data-stylist-chip="Aarohi Sharma">
+                                <strong>Aarohi</strong>
+                                <span>Hair - 4.9</span>
+                            </button>
+                            <button type="button" data-stylist-chip="Nisha Kapoor">
+                                <strong>Nisha</strong>
+                                <span>Skin - 4.8</span>
+                            </button>
+                            <button type="button" data-stylist-chip="Meera Rao">
+                                <strong>Meera</strong>
+                                <span>Makeup - 5.0</span>
+                            </button>
+                            <button type="button" data-stylist-chip="Tara Joshi">
+                                <strong>Tara</strong>
+                                <span>Nails - 4.6</span>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section class="form-card">
+                        <div class="card-heading">
+                            <span>03</span>
+                            <div>
+                                <h3>Date and time</h3>
+                                <p>Choose a convenient appointment slot.</p>
+                            </div>
+                        </div>
+
+                        <div class="two-column">
+                            <label>
+                                <span>Date</span>
+                                <input type="date" name="date" data-date-input required>
+                            </label>
+                            <label>
+                                <span>Visit type</span>
+                                <select name="visitType">
+                                    <option value="Salon visit">Salon visit</option>
+                                    <option value="Bridal consultation">Bridal consultation</option>
+                                    <option value="Quick touch-up">Quick touch-up</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <input type="hidden" name="time" data-time-input required>
+                        <div class="time-slots" data-time-slots aria-label="Available time slots">
+                            <button type="button" data-time-slot="10:00 AM">10:00 AM</button>
+                            <button type="button" data-time-slot="11:30 AM">11:30 AM</button>
+                            <button type="button" data-time-slot="1:00 PM">1:00 PM</button>
+                            <button type="button" data-time-slot="2:30 PM">2:30 PM</button>
+                            <button type="button" data-time-slot="4:00 PM">4:00 PM</button>
+                            <button type="button" data-time-slot="5:30 PM">5:30 PM</button>
+                            <button type="button" data-time-slot="7:00 PM">7:00 PM</button>
+                        </div>
+                    </section>
+
+                    <section class="form-card">
+                        <div class="card-heading">
+                            <span>04</span>
+                            <div>
+                                <h3>Add notes</h3>
+                                <p>Share preferences, allergies, or event details.</p>
+                            </div>
+                        </div>
+
+                        <label>
+                            <span>Appointment notes</span>
+                            <textarea name="notes" rows="5" placeholder="Example: soft glam makeup, sensitive skin, haircut reference, bridal event timing..."></textarea>
+                        </label>
+                    </section>
+
+                    <div class="form-actions">
+                        <button class="submit-btn" type="submit">Continue to summary</button>
+                        <a href="services.html">Back to services</a>
+                    </div>
+
+                    <p class="form-message" data-form-message role="status"></p>
+                </form>
+
+                <aside class="booking-preview reveal" aria-label="Live booking preview">
+                    <span class="preview-tag">Live summary</span>
+                    <h2 data-preview-service>Select a service</h2>
+                    <p data-preview-description>Your service details will appear here once selected.</p>
+
+                    <div class="preview-list">
+                        <div>
+                            <span>Stylist</span>
+                            <strong data-preview-stylist>Not selected</strong>
+                        </div>
+                        <div>
+                            <span>Date</span>
+                            <strong data-preview-date>Not selected</strong>
+                        </div>
+                        <div>
+                            <span>Time</span>
+                            <strong data-preview-time>Not selected</strong>
+                        </div>
+                        <div>
+                            <span>Duration</span>
+                            <strong data-preview-duration>--</strong>
+                        </div>
+                    </div>
+
+                    <div class="price-box">
+                        <span>Estimated service price</span>
+                        <strong data-preview-price>Rs. 0</strong>
+                    </div>
+
+                    <div class="help-card">
+                        <strong>Need help choosing?</strong>
+                        <p>Browse stylist profiles or contact the salon before confirming your slot.</p>
+                        <a href="staff-stylist.html">View stylists</a>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div>
+            <strong>Glow & Grace Salon</strong>
+            <p>Beauty appointments made simple, calm, and stylish.</p>
+        </div>
+        <div class="footer-links" aria-label="Footer links">
+            <a href="home-page.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="booking-summary.html">Summary</a>
+            <a href="my-appointments.html">Appointments</a>
+            <a href="../admin/admin-login.html">Admin</a>
+        </div>
+    </footer>
+
+    <script src="../javascript/customer/booking.js"></script>
+</body>
+</html>

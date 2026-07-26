@@ -1,0 +1,162 @@
+html {
+    color-scheme: light;
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+}
+
+input[type="date"],
+input[type="search"],
+input[type="time"],
+select {
+    color-scheme: light;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="search"]::-webkit-search-cancel-button {
+    opacity: 0.78;
+    cursor: pointer;
+    filter: brightness(0) saturate(100%);
+}
+
+html[data-theme="dark"] input[type="date"],
+html[data-theme="dark"] input[type="search"],
+html[data-theme="dark"] input[type="time"],
+html[data-theme="dark"] select {
+    color-scheme: dark;
+}
+
+html[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+html[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator,
+html[data-theme="dark"] input[type="search"]::-webkit-search-cancel-button {
+    opacity: 0.95;
+    filter: brightness(0) invert(1);
+}
+
+@media (max-width: 560px) {
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        text-size-adjust: 100%;
+    }
+
+    img,
+    video,
+    canvas,
+    svg {
+        max-width: 100%;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+        min-width: 0;
+    }
+
+    .admin-layout,
+    .admin-sidebar,
+    .admin-main,
+    .dashboard-main,
+    .appointments-main,
+    .services-main,
+    .staff-main,
+    .customers-main,
+    .payments-main,
+    .reviews-main,
+    .reports-main {
+        min-width: 0;
+    }
+
+    .admin-sidebar {
+        gap: 18px;
+        padding: 18px 16px;
+    }
+
+    .brand {
+        min-width: 0;
+    }
+
+    .brand div {
+        min-width: 0;
+    }
+
+    .brand strong,
+    .brand small {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .admin-nav {
+        display: flex !important;
+        gap: 8px;
+        margin-inline: -2px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        scrollbar-width: thin;
+    }
+
+    .admin-nav a {
+        flex: 0 0 auto;
+        white-space: nowrap;
+    }
+
+    .admin-topbar,
+    .topbar-actions,
+    .panel-heading,
+    .control-panel,
+    .filter-tabs,
+    .form-actions,
+    .card-actions {
+        min-width: 0;
+    }
+
+    .topbar-actions,
+    .form-actions,
+    .card-actions {
+        align-items: stretch;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .topbar-actions a,
+    .topbar-actions button,
+    .form-actions button,
+    .form-actions a,
+    .card-actions button,
+    .primary-action,
+    .ghost-action {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .filter-tabs {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        scrollbar-width: thin;
+    }
+
+    .filter-tabs button {
+        flex: 0 0 auto;
+        white-space: nowrap;
+    }
+
+    .table-wrap {
+        margin-inline: -16px;
+        padding-inline: 16px;
+    }
+
+    .empty-state {
+        min-width: 0;
+    }
+}
