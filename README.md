@@ -6,9 +6,10 @@ Glow & Grace is a salon appointment booking project built with plain HTML, CSS, 
 
 - Customer website for browsing services, registering/logging in, booking appointments, paying, checking payment status, viewing appointments, updating profile details, and submitting reviews.
 - Admin panel for dashboard metrics, appointments, services, staff, customers, payments, reviews, and reports.
-- Python backend for customer/admin authentication, sessions, and profile updates.
+- Python backend for customer/admin authentication, sessions, profile updates, and password reset.
+- Local SQLite support for development.
+- Supabase/Postgres support for hosted backend deployment.
 - Browser localStorage for salon activity data such as appointments, payments, services, staff, reviews, notifications, and reports.
-- SQLite database for accounts and login sessions.
 
 ## Run Locally
 
@@ -72,6 +73,41 @@ $env:PORT="8000"
 python backend/server.py
 ```
 
+## Hosted Backend Setup
+
+For production, deploy the frontend on Vercel and the Python backend on Render.
+
+Render settings:
+
+```text
+Build Command: pip install -r requirements.txt
+Start Command: python backend/server.py
+```
+
+Render environment variables:
+
+```text
+DATABASE_URL=postgresql://postgres.xxxxx:your-password@aws-...pooler.supabase.com:5432/postgres
+GLOW_GRACE_ADMIN_PASSWORD=your-strong-admin-password
+SECURE_COOKIES=true
+```
+
+Use the Supabase connection string without square brackets around the password. Do not commit the database password to GitHub.
+
+After Render gives a backend URL, put it in:
+
+```text
+frontend/src/javascript/backend-config.js
+```
+
+Example:
+
+```javascript
+window.GLOW_GRACE_BACKEND_URL = "https://your-service-name.onrender.com";
+```
+
+Then commit and push so Vercel redeploys.
+
 ## Login System
 
 Customers register with:
@@ -86,7 +122,7 @@ Customers can log in with either the same email address or the same mobile numbe
 
 Forgot password uses the registered email address, registered mobile number, selected security question, and saved security answer. If those match, the customer can set and confirm a new password.
 
-Admin login uses the seeded admin account stored in SQLite.
+Admin login uses the seeded admin account stored in the backend database.
 
 Google sign-in is not enabled yet. The backend returns a setup-required message until a Google OAuth client ID is added.
 
@@ -96,25 +132,31 @@ Google sign-in is not enabled yet. The backend returns a setup-required message 
 2. Customer reviews the booking summary.
 3. Customer continues to payment.
 4. Clicking `Pay now` confirms and saves the appointment.
-5. The appointment appears in Customer My Appointments and Admin Appointments.
+5. The appointment appears in Customer My Appointments and Admin Appointments in the same browser storage.
 6. Payment Status shows payment history. Receipt details appear only after clicking `View`.
 
 ## Data Storage
 
-SQLite backend database:
+Local development database:
 
 ```text
 backend/data/salon.db
 ```
 
-Stores:
+Hosted database:
+
+```text
+Supabase/Postgres through DATABASE_URL
+```
+
+Backend database stores:
 
 - Customer accounts
 - Admin accounts
 - Login sessions
 - Hashed security answers for customer password reset
 
-Browser localStorage stores app activity data:
+Browser localStorage currently stores app activity data:
 
 - Appointments and payment records
 - Services
@@ -125,7 +167,7 @@ Browser localStorage stores app activity data:
 - Admin activity date
 - Customer profile display data
 
-Because activity data is in localStorage, it is tied to the browser profile being used.
+Because activity data is still in localStorage, appointment/payment syncing across devices needs a separate database migration after online login is connected.
 
 ## Folder Structure
 

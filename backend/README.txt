@@ -2,10 +2,10 @@ Glow & Grace Backend
 ====================
 
 This backend is a small Python server for the Glow & Grace salon project.
-It serves the static frontend and provides authentication APIs.
+It serves the static frontend locally and provides authentication APIs.
 
-Run
----
+Run Locally
+-----------
 
 From the project root:
 
@@ -31,10 +31,19 @@ Environment Variables
 ---------------------
 
 HOST
-Default: localhost
+Default: localhost locally, 0.0.0.0 on Render
 
 PORT
-Default: 8000
+Default: 8000 locally; Render sets this automatically
+
+DATABASE_URL
+Optional. When set to a postgresql:// URL, the backend uses Supabase/Postgres instead of SQLite.
+
+PGSSLMODE
+Default: require
+
+SECURE_COOKIES
+Use true for hosted HTTPS frontend/backend calls.
 
 GLOW_GRACE_ADMIN_EMAIL
 Default: admin@glowgrace.com
@@ -48,9 +57,13 @@ Default: manager
 Database
 --------
 
-SQLite database:
+Local SQLite database:
 
 backend/data/salon.db
+
+Hosted database:
+
+Supabase/Postgres through DATABASE_URL
 
 Stores:
 
@@ -58,6 +71,19 @@ Stores:
 - Admin accounts
 - Session records
 - Hashed customer security answers for password reset
+
+Render Deployment
+-----------------
+
+Build Command:
+
+pip install -r requirements.txt
+
+Start Command:
+
+python backend/server.py
+
+Set DATABASE_URL in Render Environment. Do not put the real database password in GitHub.
 
 Main API Routes
 ---------------

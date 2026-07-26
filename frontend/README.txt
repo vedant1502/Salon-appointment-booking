@@ -3,7 +3,7 @@ Glow & Grace Frontend
 
 This frontend is built with plain HTML, CSS, and JavaScript. It does not use React.
 
-Run it through the backend server:
+Run it locally through the backend server:
 
 python backend/server.py
 
@@ -12,6 +12,19 @@ Then open:
 http://localhost:8000/src/customer/home-page.html
 
 Do not open the HTML files directly when testing login, because authentication uses backend API routes and cookies.
+
+Hosted Backend URL
+------------------
+
+The deployed Vercel frontend reads the backend URL from:
+
+src/javascript/backend-config.js
+
+After deploying the backend on Render, set:
+
+window.GLOW_GRACE_BACKEND_URL = "https://your-service-name.onrender.com";
+
+Leave it blank for local development.
 
 Folders
 -------

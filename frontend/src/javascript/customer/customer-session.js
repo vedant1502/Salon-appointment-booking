@@ -85,10 +85,22 @@
         return window.location.protocol === "file:" ? true : localHosts.includes(window.location.hostname);
     };
 
+    const getBackendBase = () => String(window.GLOW_GRACE_BACKEND_URL || "").trim().replace(/\/+$/, "");
+
     const getAuthUrls = (path) => {
+        const backendBase = getBackendBase();
+
+        if (backendBase) {
+            return [`${backendBase}/api/auth${path}`];
+        }
+
+        if (!isLocalDevelopment()) {
+            return [];
+        }
+
         const urls = [`/api/auth${path}`];
 
-        if (isLocalDevelopment() && window.location.origin !== "http://localhost:8000") {
+        if (window.location.origin !== "http://localhost:8000") {
             urls.push(`${localAuthBase}${path}`);
         }
 
@@ -96,10 +108,15 @@
     };
 
     const request = async (path, options = {}) => {
+        const authUrls = getAuthUrls(path);
         let lastError = null;
         let data = {};
 
-        for (const url of getAuthUrls(path)) {
+        if (authUrls.length === 0) {
+            throw new Error("Online login is not connected yet. Add your hosted backend URL in frontend/src/javascript/backend-config.js.");
+        }
+
+        for (const url of authUrls) {
             try {
                 const response = await fetch(url, {
                     credentials: "include",

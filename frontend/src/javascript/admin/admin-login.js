@@ -16,8 +16,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    const isLocalDevelopment = () => {
+        const localHosts = ["localhost", "127.0.0.1", "::1"];
+        return window.location.protocol === "file:" ? true : localHosts.includes(window.location.hostname);
+    };
+
+    const getBackendBase = () => String(window.GLOW_GRACE_BACKEND_URL || "").trim().replace(/\/+$/, "");
+
+    const getAuthUrl = (path) => {
+        const backendBase = getBackendBase();
+
+        if (backendBase) {
+            return `${backendBase}/api/auth${path}`;
+        }
+
+        if (!isLocalDevelopment()) {
+            throw new Error("Online admin login is not connected yet. Add your hosted backend URL in frontend/src/javascript/backend-config.js.");
+        }
+
+        return `/api/auth${path}`;
+    };
+
     const request = async (path, body) => {
-        const response = await fetch(`/api/auth${path}`, {
+        const response = await fetch(getAuthUrl(path), {
             method: "POST",
             credentials: "include",
             headers: {
