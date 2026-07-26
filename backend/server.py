@@ -259,14 +259,24 @@ def init_db():
         admin_role = os.environ.get("GLOW_GRACE_ADMIN_ROLE", "manager")
         existing_admin = db.execute("SELECT id FROM admins WHERE email = ?", (admin_email,)).fetchone()
 
+        now = iso_now()
+
         if not existing_admin:
-            now = iso_now()
             db.execute(
                 """
                 INSERT INTO admins (role, email, password_hash, created_at, updated_at)
                 VALUES (?, ?, ?, ?, ?)
                 """,
                 (admin_role, admin_email, hash_password(admin_password), now, now),
+            )
+        elif "GLOW_GRACE_ADMIN_PASSWORD" in os.environ or "GLOW_GRACE_ADMIN_ROLE" in os.environ:
+            db.execute(
+                """
+                UPDATE admins
+                SET role = ?, password_hash = ?, updated_at = ?
+                WHERE id = ?
+                """,
+                (admin_role, hash_password(admin_password), now, existing_admin["id"]),
             )
 
         db.execute("DELETE FROM sessions WHERE expires_at < ?", (utc_now(),))
