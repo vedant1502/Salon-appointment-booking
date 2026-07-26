@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+backend/data/
+.env
+.venv/
+node_modules/
