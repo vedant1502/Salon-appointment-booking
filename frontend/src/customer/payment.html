@@ -13,7 +13,7 @@
     <script src="../javascript/customer/theme.js"></script>
     <script src="../javascript/backend-config.js?v=hosted-backend"></script>
     <script src="../javascript/customer/customer-session.js?v=hosted-backend"></script>
-    <link rel="stylesheet" href="../styles/customer/payment.css">
+    <link rel="stylesheet" href="../styles/customer/payment.css?v=upi-qr">
     <link rel="stylesheet" href="../styles/customer/mobile-polish.css?v=picker-icons">
 </head>
 <body>
@@ -90,6 +90,13 @@
 
                 <section class="detail-card">
                     <div class="method-panel active" data-method-panel="upi">
+                        <div class="upi-qr" aria-label="UPI payment QR code">
+                            <img src="../assets/payment-QR.jpeg" alt="Glow and Grace Salon UPI payment QR code">
+                            <div>
+                                <strong>Scan and pay</strong>
+                                <small>Use any UPI app, then enter your UPI ID below.</small>
+                            </div>
+                        </div>
                         <label>
                             <span>UPI ID</span>
                             <input type="text" name="upiId" placeholder="name@upi" data-required>

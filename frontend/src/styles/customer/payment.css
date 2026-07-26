@@ -350,6 +350,41 @@ h2 {
     text-transform: uppercase;
 }
 
+.upi-qr {
+    display: grid;
+    grid-template-columns: minmax(112px, 148px) minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    background: var(--surface);
+}
+
+.upi-qr img {
+    width: 100%;
+    max-width: 148px;
+    aspect-ratio: 1;
+    object-fit: contain;
+    border-radius: 8px;
+    padding: 8px;
+    background: #fff;
+}
+
+.upi-qr strong,
+.upi-qr small {
+    display: block;
+}
+
+.upi-qr strong {
+    font-size: 1rem;
+}
+
+.upi-qr small {
+    margin-top: 4px;
+    color: var(--muted);
+}
+
 .method-panel input {
     width: 100%;
     min-height: 48px;
@@ -565,7 +600,13 @@ html[data-theme="dark"] .theme-icon {
         padding: 20px;
     }
 
-    .two-column {
+    .two-column,
+    .upi-qr {
         grid-template-columns: 1fr;
+    }
+
+    .upi-qr img {
+        justify-self: center;
+        max-width: 180px;
     }
 }
