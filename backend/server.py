@@ -422,7 +422,6 @@ class SalonRequestHandler(SimpleHTTPRequestHandler):
             "/api/auth/register": self.handle_register,
             "/api/auth/login": self.handle_login,
             "/api/auth/admin-login": self.handle_admin_login,
-            "/api/auth/google-login": self.handle_google_login,
             "/api/auth/verify-recovery": self.handle_verify_recovery,
             "/api/auth/reset-password": self.handle_reset_password,
             "/api/auth/logout": self.handle_logout,
@@ -782,12 +781,6 @@ class SalonRequestHandler(SimpleHTTPRequestHandler):
                 )
         except (json.JSONDecodeError, ValueError):
             self.send_json({"error": "Invalid admin login request."}, status=400)
-
-    def handle_google_login(self):
-        self.send_json(
-            {"error": "Google sign-in needs a Google OAuth client ID before it can be enabled."},
-            status=501,
-        )
 
     def handle_me(self):
         with get_db() as db:

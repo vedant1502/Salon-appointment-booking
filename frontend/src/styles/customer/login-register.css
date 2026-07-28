@@ -151,7 +151,6 @@ select {
 .theme-toggle:hover,
 .btn:hover,
 .submit-btn:hover,
-.google-btn:hover,
 .account-links a:hover {
     transform: translateY(-2px);
 }
@@ -163,7 +162,6 @@ select {
 .header-action:focus-visible,
 .tab-btn:focus-visible,
 .submit-btn:focus-visible,
-.google-btn:focus-visible,
 .password-field button:focus-visible,
 .account-links a:focus-visible {
     outline: 3px solid var(--gold);
@@ -344,7 +342,6 @@ h2 {
     margin-bottom: 20px;
 }
 
-.google-btn,
 .submit-btn,
 .btn {
     width: 100%;
@@ -357,50 +354,6 @@ h2 {
     font-weight: 800;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
-
-.google-btn {
-    border: 1px solid var(--line);
-    color: var(--ink);
-    background: var(--surface);
-}
-
-.google-btn span {
-    display: grid;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    color: #fff;
-    background: #4285f4;
-    font-weight: 800;
-}
-
-.divider {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-    color: var(--muted);
-    font-size: 0.82rem;
-    font-weight: 800;
-    text-transform: uppercase;
-}
-
-.divider::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: var(--line);
-}
-
-.divider span {
-    position: relative;
-    padding: 0 12px;
-    background: var(--surface);
 }
 
 .auth-form label {

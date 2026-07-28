@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const authPanels = document.querySelectorAll("[data-auth-panel]");
     const loginForms = document.querySelectorAll("[data-login-form]");
     const passwordToggles = document.querySelectorAll("[data-password-toggle]");
-    const googleButtons = document.querySelectorAll("[data-google-login]");
     const loginMessage = document.querySelector("[data-login-message]");
     const registerMessage = document.querySelector("[data-register-message]");
     const registerForm = document.querySelector("[data-register-form]");
@@ -98,24 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
             input.type = showPassword ? "text" : "password";
             button.textContent = showPassword ? "Hide" : "Show";
             button.setAttribute("aria-label", showPassword ? "Hide password" : "Show password");
-        });
-    });
-
-    googleButtons.forEach((button) => {
-        button.addEventListener("click", async () => {
-            const activePanel = document.querySelector("[data-auth-panel].active");
-            const message = activePanel && activePanel.dataset.authPanel === "register" ? registerMessage : loginMessage;
-
-            button.disabled = true;
-            setMessage(message, "Checking Google sign-in setup...");
-
-            try {
-                await request("/google-login", {});
-            } catch (error) {
-                setMessage(message, error.message, true);
-            } finally {
-                button.disabled = false;
-            }
         });
     });
 
