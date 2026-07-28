@@ -160,3 +160,503 @@ html[data-theme="dark"] input[type="search"]::-webkit-search-cancel-button {
         min-width: 0;
     }
 }
+
+/* Mobile refinement pass: desktop styles stay untouched above 768px. */
+@media (max-width: 768px) {
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        min-width: 0;
+    }
+
+    .admin-layout {
+        display: block;
+        min-height: auto;
+        height: auto;
+        overflow: visible;
+    }
+
+    .admin-sidebar {
+        position: static;
+        width: 100%;
+        min-height: auto;
+        height: auto;
+        gap: 14px;
+        padding: 16px;
+        overflow: visible;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+        min-width: 0;
+        gap: 10px;
+    }
+
+    .brand-mark {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+    }
+
+    .brand strong {
+        font-size: 1rem;
+        line-height: 1.1;
+    }
+
+    .brand small {
+        font-size: 0.72rem;
+        line-height: 1.1;
+    }
+
+    .admin-nav {
+        display: flex;
+        grid-template-columns: none;
+        gap: 8px;
+        margin-inline: -2px;
+        overflow-x: auto;
+        padding-bottom: 5px;
+        scrollbar-width: thin;
+    }
+
+    .admin-nav a {
+        flex: 0 0 auto;
+        min-height: 44px;
+        padding: 10px 14px;
+        white-space: nowrap;
+    }
+
+    .sidebar-card {
+        display: none;
+    }
+
+    .dashboard-main,
+    .appointments-main,
+    .services-main,
+    .staff-main,
+    .customers-main,
+    .payments-main,
+    .reviews-main,
+    .reports-main {
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        padding: 18px 16px 42px;
+        overflow: visible;
+    }
+
+    .admin-topbar,
+    .dashboard-topbar {
+        position: static;
+        width: auto;
+        min-width: 0;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+        margin: -18px -16px 18px;
+        padding: 18px 16px;
+    }
+
+    .admin-topbar > div,
+    .dashboard-topbar > div,
+    .panel-heading,
+    .heading-actions,
+    .control-panel,
+    .report-controls,
+    .review-panel,
+    .service-workspace,
+    .staff-workspace,
+    .customer-workspace,
+    .appointment-layout,
+    .payment-panel,
+    .report-panel,
+    .edit-panel,
+    .action-panel {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    h1 {
+        max-width: 100%;
+        font-size: 2rem;
+        line-height: 1.08;
+    }
+
+    h2 {
+        font-size: 1.42rem;
+        line-height: 1.14;
+    }
+
+    h3 {
+        font-size: 1.08rem;
+        line-height: 1.18;
+    }
+
+    p,
+    li,
+    small,
+    span,
+    strong,
+    a,
+    button,
+    input,
+    select,
+    textarea {
+        overflow-wrap: break-word;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        max-width: 100%;
+        font-size: 1rem;
+    }
+
+    textarea {
+        min-height: 132px;
+    }
+
+    .topbar-actions,
+    .form-actions,
+    .card-actions,
+    .review-actions,
+    .heading-actions,
+    .notification-actions,
+    .toolbar,
+    .report-controls,
+    .panel-heading {
+        width: 100%;
+        min-width: 0;
+        gap: 12px;
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .topbar-actions a,
+    .topbar-actions button,
+    .form-actions a,
+    .form-actions button,
+    .card-actions button,
+    .review-actions button,
+    .heading-actions a,
+    .heading-actions button,
+    .toolbar a,
+    .toolbar button,
+    .primary-action,
+    .ghost-action,
+    .ghost-btn,
+    .logout-btn,
+    .save-btn,
+    .edit-btn,
+    .clear-filter {
+        width: 100%;
+        min-height: 48px;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.2;
+    }
+
+    .topbar-actions .theme-toggle,
+    .admin-topbar .theme-toggle,
+    .dashboard-topbar .theme-toggle {
+        width: 48px;
+        min-width: 48px;
+        align-self: flex-start;
+    }
+
+    .date-filter,
+    .search-box,
+    .rating-filter,
+    .period-list,
+    .coupon-form,
+    .form-row,
+    .password-field {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .stats-grid,
+    .insights-grid,
+    .summary-grid,
+    .report-grid,
+    .metric-grid,
+    .panel-stats,
+    .dashboard-grid,
+    .side-stack,
+    .service-workspace,
+    .staff-workspace,
+    .customer-workspace,
+    .appointment-layout,
+    .form-grid,
+    .two-column,
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card,
+    .insight-card,
+    .panel,
+    .report-panel,
+    .review-card,
+    .service-card,
+    .staff-card,
+    .customer-card,
+    .payment-card,
+    .appointment-card,
+    .notification-panel,
+    .review-panel,
+    .service-form,
+    .staff-form,
+    .customer-form,
+    .admin-form,
+    .login-panel,
+    .access-note,
+    .login-visual,
+    .edit-panel,
+    .action-panel {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        padding: 18px;
+    }
+
+    .review-card,
+    .service-card,
+    .staff-card,
+    .customer-card,
+    .payment-card,
+    .appointment-card,
+    .timeline-item,
+    .payment-panel,
+    .report-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-tabs,
+    .filter-strip,
+    .category-strip,
+    .period-list,
+    .admin-nav {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-tabs,
+    .filter-strip,
+    .category-strip,
+    .period-list {
+        display: flex;
+        gap: 8px;
+        padding-bottom: 5px;
+        scrollbar-width: thin;
+    }
+
+    .filter-tabs > *,
+    .filter-strip > *,
+    .category-strip > *,
+    .period-list > * {
+        flex: 0 0 auto;
+    }
+
+    .table-wrap {
+        width: calc(100% + 32px);
+        max-width: calc(100% + 32px);
+        margin-inline: -16px;
+        padding-inline: 16px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrap table,
+    table {
+        min-width: 680px;
+    }
+
+    .status-pill,
+    .panel-tag,
+    .role,
+    .preview-tag,
+    .tag-row span,
+    .review-meta span,
+    .service-meta span {
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    .tag-row,
+    .review-meta,
+    .service-meta,
+    .panel-meta,
+    .payment-list,
+    .bar-list,
+    .rank-list {
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .image-panel img,
+    .image-preview img,
+    .login-visual img {
+        width: 100%;
+        height: auto;
+        max-height: 280px;
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 520px) {
+    .admin-sidebar {
+        padding: 14px;
+    }
+
+    .brand small {
+        display: none;
+    }
+
+    .brand-mark {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+    }
+
+    .dashboard-main,
+    .appointments-main,
+    .services-main,
+    .staff-main,
+    .customers-main,
+    .payments-main,
+    .reviews-main,
+    .reports-main {
+        padding: 16px 14px 36px;
+    }
+
+    .admin-topbar,
+    .dashboard-topbar {
+        margin: -16px -14px 16px;
+        padding: 16px 14px;
+    }
+
+    h1 {
+        font-size: 1.78rem;
+    }
+
+    h2 {
+        font-size: 1.28rem;
+    }
+
+    h3 {
+        font-size: 1rem;
+    }
+
+    .stat-card,
+    .insight-card,
+    .panel,
+    .report-panel,
+    .review-card,
+    .service-card,
+    .staff-card,
+    .customer-card,
+    .payment-card,
+    .appointment-card,
+    .notification-panel,
+    .review-panel,
+    .service-form,
+    .staff-form,
+    .customer-form,
+    .admin-form,
+    .login-panel,
+    .access-note,
+    .login-visual,
+    .edit-panel,
+    .action-panel {
+        padding: 16px;
+    }
+
+    .table-wrap {
+        width: calc(100% + 28px);
+        max-width: calc(100% + 28px);
+        margin-inline: -14px;
+        padding-inline: 14px;
+    }
+}
+
+/* Admin login has a fixed topbar in its base stylesheet; keep it inside phone widths. */
+@media (max-width: 768px) {
+    .login-shell {
+        width: 100%;
+        grid-template-columns: 1fr;
+        overflow: hidden;
+    }
+
+    .admin-topbar {
+        left: 0;
+        right: 0;
+        width: 100%;
+        margin-inline: 0;
+        padding-inline: 16px;
+    }
+
+    .admin-topbar .brand {
+        flex: 1 1 auto;
+        max-width: calc(100vw - 96px);
+    }
+
+    .admin-topbar .topbar-actions {
+        flex: 0 0 auto;
+        width: auto;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .admin-topbar .topbar-actions a {
+        display: none;
+    }
+
+    .login-visual,
+    .login-panel {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 520px) {
+    .admin-topbar {
+        padding-inline: 14px;
+    }
+
+    .admin-topbar .brand {
+        max-width: calc(100vw - 88px);
+    }
+}
+
+/* Keep horizontal mobile controls clean without visible scrollbar tracks. */
+@media (max-width: 768px) {
+    .admin-nav,
+    .filter-tabs,
+    .filter-strip,
+    .category-strip,
+    .period-list {
+        scrollbar-width: none;
+    }
+
+    .admin-nav::-webkit-scrollbar,
+    .filter-tabs::-webkit-scrollbar,
+    .filter-strip::-webkit-scrollbar,
+    .category-strip::-webkit-scrollbar,
+    .period-list::-webkit-scrollbar {
+        display: none;
+    }
+}
