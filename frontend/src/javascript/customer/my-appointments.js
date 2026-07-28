@@ -203,43 +203,39 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const setAppointmentStatus = async (appointmentId, status) => {
-        let updatedAppointment = null;
+        const appointment = appointments.find((item) => item.id === appointmentId);
 
-        appointments = appointments.map((appointment) => {
-            if (appointment.id !== appointmentId) {
-                return appointment;
-            }
+        if (!appointment) {
+            return;
+        }
 
-            updatedAppointment = {
-                ...appointment,
-                status,
-                updatedAt: new Date().toISOString(),
-            };
+        const updates = {
+            status,
+            updatedAt: new Date().toISOString(),
+        };
+        const localAppointment = {
+            ...appointment,
+            ...updates,
+        };
+        let savedAppointment = localAppointment;
 
-            return updatedAppointment;
-        });
-
-        saveAppointments();
-        renderAppointments();
-
-        if (liveData && liveData.updateAppointment && updatedAppointment) {
+        if (liveData && liveData.updateAppointment) {
             try {
-                const syncedAppointment = await liveData.updateAppointment(appointmentId, {
-                    status,
-                    updatedAt: updatedAppointment.updatedAt,
-                });
-
-                if (syncedAppointment) {
-                    appointments = appointments.map((appointment) => (
-                        appointment.id === appointmentId ? { ...appointment, ...syncedAppointment } : appointment
-                    ));
-                    saveAppointments();
-                    renderAppointments();
-                }
+                savedAppointment = {
+                    ...localAppointment,
+                    ...await liveData.updateAppointment(appointmentId, updates),
+                };
             } catch (error) {
-                // Keep the local UI responsive; the next page load will retry from live data.
+                renderAppointments();
+                return;
             }
         }
+
+        appointments = appointments.map((item) => (
+            item.id === appointmentId ? savedAppointment : item
+        ));
+        saveAppointments();
+        renderAppointments();
     };
 
     const renderAppointment = (appointment) => {
@@ -477,6 +473,16 @@ document.addEventListener("DOMContentLoaded", () => {
     revealItems.forEach((item) => revealObserver.observe(item));
 
     const loadAppointments = async () => {
+        if (window.GlowGraceCustomerSession) {
+            const session = await window.GlowGraceCustomerSession.refresh({ redirectIfMissing: true });
+
+            if (!session) {
+                appointments = [];
+                renderAppointments();
+                return;
+            }
+        }
+
         appointments = readAppointments();
         renderAppointments();
 
@@ -486,7 +492,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 saveAppointments();
                 renderAppointments();
             } catch (error) {
-                // Local appointments remain visible if live data is temporarily unavailable.
+                if (error.status === 401) {
+                    appointments = [];
+                    saveAppointments();
+                    renderAppointments();
+                }
             }
         }
     };

@@ -222,31 +222,39 @@ document.addEventListener("DOMContentLoaded", () => {
     ].join(" ").toLowerCase();
 
     const updateAppointment = async (appointmentId, updater, notificationBuilder) => {
-        let notification = null;
-        let updates = null;
+        const appointment = appointments.find((item) => item.id === appointmentId);
 
-        appointments = appointments.map((appointment) => {
-            if (appointment.id !== appointmentId) {
-                return appointment;
+        if (!appointment) {
+            return;
+        }
+
+        const now = new Date().toISOString();
+        const updates = {
+            ...updater(appointment),
+            paymentUpdatedAt: now,
+            updatedAt: now,
+        };
+        let updatedAppointment = {
+            ...appointment,
+            ...updates,
+        };
+        const notification = notificationBuilder ? notificationBuilder(updatedAppointment, appointment) : null;
+
+        if (liveData && liveData.updateAppointment) {
+            try {
+                updatedAppointment = {
+                    ...updatedAppointment,
+                    ...await liveData.updateAppointment(appointmentId, updates, { admin: true }),
+                };
+            } catch (error) {
+                renderPayments();
+                return;
             }
+        }
 
-            updates = {
-                ...updater(appointment),
-                paymentUpdatedAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-            };
-            const updatedAppointment = {
-                ...appointment,
-                ...updates,
-            };
-
-            if (notificationBuilder) {
-                notification = notificationBuilder(updatedAppointment, appointment);
-            }
-
-            return updatedAppointment;
-        });
-
+        appointments = appointments.map((item) => (
+            item.id === appointmentId ? updatedAppointment : item
+        ));
         saveAppointments();
 
         if (notification) {
@@ -254,22 +262,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         renderPayments();
-
-        if (liveData && liveData.updateAppointment && updates) {
-            try {
-                const syncedAppointment = await liveData.updateAppointment(appointmentId, updates, { admin: true });
-
-                if (syncedAppointment) {
-                    appointments = appointments.map((appointment) => (
-                        appointment.id === appointmentId ? { ...appointment, ...syncedAppointment } : appointment
-                    ));
-                    saveAppointments();
-                    renderPayments();
-                }
-            } catch (error) {
-                // Local admin edits remain visible if the live backend is temporarily unavailable.
-            }
-        }
     };
     const renderPaymentCard = (appointment) => {
         const state = getPaymentState(appointment);
@@ -493,6 +485,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const loadPayments = async () => {
+        if (window.GlowGraceAdminAuth) {
+            const admin = await window.GlowGraceAdminAuth.ensure();
+
+            if (!admin) {
+                return;
+            }
+        }
+
         appointments = readAppointments();
         renderPayments();
 
@@ -502,7 +502,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 saveAppointments();
                 renderPayments();
             } catch (error) {
-                // Local payment records remain visible if the live backend is waking up.
+                if (error.status === 401) {
+                    appointments = [];
+                    saveAppointments();
+                    renderPayments();
+                }
             }
         }
     };

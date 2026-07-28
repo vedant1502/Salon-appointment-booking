@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const saveConfirmedBooking = async (status, method) => {
-        const appointments = readAppointments();
         const amountPaid = status === "pending" ? 0 : payableAmount;
         const ref = bookingDetails.ref || `GG${Date.now().toString().slice(-6)}`;
         const appointmentId = bookingDetails.appointmentId || `APT-${ref}`;
@@ -77,11 +76,17 @@ document.addEventListener("DOMContentLoaded", () => {
             remaining: status === "pending" ? totalAmount : 0,
             createdAt: now,
             paymentUpdatedAt: now,
+            updatedAt: now,
         };
-        const existingIndex = appointments.findIndex((item) => item.id === appointment.id);
 
         bookingDetails.ref = ref;
         bookingDetails.appointmentId = appointmentId;
+
+        const savedAppointment = liveData && liveData.saveAppointment
+            ? { ...appointment, ...await liveData.saveAppointment(appointment) }
+            : appointment;
+        const appointments = readAppointments();
+        const existingIndex = appointments.findIndex((item) => item.id === savedAppointment.id);
 
         if (existingIndex >= 0) {
             const existingStatus = appointments[existingIndex].status;
@@ -89,13 +94,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             appointments[existingIndex] = {
                 ...appointments[existingIndex],
-                ...appointment,
-                status: shouldKeepManualStatus ? existingStatus : appointment.status,
-                createdAt: appointments[existingIndex].createdAt || appointment.createdAt,
-                updatedAt: now,
+                ...savedAppointment,
+                status: shouldKeepManualStatus ? existingStatus : savedAppointment.status,
+                createdAt: appointments[existingIndex].createdAt || savedAppointment.createdAt,
             };
         } else {
-            appointments.unshift(appointment);
+            appointments.unshift(savedAppointment);
         }
 
         appointments.sort((first, second) => {
@@ -105,23 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         localStorage.setItem(appointmentsKey, JSON.stringify(appointments));
-
-        let savedAppointment = appointment;
-
-        if (liveData && liveData.saveAppointment) {
-            const syncedAppointment = await liveData.saveAppointment(appointment);
-            savedAppointment = {
-                ...appointment,
-                ...(syncedAppointment || {}),
-            };
-            const syncedIndex = appointments.findIndex((item) => item.id === savedAppointment.id);
-
-            if (syncedIndex >= 0) {
-                appointments[syncedIndex] = savedAppointment;
-            }
-
-            localStorage.setItem(appointmentsKey, JSON.stringify(appointments));
-        }
 
         return {
             amountPaid: Number(savedAppointment.amountPaid) || amountPaid,

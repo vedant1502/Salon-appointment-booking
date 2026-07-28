@@ -563,6 +563,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const loadReports = async () => {
+        if (window.GlowGraceAdminAuth) {
+            const admin = await window.GlowGraceAdminAuth.ensure();
+
+            if (!admin) {
+                return;
+            }
+        }
+
         appointments = readArray(appointmentsKey, []);
         renderReports();
 
@@ -572,7 +580,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem(appointmentsKey, JSON.stringify(appointments));
                 renderReports();
             } catch (error) {
-                // Local reports remain visible if the live backend is waking up.
+                if (error.status === 401) {
+                    appointments = [];
+                    localStorage.setItem(appointmentsKey, JSON.stringify(appointments));
+                    renderReports();
+                }
             }
         }
     };

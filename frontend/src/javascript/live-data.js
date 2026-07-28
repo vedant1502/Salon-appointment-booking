@@ -19,7 +19,10 @@
         const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-            throw new Error(data.error || "Live data request failed.");
+            const error = new Error(data.error || "Live data request failed.");
+            error.status = response.status;
+            error.data = data;
+            throw error;
         }
 
         return data;

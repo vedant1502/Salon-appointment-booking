@@ -519,6 +519,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const loadCustomers = async () => {
+        if (window.GlowGraceAdminAuth) {
+            const admin = await window.GlowGraceAdminAuth.ensure();
+
+            if (!admin) {
+                return;
+            }
+        }
+
         customers = buildCustomers();
         renderCustomers();
 
@@ -528,7 +536,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 customers = buildCustomers();
                 renderCustomers();
             } catch (error) {
-                // Local customer records remain visible if the live backend is waking up.
+                if (error.status === 401) {
+                    localStorage.setItem(appointmentsKey, JSON.stringify([]));
+                    customers = buildCustomers();
+                    renderCustomers();
+                }
             }
         }
     };

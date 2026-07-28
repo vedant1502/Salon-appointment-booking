@@ -158,8 +158,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const getPaymentId = (payment = {}) => String(payment.id || payment.paymentRef || "");
 
     const saveAppointment = async (appointment) => {
+        const now = new Date().toISOString();
+        const requestedAppointment = {
+            ...appointment,
+            updatedAt: appointment.updatedAt || now,
+        };
+        const savedAppointment = liveData && liveData.saveAppointment
+            ? { ...requestedAppointment, ...await liveData.saveAppointment(requestedAppointment) }
+            : requestedAppointment;
         const appointments = readAppointments();
-        const existingIndex = appointments.findIndex((item) => item.id === appointment.id);
+        const existingIndex = appointments.findIndex((item) => item.id === savedAppointment.id);
 
         if (existingIndex >= 0) {
             const existingStatus = appointments[existingIndex].status;
@@ -167,28 +175,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             appointments[existingIndex] = {
                 ...appointments[existingIndex],
-                ...appointment,
-                status: shouldKeepManualStatus ? existingStatus : appointment.status,
-                createdAt: appointments[existingIndex].createdAt || appointment.createdAt,
-                updatedAt: new Date().toISOString(),
+                ...savedAppointment,
+                status: shouldKeepManualStatus ? existingStatus : savedAppointment.status,
+                createdAt: appointments[existingIndex].createdAt || savedAppointment.createdAt,
             };
         } else {
-            appointments.unshift(appointment);
+            appointments.unshift(savedAppointment);
         }
 
         saveAppointments(appointments);
-
-        if (liveData && liveData.saveAppointment) {
-            const syncedAppointment = await liveData.saveAppointment(appointment);
-
-            if (syncedAppointment) {
-                const syncedIndex = appointments.findIndex((item) => item.id === syncedAppointment.id);
-                if (syncedIndex >= 0) {
-                    appointments[syncedIndex] = syncedAppointment;
-                    saveAppointments(appointments);
-                }
-            }
-        }
     };
 
     const savePaymentFromUrl = async () => {
@@ -464,17 +459,35 @@ document.addEventListener("DOMContentLoaded", () => {
     revealItems.forEach((item) => revealObserver.observe(item));
 
     const loadPaymentHistory = async () => {
+        if (window.GlowGraceCustomerSession) {
+            const session = await window.GlowGraceCustomerSession.refresh({ redirectIfMissing: true });
+
+            if (!session) {
+                saveAppointments([]);
+                selectedPaymentId = "";
+                renderPaymentHistory();
+                return;
+            }
+        }
+
         try {
             await savePaymentFromUrl();
         } catch (error) {
-            // Existing local payment records still render if live save is temporarily unavailable.
+            if (error.status === 401) {
+                saveAppointments([]);
+                selectedPaymentId = "";
+                renderPaymentHistory();
+                return;
+            }
         }
 
         if (liveData && liveData.getMyAppointments) {
             try {
                 saveAppointments(await liveData.getMyAppointments());
             } catch (error) {
-                // Keep local history visible if the live backend is waking up.
+                if (error.status === 401) {
+                    saveAppointments([]);
+                }
             }
         }
 
