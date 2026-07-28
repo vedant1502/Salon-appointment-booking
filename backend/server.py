@@ -235,6 +235,28 @@ def init_db():
             updated_at TEXT NOT NULL
         );
 
+        CREATE TABLE IF NOT EXISTS contact_messages (
+            id TEXT PRIMARY KEY,
+            user_id INTEGER,
+            data TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS services (
+            id TEXT PRIMARY KEY,
+            data TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS staff (
+            id TEXT PRIMARY KEY,
+            data TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL
+        );
+
         DROP TABLE IF EXISTS otps;
     """
     postgres_schema = """
@@ -279,6 +301,28 @@ def init_db():
         CREATE TABLE IF NOT EXISTS reviews (
             id TEXT PRIMARY KEY,
             user_id INTEGER,
+            data TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS contact_messages (
+            id TEXT PRIMARY KEY,
+            user_id INTEGER,
+            data TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS services (
+            id TEXT PRIMARY KEY,
+            data TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS staff (
+            id TEXT PRIMARY KEY,
             data TEXT NOT NULL,
             created_at TEXT NOT NULL,
             updated_at TEXT NOT NULL

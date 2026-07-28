@@ -86,6 +86,7 @@ Shared Behavior
 - Admin authentication uses backend sessions.
 - Appointment and payment records sync with the live backend and cache in localStorage key: glow-grace-appointments
 - Reviews sync with the live backend and cache in localStorage key: glow-grace-reviews
+- Services, staff, and contact messages still use localStorage in the UI, but backend tables are ready for migration
 - Activity date selection uses localStorage key: glow-grace-admin-activity-date
 - Native date/time/search/select icons are handled in shared mobile-polish.css files for light and dark mode visibility.
 

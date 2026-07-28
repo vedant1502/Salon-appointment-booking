@@ -10,7 +10,7 @@ Glow & Grace is a salon appointment booking project built with plain HTML, CSS, 
 - Local SQLite support for development.
 - Supabase/Postgres support for hosted backend deployment.
 - Live backend storage for customer accounts, appointments, payments, and reviews.
-- Browser localStorage remains as a UI cache and for services, staff, notifications, contact messages, and reports that have not been migrated yet.
+- Browser localStorage remains as a UI cache and for services, staff, notifications, contact messages, and reports until their UI pages are migrated. Backend placeholder tables now exist for services, staff, and contact messages.
 
 ## Run Locally
 
@@ -161,6 +161,7 @@ Live backend database also stores:
 
 - Appointments and payment records
 - Customer reviews
+- Contact messages, services, and staff table placeholders for the next migration phases
 
 Browser localStorage still stores/caches:
 

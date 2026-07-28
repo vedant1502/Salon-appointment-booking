@@ -73,6 +73,9 @@ Stores:
 - Hashed customer security answers for password reset
 - Live appointment/payment records
 - Customer reviews
+- Contact messages table placeholder
+- Services table placeholder
+- Staff table placeholder
 
 Render Deployment
 -----------------
@@ -119,4 +122,5 @@ Notes
 - OTP login has been removed.
 - Google login is not enabled until OAuth credentials are added.
 - Appointments, payments, reviews, happy clients count, and average rating are backed by the hosted database.
-- Services, staff, contact messages, notifications, and some report cache data still use browser localStorage until their migration phase.
+- Services, staff, and contact messages have backend tables ready, but their frontend pages still use browser localStorage until their migration phase.
+- Notifications and some report cache data still use browser localStorage.
