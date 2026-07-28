@@ -321,7 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
             savedReview = await liveData.saveReview(review);
         }
 
-        reviews = [savedReview, ...readReviews().filter((item) => item.id !== savedReview.id)];
+        reviews = [savedReview, ...reviews.filter((item) => item.id !== savedReview.id)];
         saveReviews();
         renderReviews();
     };
@@ -409,9 +409,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        reviews = readReviews();
-        populateAppointments();
-        renderReviews();
+        window.setTimeout(() => loadReviewsPage(), 0);
     });
 
     const revealObserver = new IntersectionObserver((entries) => {
@@ -426,7 +424,9 @@ document.addEventListener("DOMContentLoaded", () => {
     revealItems.forEach((item) => revealObserver.observe(item));
 
     const loadReviewsPage = async () => {
-        reviews = readReviews();
+        reviews = [];
+        saveReviews();
+        saveJson(appointmentsKey, []);
         fillProfileFields();
         populateAppointments();
         renderReviews();
@@ -436,7 +436,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 saveJson(appointmentsKey, await liveData.getMyAppointments());
                 populateAppointments();
             } catch (error) {
-                // Keep local completed appointment choices available if live data is unavailable.
+                if (error.status === 401) {
+                    saveJson(appointmentsKey, []);
+                    populateAppointments();
+                }
             }
         }
 
@@ -446,7 +449,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 saveReviews();
                 renderReviews();
             } catch (error) {
-                // Local reviews remain visible if the live backend is waking up.
+                reviews = [];
+                saveReviews();
+                renderReviews();
             }
         }
     };

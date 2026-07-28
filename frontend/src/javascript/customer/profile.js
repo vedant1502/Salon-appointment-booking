@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         reminders: [],
     };
     let currentProfile = defaultProfile;
+    let profileAppointments = [];
 
     const readJson = (key, fallback) => {
         try {
@@ -146,10 +147,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const updateAppointmentStats = () => {
-        const appointments = readAppointments();
         const counts = { upcoming: 0, completed: 0, cancelled: 0 };
 
-        appointments.forEach((appointment) => {
+        profileAppointments.forEach((appointment) => {
             if (counts[appointment.status] !== undefined) {
                 counts[appointment.status] += 1;
             }
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const updateNextVisit = () => {
-        const appointments = readAppointments()
+        const appointments = profileAppointments
             .filter((appointment) => appointment.status === "upcoming")
             .sort((first, second) => String(first.date || "").localeCompare(String(second.date || "")));
         const nextVisit = appointments[0];
@@ -519,22 +519,32 @@ document.addEventListener("DOMContentLoaded", () => {
     currentProfile = readProfile();
     fillForm(currentProfile);
     updateOverview(currentProfile);
+    profileAppointments = [];
     updateAppointmentStats();
     updateNextVisit();
     renderNotifications();
     setEditMode(false);
 
     const loadProfileAppointments = async () => {
+        profileAppointments = [];
+        saveJson(appointmentsKey, []);
+        updateAppointmentStats();
+        updateNextVisit();
+
         if (!liveData || !liveData.getMyAppointments) {
             return;
         }
 
         try {
-            saveJson(appointmentsKey, await liveData.getMyAppointments());
+            profileAppointments = await liveData.getMyAppointments();
+            saveJson(appointmentsKey, profileAppointments);
             updateAppointmentStats();
             updateNextVisit();
         } catch (error) {
-            // Local profile appointment data remains visible if live data is unavailable.
+            profileAppointments = [];
+            saveJson(appointmentsKey, []);
+            updateAppointmentStats();
+            updateNextVisit();
         }
     };
 

@@ -164,14 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .replace(/^-|-$/g, "") || "guest";
 
     const getCustomerCount = (appointments) => {
-        const profile = readJson(profileKey, {});
-        const hasProfile = Boolean(profile.name || profile.email || profile.mobile);
-        const profileId = hasProfile ? makeCustomerId(profile.email || profile.mobile || profile.name || "profile") : "";
         const customerIds = new Set();
-
-        if (profileId) {
-            customerIds.add(profileId);
-        }
 
         appointments.forEach((appointment) => {
             const identifier = appointment.customerEmail || appointment.customerMobile || appointment.customerName;
@@ -181,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            customerIds.add(profileId || "guest");
+            customerIds.add("guest");
         });
 
         return customerIds.size;
@@ -340,7 +333,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    let appointments = getAppointments();
+    let appointments = [];
     const renderDashboard = () => {
         const selectedActivity = getActivityForSelectedDate(appointments);
 
@@ -366,6 +359,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
+        appointments = [];
+        localStorage.setItem(appointmentsKey, JSON.stringify(appointments));
         renderSession();
         renderDashboard();
 

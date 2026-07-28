@@ -493,7 +493,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        appointments = readAppointments();
+        appointments = [];
+        saveAppointments();
         renderPayments();
 
         if (liveData && liveData.getAdminAppointments) {

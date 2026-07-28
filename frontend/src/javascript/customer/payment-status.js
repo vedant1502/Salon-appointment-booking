@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const savedAppointment = liveData && liveData.saveAppointment
             ? { ...requestedAppointment, ...await liveData.saveAppointment(requestedAppointment) }
             : requestedAppointment;
-        const appointments = readAppointments();
+        const appointments = [];
         const existingIndex = appointments.findIndex((item) => item.id === savedAppointment.id);
 
         if (existingIndex >= 0) {
@@ -443,7 +443,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.addEventListener("storage", (event) => {
         if (event.key === appointmentsKey) {
-            renderPaymentHistory();
+            window.setTimeout(() => loadPaymentHistory(), 0);
         }
     });
 
@@ -469,6 +469,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
         }
+
+        saveAppointments([]);
+        selectedPaymentId = "";
+        renderPaymentHistory();
 
         try {
             await savePaymentFromUrl();

@@ -178,12 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .replace(/^-|-$/g, "") || "guest";
 
     const countCustomers = (items) => {
-        const profile = readJson(profileKey, {});
         const ids = new Set();
-
-        if (profile.name || profile.email || profile.mobile) {
-            ids.add(makeCustomerId(profile.email || profile.mobile || profile.name));
-        }
 
         items.forEach((appointment) => {
             ids.add(makeCustomerId(appointment.customerEmail || appointment.customerMobile || appointment.customerName || "guest"));
@@ -571,7 +566,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        appointments = readArray(appointmentsKey, []);
+        appointments = [];
+        localStorage.setItem(appointmentsKey, JSON.stringify(appointments));
         renderReports();
 
         if (liveData && liveData.getAdminAppointments) {

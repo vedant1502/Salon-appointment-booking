@@ -483,7 +483,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        appointments = readAppointments();
+        appointments = [];
+        saveAppointments();
         renderAppointments();
 
         if (liveData && liveData.getMyAppointments) {

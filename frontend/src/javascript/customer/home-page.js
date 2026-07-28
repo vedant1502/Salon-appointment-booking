@@ -8,19 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const averageRating = document.querySelector("[data-average-rating]");
     const homeReviews = document.querySelector("[data-home-reviews]");
     const revealItems = document.querySelectorAll(".reveal");
-    const appointmentsKey = "glow-grace-appointments";
     const servicesKey = "glow-grace-services";
-    const reviewsKey = "glow-grace-reviews";
     const liveData = window.GlowGraceLiveData;
     const defaultActiveServiceCount = 9;
-    const demoReviewIds = new Set([
-        "review-apt-gg063515",
-        "review-glow-facial-001",
-        "review-spa-002",
-        "review-color-003",
-        "review-party-makeup-004",
-        "review-nail-005",
-    ]);
+    let liveCompletedClients = 0;
+    let liveHomeReviews = [];
 
     const readArray = (key) => {
         try {
@@ -38,11 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 
-    const countCompletedAppointments = () => (readArray(appointmentsKey) || []).filter((appointment) => {
-        const status = String(appointment.status || "").toLowerCase();
-        const adminStatus = String(appointment.adminStatus || "").toLowerCase();
-        return status === "completed" || adminStatus === "completed";
-    }).length;
+    const countCompletedAppointments = () => liveCompletedClients;
 
     const countActiveServices = () => {
         const services = readArray(servicesKey);
@@ -55,12 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const getAverageRating = () => {
-        const reviews = readArray(reviewsKey) || [];
-        const visibleReviews = reviews.filter((review) => {
-            const rating = Number(review.rating);
-            const isDemoReview = demoReviewIds.has(String(review.id || ""));
-            return !isDemoReview && review.hidden !== true && rating > 0;
-        });
+        const visibleReviews = liveHomeReviews.filter((review) => review.hidden !== true && Number(review.rating) > 0);
 
         if (visibleReviews.length === 0) {
             return "0.0";
@@ -71,12 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const getRealVisibleReviews = () => {
-        const reviews = readArray(reviewsKey) || [];
-        return reviews.filter((review) => (
-            !demoReviewIds.has(String(review.id || ""))
-            && review.hidden !== true
-            && Number(review.rating) > 0
-        ));
+        return liveHomeReviews.filter((review) => review.hidden !== true && Number(review.rating) > 0);
     };
 
     const getStars = (rating) => {
@@ -126,18 +104,23 @@ document.addEventListener("DOMContentLoaded", () => {
             const summary = await liveData.getSummary();
             const liveReviews = Array.isArray(summary.reviews) ? summary.reviews : [];
 
+            liveCompletedClients = Number(summary.completedClients) || 0;
+
             if (completedClientsCounter) {
-                setCounterValue(completedClientsCounter, Number(summary.completedClients) || 0);
+                setCounterValue(completedClientsCounter, liveCompletedClients);
             }
 
             if (averageRating) {
                 averageRating.textContent = (Number(summary.averageRating) || 0).toFixed(1);
             }
 
-            localStorage.setItem(reviewsKey, JSON.stringify(liveReviews));
+            liveHomeReviews = liveReviews;
             renderHomeReviews();
         } catch (error) {
-            // Local home stats stay visible if the live backend is waking up.
+            liveCompletedClients = 0;
+            liveHomeReviews = [];
+            updateHomeStats();
+            renderHomeReviews();
         }
     };
 
@@ -227,12 +210,11 @@ document.addEventListener("DOMContentLoaded", () => {
     counters.forEach((counter) => counterObserver.observe(counter));
 
     window.addEventListener("storage", (event) => {
-        if (![appointmentsKey, servicesKey, reviewsKey].includes(event.key)) {
+        if (event.key !== servicesKey) {
             return;
         }
 
         updateHomeStats();
-        renderHomeReviews();
     });
 
     window.addEventListener("pageshow", () => {

@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const savedAppointment = liveData && liveData.saveAppointment
             ? { ...appointment, ...await liveData.saveAppointment(appointment) }
             : appointment;
-        const appointments = readAppointments();
+        const appointments = [];
         const existingIndex = appointments.findIndex((item) => item.id === savedAppointment.id);
 
         if (existingIndex >= 0) {

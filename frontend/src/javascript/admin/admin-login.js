@@ -91,18 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const updateMetrics = () => {
-        const appointments = readJson(appointmentsKey, []);
         const staff = readJson(staffKey, []);
-        const appointmentItems = Array.isArray(appointments) ? appointments : [];
         const staffItems = Array.isArray(staff) ? staff : [];
-        const today = toDateValue(new Date());
 
-        setMetric("today-bookings", appointmentItems.filter((appointment) => appointment.date === today).length);
+        setMetric("today-bookings", 0);
         setMetric("available-staff", staffItems.filter((member) => member.available !== false).length);
-        setMetric("pending-payments", appointmentItems.filter((appointment) => (
-            Number(appointment.remaining) > 0
-            || String(appointment.paymentStatus || "").toLowerCase() === "pending"
-        )).length);
+        setMetric("pending-payments", 0);
     };
 
     if (passwordToggle && passwordInput) {

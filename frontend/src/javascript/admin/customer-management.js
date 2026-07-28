@@ -159,15 +159,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const buildCustomers = () => {
-        const profile = readJson(profileKey, {});
         const appointments = readAppointments();
         const overrides = readJson(customersKey, {});
-        const profileId = hasProfileDetails(profile) ? makeCustomerId(profile.email || profile.mobile || profile.name || "profile") : "";
+        const profileId = "";
         const customerMap = new Map();
-
-        if (profileId) {
-            customerMap.set(profileId, createCustomer({ id: profileId, profile, source: "Profile" }));
-        }
 
         appointments.forEach((appointment) => {
             const customerId = getAppointmentCustomerId(appointment, profileId);
@@ -527,6 +522,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
+        localStorage.setItem(appointmentsKey, JSON.stringify([]));
         customers = buildCustomers();
         renderCustomers();
 

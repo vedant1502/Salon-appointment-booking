@@ -77,6 +77,9 @@
             signedIn: false,
             signedOutAt: new Date().toISOString(),
         });
+        localStorage.removeItem("glow-grace-appointments");
+        localStorage.removeItem("glow-grace-reviews");
+        localStorage.removeItem(profileKey);
         updateHeaderAction();
     };
 

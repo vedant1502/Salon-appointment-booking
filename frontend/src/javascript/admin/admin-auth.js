@@ -15,6 +15,8 @@
 
     const clearAdminSession = () => {
         localStorage.removeItem(adminSessionKey);
+        localStorage.removeItem("glow-grace-appointments");
+        localStorage.removeItem("glow-grace-reviews");
     };
 
     const isLocalDevelopment = () => {

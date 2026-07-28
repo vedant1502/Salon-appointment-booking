@@ -360,8 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        reviews = readReviews();
-        renderReviews();
+        window.setTimeout(() => loadReviews(), 0);
     });
 
     const loadReviews = async () => {
@@ -373,7 +372,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        reviews = readReviews();
+        reviews = [];
+        saveReviews();
         renderReviews();
 
         if (liveData && liveData.getAdminReviews) {
