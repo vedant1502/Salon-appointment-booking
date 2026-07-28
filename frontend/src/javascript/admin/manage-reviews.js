@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const reviewsKey = "glow-grace-reviews";
     const notificationsKey = "glow-grace-notifications";
+    const liveData = window.GlowGraceLiveData;
     const reviewList = document.querySelector("[data-review-list]");
     const filterButtons = document.querySelectorAll("[data-filter]");
     const ratingFilter = document.querySelector("[data-rating-filter]");
@@ -228,23 +229,44 @@ document.addEventListener("DOMContentLoaded", () => {
             .join("");
     };
 
-    const updateReview = (reviewId, updater) => {
+    const updateReview = async (reviewId, updater) => {
+        let updates = null;
+
         reviews = reviews.map((review) => {
             if (review.id !== reviewId) {
                 return review;
             }
 
-            return {
-                ...review,
+            updates = {
                 ...updater(review),
                 updatedAt: new Date().toISOString(),
+            };
+
+            return {
+                ...review,
+                ...updates,
             };
         });
 
         saveReviews();
         renderReviews();
-    };
 
+        if (liveData && liveData.updateReview && updates) {
+            try {
+                const syncedReview = await liveData.updateReview(reviewId, updates);
+
+                if (syncedReview) {
+                    reviews = reviews.map((review) => (
+                        review.id === reviewId ? { ...review, ...syncedReview } : review
+                    ));
+                    saveReviews();
+                    renderReviews();
+                }
+            } catch (error) {
+                // Local moderation remains visible if the live backend is temporarily unavailable.
+            }
+        }
+    };
     if (reviewList) {
         reviewList.addEventListener("click", (event) => {
             const button = event.target.closest("[data-action]");
@@ -346,6 +368,20 @@ document.addEventListener("DOMContentLoaded", () => {
         renderReviews();
     });
 
-    reviews = readReviews();
-    renderReviews();
+    const loadReviews = async () => {
+        reviews = readReviews();
+        renderReviews();
+
+        if (liveData && liveData.getAdminReviews) {
+            try {
+                reviews = await liveData.getAdminReviews();
+                saveReviews();
+                renderReviews();
+            } catch (error) {
+                // Local reviews remain visible if the live backend is waking up.
+            }
+        }
+    };
+
+    loadReviews();
 });

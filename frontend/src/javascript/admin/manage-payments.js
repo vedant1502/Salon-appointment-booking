@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const appointmentsKey = "glow-grace-appointments";
     const notificationsKey = "glow-grace-notifications";
     const activityDateKey = "glow-grace-admin-activity-date";
+    const liveData = window.GlowGraceLiveData;
     const paymentList = document.querySelector("[data-payment-list]");
     const filterButtons = document.querySelectorAll("[data-filter]");
     const searchInput = document.querySelector("[data-search]");
@@ -220,20 +221,23 @@ document.addEventListener("DOMContentLoaded", () => {
         appointment.time,
     ].join(" ").toLowerCase();
 
-    const updateAppointment = (appointmentId, updater, notificationBuilder) => {
+    const updateAppointment = async (appointmentId, updater, notificationBuilder) => {
         let notification = null;
+        let updates = null;
 
         appointments = appointments.map((appointment) => {
             if (appointment.id !== appointmentId) {
                 return appointment;
             }
 
-            const updates = updater(appointment);
+            updates = {
+                ...updater(appointment),
+                paymentUpdatedAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+            };
             const updatedAppointment = {
                 ...appointment,
                 ...updates,
-                paymentUpdatedAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
             };
 
             if (notificationBuilder) {
@@ -250,8 +254,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         renderPayments();
-    };
 
+        if (liveData && liveData.updateAppointment && updates) {
+            try {
+                const syncedAppointment = await liveData.updateAppointment(appointmentId, updates, { admin: true });
+
+                if (syncedAppointment) {
+                    appointments = appointments.map((appointment) => (
+                        appointment.id === appointmentId ? { ...appointment, ...syncedAppointment } : appointment
+                    ));
+                    saveAppointments();
+                    renderPayments();
+                }
+            } catch (error) {
+                // Local admin edits remain visible if the live backend is temporarily unavailable.
+            }
+        }
+    };
     const renderPaymentCard = (appointment) => {
         const state = getPaymentState(appointment);
         const total = getTotal(appointment);
@@ -473,6 +492,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    appointments = readAppointments();
-    renderPayments();
+    const loadPayments = async () => {
+        appointments = readAppointments();
+        renderPayments();
+
+        if (liveData && liveData.getAdminAppointments) {
+            try {
+                appointments = await liveData.getAdminAppointments();
+                saveAppointments();
+                renderPayments();
+            } catch (error) {
+                // Local payment records remain visible if the live backend is waking up.
+            }
+        }
+    };
+
+    loadPayments();
 });

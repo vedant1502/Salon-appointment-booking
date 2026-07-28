@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const appointmentsKey = "glow-grace-appointments";
     const notificationsKey = "glow-grace-notifications";
     const customerSession = window.GlowGraceCustomerSession;
+    const liveData = window.GlowGraceLiveData;
     const header = document.querySelector("[data-header]");
     const navToggle = document.querySelector("[data-nav-toggle]");
     const navMenu = document.querySelector("[data-nav-menu]");
@@ -522,6 +523,22 @@ document.addEventListener("DOMContentLoaded", () => {
     updateNextVisit();
     renderNotifications();
     setEditMode(false);
+
+    const loadProfileAppointments = async () => {
+        if (!liveData || !liveData.getMyAppointments) {
+            return;
+        }
+
+        try {
+            saveJson(appointmentsKey, await liveData.getMyAppointments());
+            updateAppointmentStats();
+            updateNextVisit();
+        } catch (error) {
+            // Local profile appointment data remains visible if live data is unavailable.
+        }
+    };
+
+    loadProfileAppointments();
 
     if (customerSession && customerSession.refresh) {
         customerSession.refresh({ redirectIfMissing: true }).then((session) => {

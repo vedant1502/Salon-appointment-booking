@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const appointmentsKey = "glow-grace-appointments";
+    const liveData = window.GlowGraceLiveData;
     const header = document.querySelector("[data-header]");
     const navToggle = document.querySelector("[data-nav-toggle]");
     const navMenu = document.querySelector("[data-nav-menu]");
@@ -201,21 +202,44 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    const setAppointmentStatus = (appointmentId, status) => {
+    const setAppointmentStatus = async (appointmentId, status) => {
+        let updatedAppointment = null;
+
         appointments = appointments.map((appointment) => {
             if (appointment.id !== appointmentId) {
                 return appointment;
             }
 
-            return {
+            updatedAppointment = {
                 ...appointment,
                 status,
                 updatedAt: new Date().toISOString(),
             };
+
+            return updatedAppointment;
         });
 
         saveAppointments();
         renderAppointments();
+
+        if (liveData && liveData.updateAppointment && updatedAppointment) {
+            try {
+                const syncedAppointment = await liveData.updateAppointment(appointmentId, {
+                    status,
+                    updatedAt: updatedAppointment.updatedAt,
+                });
+
+                if (syncedAppointment) {
+                    appointments = appointments.map((appointment) => (
+                        appointment.id === appointmentId ? { ...appointment, ...syncedAppointment } : appointment
+                    ));
+                    saveAppointments();
+                    renderAppointments();
+                }
+            } catch (error) {
+                // Keep the local UI responsive; the next page load will retry from live data.
+            }
+        }
     };
 
     const renderAppointment = (appointment) => {
@@ -452,6 +476,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     revealItems.forEach((item) => revealObserver.observe(item));
 
-    appointments = readAppointments();
-    renderAppointments();
+    const loadAppointments = async () => {
+        appointments = readAppointments();
+        renderAppointments();
+
+        if (liveData && liveData.getMyAppointments) {
+            try {
+                appointments = await liveData.getMyAppointments();
+                saveAppointments();
+                renderAppointments();
+            } catch (error) {
+                // Local appointments remain visible if live data is temporarily unavailable.
+            }
+        }
+    };
+
+    loadAppointments();
 });

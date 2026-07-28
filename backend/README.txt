@@ -71,6 +71,8 @@ Stores:
 - Admin accounts
 - Session records
 - Hashed customer security answers for password reset
+- Live appointment/payment records
+- Customer reviews
 
 Render Deployment
 -----------------
@@ -98,6 +100,16 @@ POST /api/auth/verify-recovery
 POST /api/auth/reset-password
 POST /api/auth/logout
 PUT  /api/auth/profile
+GET  /api/appointments/my
+POST /api/appointments
+PUT  /api/appointments/:id
+GET  /api/admin/appointments
+PUT  /api/admin/appointments/:id
+GET  /api/reviews
+POST /api/reviews
+GET  /api/admin/reviews
+PUT  /api/admin/reviews/:id
+GET  /api/live/summary
 
 Notes
 -----
@@ -106,4 +118,5 @@ Notes
 - Customer password reset verifies registered email, registered mobile, selected security question, and security answer.
 - OTP login has been removed.
 - Google login is not enabled until OAuth credentials are added.
-- Appointments, payments, services, staff, reviews, and reports are currently stored in browser localStorage by the frontend.
+- Appointments, payments, reviews, happy clients count, and average rating are backed by the hosted database.
+- Services, staff, contact messages, notifications, and some report cache data still use browser localStorage until their migration phase.

@@ -54,6 +54,13 @@ def normalize_recovery_question(value):
     return str(value or "").strip()
 
 
+def safe_float(value):
+    try:
+        return float(value or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
 def normalize_recovery_answer(value):
     return " ".join(str(value or "").strip().lower().split())
 
@@ -212,6 +219,22 @@ def init_db():
             created_at TEXT NOT NULL
         );
 
+        CREATE TABLE IF NOT EXISTS appointments (
+            id TEXT PRIMARY KEY,
+            user_id INTEGER NOT NULL,
+            data TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS reviews (
+            id TEXT PRIMARY KEY,
+            user_id INTEGER,
+            data TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL
+        );
+
         DROP TABLE IF EXISTS otps;
     """
     postgres_schema = """
@@ -243,6 +266,22 @@ def init_db():
             account_id INTEGER NOT NULL,
             expires_at INTEGER NOT NULL,
             created_at TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS appointments (
+            id TEXT PRIMARY KEY,
+            user_id INTEGER NOT NULL,
+            data TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS reviews (
+            id TEXT PRIMARY KEY,
+            user_id INTEGER,
+            data TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL
         );
 
         DROP TABLE IF EXISTS otps;
@@ -311,6 +350,26 @@ class SalonRequestHandler(SimpleHTTPRequestHandler):
             self.handle_me()
             return
 
+        if parsed_path.path == "/api/appointments/my":
+            self.handle_my_appointments()
+            return
+
+        if parsed_path.path == "/api/admin/appointments":
+            self.handle_admin_appointments()
+            return
+
+        if parsed_path.path == "/api/reviews":
+            self.handle_public_reviews()
+            return
+
+        if parsed_path.path == "/api/admin/reviews":
+            self.handle_admin_reviews()
+            return
+
+        if parsed_path.path == "/api/live/summary":
+            self.handle_live_summary()
+            return
+
         self.serve_static(parsed_path.path)
 
     def do_POST(self):
@@ -323,6 +382,8 @@ class SalonRequestHandler(SimpleHTTPRequestHandler):
             "/api/auth/verify-recovery": self.handle_verify_recovery,
             "/api/auth/reset-password": self.handle_reset_password,
             "/api/auth/logout": self.handle_logout,
+            "/api/appointments": self.handle_save_appointment,
+            "/api/reviews": self.handle_save_review,
         }
         handler = routes.get(parsed_path.path)
 
@@ -337,6 +398,18 @@ class SalonRequestHandler(SimpleHTTPRequestHandler):
 
         if parsed_path.path == "/api/auth/profile":
             self.handle_profile_update()
+            return
+
+        if parsed_path.path.startswith("/api/appointments/"):
+            self.handle_update_appointment(parsed_path.path.removeprefix("/api/appointments/"), admin=False)
+            return
+
+        if parsed_path.path.startswith("/api/admin/appointments/"):
+            self.handle_update_appointment(parsed_path.path.removeprefix("/api/admin/appointments/"), admin=True)
+            return
+
+        if parsed_path.path.startswith("/api/admin/reviews/"):
+            self.handle_update_review(parsed_path.path.removeprefix("/api/admin/reviews/"))
             return
 
         self.send_json({"error": "API route not found."}, status=404)
@@ -726,6 +799,305 @@ class SalonRequestHandler(SimpleHTTPRequestHandler):
         except (json.JSONDecodeError, ValueError):
             self.send_json({"error": "Invalid profile update request."}, status=400)
 
+    def require_account(self, db, account_type):
+        session, account = self.get_current_session(db)
+
+        if not session or not account or session["account_type"] != account_type:
+            label = "Admin" if account_type == "admin" else "Customer"
+            self.send_json({"error": f"{label} login is required."}, status=401)
+            return None, None
+
+        return session, account
+
+    def decode_live_record(self, row):
+        try:
+            data = json.loads(row["data"] or "{}")
+        except (TypeError, json.JSONDecodeError):
+            data = {}
+
+        data.setdefault("id", row["id"])
+        data.setdefault("createdAt", row["created_at"])
+        data.setdefault("updatedAt", row["updated_at"])
+        return data
+
+    def encode_live_record(self, data):
+        return json.dumps(data, separators=(",", ":"), sort_keys=True)
+
+    def fetch_appointment(self, db, appointment_id):
+        return db.execute("SELECT * FROM appointments WHERE id = ?", (appointment_id,)).fetchone()
+
+    def fetch_review(self, db, review_id):
+        return db.execute("SELECT * FROM reviews WHERE id = ?", (review_id,)).fetchone()
+
+    def make_record_id(self, prefix):
+        return f"{prefix}-{secrets.token_hex(4).upper()}"
+
+    def handle_my_appointments(self):
+        with get_db() as db:
+            session, account = self.require_account(db, "customer")
+
+            if not session:
+                return
+
+            rows = db.execute(
+                "SELECT * FROM appointments WHERE user_id = ? ORDER BY updated_at DESC",
+                (account["id"],),
+            ).fetchall()
+            self.send_json({"appointments": [self.decode_live_record(row) for row in rows]})
+
+    def handle_admin_appointments(self):
+        with get_db() as db:
+            session, account = self.require_account(db, "admin")
+
+            if not session:
+                return
+
+            rows = db.execute("SELECT * FROM appointments ORDER BY updated_at DESC").fetchall()
+            self.send_json({"appointments": [self.decode_live_record(row) for row in rows]})
+
+    def handle_save_appointment(self):
+        try:
+            payload = self.read_json_body()
+            appointment = payload.get("appointment") if isinstance(payload.get("appointment"), dict) else payload
+
+            if not isinstance(appointment, dict):
+                self.send_json({"error": "Appointment details are required."}, status=400)
+                return
+
+            with get_db() as db:
+                session, account = self.require_account(db, "customer")
+
+                if not session:
+                    return
+
+                now = iso_now()
+                appointment_id = str(appointment.get("id") or self.make_record_id("APT-GG"))
+                existing = self.fetch_appointment(db, appointment_id)
+
+                if existing and existing["user_id"] != account["id"]:
+                    self.send_json({"error": "You cannot update another customer's appointment."}, status=403)
+                    return
+
+                previous = self.decode_live_record(existing) if existing else {}
+                saved = {
+                    **previous,
+                    **appointment,
+                    "id": appointment_id,
+                    "customerId": account["id"],
+                    "customerName": appointment.get("customerName") or previous.get("customerName") or account["name"],
+                    "customerEmail": appointment.get("customerEmail") or previous.get("customerEmail") or account["email"],
+                    "customerMobile": appointment.get("customerMobile") or previous.get("customerMobile") or account["mobile"],
+                    "createdAt": previous.get("createdAt") or appointment.get("createdAt") or now,
+                    "updatedAt": now,
+                }
+                saved.setdefault("status", "upcoming")
+                saved.setdefault("paymentStatus", "Pending")
+
+                if existing:
+                    db.execute(
+                        "UPDATE appointments SET data = ?, updated_at = ? WHERE id = ?",
+                        (self.encode_live_record(saved), now, appointment_id),
+                    )
+                else:
+                    db.execute(
+                        """
+                        INSERT INTO appointments (id, user_id, data, created_at, updated_at)
+                        VALUES (?, ?, ?, ?, ?)
+                        """,
+                        (appointment_id, account["id"], self.encode_live_record(saved), saved["createdAt"], now),
+                    )
+
+                self.send_json({"appointment": saved}, status=201 if not existing else 200)
+        except (json.JSONDecodeError, ValueError):
+            self.send_json({"error": "Invalid appointment request."}, status=400)
+
+    def handle_update_appointment(self, appointment_id, admin=False):
+        appointment_id = unquote(str(appointment_id or "").strip())
+
+        if not appointment_id:
+            self.send_json({"error": "Appointment ID is required."}, status=400)
+            return
+
+        try:
+            payload = self.read_json_body()
+            updates = payload.get("updates") if isinstance(payload.get("updates"), dict) else payload
+
+            if not isinstance(updates, dict):
+                self.send_json({"error": "Appointment updates are required."}, status=400)
+                return
+
+            with get_db() as db:
+                required_account = "admin" if admin else "customer"
+                session, account = self.require_account(db, required_account)
+
+                if not session:
+                    return
+
+                row = self.fetch_appointment(db, appointment_id)
+
+                if not row:
+                    self.send_json({"error": "Appointment was not found."}, status=404)
+                    return
+
+                if not admin and row["user_id"] != account["id"]:
+                    self.send_json({"error": "You cannot update another customer's appointment."}, status=403)
+                    return
+
+                now = iso_now()
+                existing = self.decode_live_record(row)
+                saved = {
+                    **existing,
+                    **updates,
+                    "id": appointment_id,
+                    "customerId": existing.get("customerId") or row["user_id"],
+                    "createdAt": existing.get("createdAt") or row["created_at"],
+                    "updatedAt": now,
+                }
+
+                db.execute(
+                    "UPDATE appointments SET data = ?, updated_at = ? WHERE id = ?",
+                    (self.encode_live_record(saved), now, appointment_id),
+                )
+                self.send_json({"appointment": saved})
+        except (json.JSONDecodeError, ValueError):
+            self.send_json({"error": "Invalid appointment update request."}, status=400)
+
+    def handle_public_reviews(self):
+        with get_db() as db:
+            rows = db.execute("SELECT * FROM reviews ORDER BY updated_at DESC").fetchall()
+            reviews = [self.decode_live_record(row) for row in rows]
+            self.send_json({"reviews": [review for review in reviews if review.get("hidden") is not True]})
+
+    def handle_admin_reviews(self):
+        with get_db() as db:
+            session, account = self.require_account(db, "admin")
+
+            if not session:
+                return
+
+            rows = db.execute("SELECT * FROM reviews ORDER BY updated_at DESC").fetchall()
+            self.send_json({"reviews": [self.decode_live_record(row) for row in rows]})
+
+    def handle_save_review(self):
+        try:
+            payload = self.read_json_body()
+            review = payload.get("review") if isinstance(payload.get("review"), dict) else payload
+
+            if not isinstance(review, dict):
+                self.send_json({"error": "Review details are required."}, status=400)
+                return
+
+            with get_db() as db:
+                session, account = self.get_current_session(db)
+                now = iso_now()
+                review_id = str(review.get("id") or self.make_record_id("review"))
+                user_id = account["id"] if session and session["account_type"] == "customer" and account else None
+                existing = self.fetch_review(db, review_id)
+                previous = self.decode_live_record(existing) if existing else {}
+                saved = {
+                    **previous,
+                    **review,
+                    "id": review_id,
+                    "createdAt": previous.get("createdAt") or review.get("createdAt") or now,
+                    "updatedAt": now,
+                    "featured": bool(review.get("featured") if "featured" in review else previous.get("featured", False)),
+                    "hidden": bool(review.get("hidden") if "hidden" in review else previous.get("hidden", False)),
+                }
+
+                if account and session and session["account_type"] == "customer":
+                    saved["customerId"] = account["id"]
+                    saved["customerName"] = saved.get("customerName") or account["name"]
+                    saved["customerEmail"] = saved.get("customerEmail") or account["email"]
+                    saved["customerMobile"] = saved.get("customerMobile") or account["mobile"]
+
+                if existing:
+                    if existing["user_id"] and user_id and existing["user_id"] != user_id:
+                        self.send_json({"error": "You cannot update another customer's review."}, status=403)
+                        return
+
+                    db.execute(
+                        "UPDATE reviews SET data = ?, updated_at = ? WHERE id = ?",
+                        (self.encode_live_record(saved), now, review_id),
+                    )
+                else:
+                    db.execute(
+                        """
+                        INSERT INTO reviews (id, user_id, data, created_at, updated_at)
+                        VALUES (?, ?, ?, ?, ?)
+                        """,
+                        (review_id, user_id, self.encode_live_record(saved), saved["createdAt"], now),
+                    )
+
+                self.send_json({"review": saved}, status=201 if not existing else 200)
+        except (json.JSONDecodeError, ValueError):
+            self.send_json({"error": "Invalid review request."}, status=400)
+
+    def handle_update_review(self, review_id):
+        review_id = unquote(str(review_id or "").strip())
+
+        if not review_id:
+            self.send_json({"error": "Review ID is required."}, status=400)
+            return
+
+        try:
+            payload = self.read_json_body()
+            updates = payload.get("updates") if isinstance(payload.get("updates"), dict) else payload
+
+            if not isinstance(updates, dict):
+                self.send_json({"error": "Review updates are required."}, status=400)
+                return
+
+            with get_db() as db:
+                session, account = self.require_account(db, "admin")
+
+                if not session:
+                    return
+
+                row = self.fetch_review(db, review_id)
+
+                if not row:
+                    self.send_json({"error": "Review was not found."}, status=404)
+                    return
+
+                now = iso_now()
+                existing = self.decode_live_record(row)
+                saved = {
+                    **existing,
+                    **updates,
+                    "id": review_id,
+                    "createdAt": existing.get("createdAt") or row["created_at"],
+                    "updatedAt": now,
+                }
+                db.execute(
+                    "UPDATE reviews SET data = ?, updated_at = ? WHERE id = ?",
+                    (self.encode_live_record(saved), now, review_id),
+                )
+                self.send_json({"review": saved})
+        except (json.JSONDecodeError, ValueError):
+            self.send_json({"error": "Invalid review update request."}, status=400)
+
+    def handle_live_summary(self):
+        with get_db() as db:
+            appointment_rows = db.execute("SELECT * FROM appointments ORDER BY updated_at DESC").fetchall()
+            review_rows = db.execute("SELECT * FROM reviews ORDER BY updated_at DESC").fetchall()
+            appointments = [self.decode_live_record(row) for row in appointment_rows]
+            reviews = [self.decode_live_record(row) for row in review_rows]
+            visible_reviews = [review for review in reviews if review.get("hidden") is not True and safe_float(review.get("rating")) > 0]
+            completed_clients = sum(
+                1 for appointment in appointments
+                if str(appointment.get("status") or "").lower() == "completed"
+                or str(appointment.get("adminStatus") or "").lower() == "completed"
+            )
+            average_rating = 0
+
+            if visible_reviews:
+                average_rating = sum(safe_float(review.get("rating")) for review in visible_reviews) / len(visible_reviews)
+
+            self.send_json({
+                "completedClients": completed_clients,
+                "averageRating": round(average_rating, 1),
+                "reviews": visible_reviews[:12],
+            })
     def handle_logout(self):
         with get_db() as db:
             token = self.parse_session_cookie()

@@ -9,7 +9,8 @@ Glow & Grace is a salon appointment booking project built with plain HTML, CSS, 
 - Python backend for customer/admin authentication, sessions, profile updates, and password reset.
 - Local SQLite support for development.
 - Supabase/Postgres support for hosted backend deployment.
-- Browser localStorage for salon activity data such as appointments, payments, services, staff, reviews, notifications, and reports.
+- Live backend storage for customer accounts, appointments, payments, and reviews.
+- Browser localStorage remains as a UI cache and for services, staff, notifications, contact messages, and reports that have not been migrated yet.
 
 ## Run Locally
 
@@ -132,7 +133,7 @@ Google sign-in is not enabled yet. The backend returns a setup-required message 
 2. Customer reviews the booking summary.
 3. Customer continues to payment.
 4. Clicking `Pay now` confirms and saves the appointment.
-5. The appointment appears in Customer My Appointments and Admin Appointments in the same browser storage.
+5. The appointment appears in Customer My Appointments and Admin Appointments from the live backend database.
 6. Payment Status shows payment history. Receipt details appear only after clicking `View`.
 
 ## Data Storage
@@ -156,18 +157,21 @@ Backend database stores:
 - Login sessions
 - Hashed security answers for customer password reset
 
-Browser localStorage currently stores app activity data:
+Live backend database also stores:
 
 - Appointments and payment records
+- Customer reviews
+
+Browser localStorage still stores/caches:
+
 - Services
 - Staff
-- Reviews
 - Notifications
 - Contact messages
 - Admin activity date
 - Customer profile display data
 
-Because activity data is still in localStorage, appointment/payment syncing across devices needs a separate database migration after online login is connected.
+Appointments, payments, reviews, happy clients count, and average rating now sync through the hosted backend when Render/Supabase are configured.
 
 ## Folder Structure
 

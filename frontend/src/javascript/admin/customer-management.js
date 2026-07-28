@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const appointmentsKey = "glow-grace-appointments";
     const profileKey = "glow-grace-profile";
     const customersKey = "glow-grace-customers";
+    const liveData = window.GlowGraceLiveData;
     const customerList = document.querySelector("[data-customer-list]");
     const customerDetails = document.querySelector("[data-customer-details]");
     const filterButtons = document.querySelectorAll("[data-filter]");
@@ -517,6 +518,20 @@ document.addEventListener("DOMContentLoaded", () => {
         searchInput.addEventListener("input", renderCustomers);
     }
 
-    customers = buildCustomers();
-    renderCustomers();
+    const loadCustomers = async () => {
+        customers = buildCustomers();
+        renderCustomers();
+
+        if (liveData && liveData.getAdminAppointments) {
+            try {
+                localStorage.setItem(appointmentsKey, JSON.stringify(await liveData.getAdminAppointments()));
+                customers = buildCustomers();
+                renderCustomers();
+            } catch (error) {
+                // Local customer records remain visible if the live backend is waking up.
+            }
+        }
+    };
+
+    loadCustomers();
 });

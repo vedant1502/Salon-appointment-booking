@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const expiryInput = document.querySelector("[data-expiry]");
     const revealItems = document.querySelectorAll(".reveal");
     const appointmentsKey = "glow-grace-appointments";
+    const liveData = window.GlowGraceLiveData;
     let payableAmount = 0;
     let totalAmount = 0;
     let bookingDetails = {
@@ -49,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return "Not selected";
     };
 
-    const saveConfirmedBooking = (status, method) => {
+    const saveConfirmedBooking = async (status, method) => {
         const appointments = readAppointments();
         const amountPaid = status === "pending" ? 0 : payableAmount;
         const ref = bookingDetails.ref || `GG${Date.now().toString().slice(-6)}`;
@@ -105,11 +106,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
         localStorage.setItem(appointmentsKey, JSON.stringify(appointments));
 
+        let savedAppointment = appointment;
+
+        if (liveData && liveData.saveAppointment) {
+            const syncedAppointment = await liveData.saveAppointment(appointment);
+            savedAppointment = {
+                ...appointment,
+                ...(syncedAppointment || {}),
+            };
+            const syncedIndex = appointments.findIndex((item) => item.id === savedAppointment.id);
+
+            if (syncedIndex >= 0) {
+                appointments[syncedIndex] = savedAppointment;
+            }
+
+            localStorage.setItem(appointmentsKey, JSON.stringify(appointments));
+        }
+
         return {
-            amountPaid,
-            ref,
-            appointmentId,
-            remaining: appointment.remaining,
+            amountPaid: Number(savedAppointment.amountPaid) || amountPaid,
+            ref: savedAppointment.paymentRef || ref,
+            appointmentId: savedAppointment.id || appointmentId,
+            remaining: Number(savedAppointment.remaining) || 0,
         };
     };
 
@@ -206,8 +224,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    const redirectToStatus = (status, method) => {
-        const savedBooking = saveConfirmedBooking(status, method);
+    const redirectToStatus = async (status, method) => {
+        const savedBooking = await saveConfirmedBooking(status, method);
         const params = new URLSearchParams({
             status,
             method,
@@ -268,10 +286,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         formMessage.classList.remove("error");
         formMessage.textContent = method === "salon"
-            ? "Booking confirmed. Opening payment status..."
-            : "Payment completed. Opening payment status...";
+            ? "Booking confirmed. Saving online..."
+            : "Payment completed. Saving online...";
+        payButton.disabled = true;
 
-        window.setTimeout(() => redirectToStatus(status, method), 650);
+        window.setTimeout(async () => {
+            try {
+                await redirectToStatus(status, method);
+            } catch (error) {
+                formMessage.classList.add("error");
+                formMessage.textContent = error.message || "Could not save the booking online. Please try again.";
+                payButton.disabled = false;
+            }
+        }, 650);
     });
 
     const revealObserver = new IntersectionObserver((entries) => {

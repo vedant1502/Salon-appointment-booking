@@ -84,7 +84,8 @@ Shared Behavior
 - Customer authentication uses backend sessions plus local profile cache.
 - Customer password reset uses registered email, registered mobile, security question, and security answer.
 - Admin authentication uses backend sessions.
-- Appointment and payment records use localStorage key: glow-grace-appointments
+- Appointment and payment records sync with the live backend and cache in localStorage key: glow-grace-appointments
+- Reviews sync with the live backend and cache in localStorage key: glow-grace-reviews
 - Activity date selection uses localStorage key: glow-grace-admin-activity-date
 - Native date/time/search/select icons are handled in shared mobile-polish.css files for light and dark mode visibility.
 

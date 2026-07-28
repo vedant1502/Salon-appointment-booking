@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const reviewsKey = "glow-grace-reviews";
     const appointmentsKey = "glow-grace-appointments";
     const profileKey = "glow-grace-profile";
+    const liveData = window.GlowGraceLiveData;
     const header = document.querySelector("[data-header]");
     const navToggle = document.querySelector("[data-nav-toggle]");
     const navMenu = document.querySelector("[data-nav-menu]");
@@ -291,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
         reviewList.innerHTML = visibleReviews.map(renderReviewCard).join("");
     };
 
-    const saveSubmittedReview = () => {
+    const saveSubmittedReview = async () => {
         const formData = new FormData(reviewForm);
         const appointmentId = String(formData.get("appointmentId") || "").trim();
         const selectedAppointment = completedAppointments.find((appointment) => appointment.id === appointmentId);
@@ -314,7 +315,13 @@ document.addEventListener("DOMContentLoaded", () => {
             source: "customer",
         };
 
-        reviews = [review, ...readReviews()];
+        let savedReview = review;
+
+        if (liveData && liveData.saveReview) {
+            savedReview = await liveData.saveReview(review);
+        }
+
+        reviews = [savedReview, ...readReviews().filter((item) => item.id !== savedReview.id)];
         saveReviews();
         renderReviews();
     };
@@ -347,7 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (reviewForm && formMessage) {
-        reviewForm.addEventListener("submit", (event) => {
+        reviewForm.addEventListener("submit", async (event) => {
             event.preventDefault();
 
             if (!reviewForm.checkValidity()) {
@@ -355,11 +362,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            saveSubmittedReview();
-            formMessage.classList.remove("error");
-            formMessage.textContent = "Review submitted. The salon team can now see it in admin.";
-            reviewForm.reset();
-            fillProfileFields();
+            try {
+                await saveSubmittedReview();
+                formMessage.classList.remove("error");
+                formMessage.textContent = "Review submitted. The salon team can now see it in admin.";
+                reviewForm.reset();
+                fillProfileFields();
+            } catch (error) {
+                formMessage.classList.add("error");
+                formMessage.textContent = error.message || "Could not save the review online. Please try again.";
+            }
         });
 
         reviewForm.addEventListener("reset", () => {
@@ -413,8 +425,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     revealItems.forEach((item) => revealObserver.observe(item));
 
-    reviews = readReviews();
-    fillProfileFields();
-    populateAppointments();
-    renderReviews();
+    const loadReviewsPage = async () => {
+        reviews = readReviews();
+        fillProfileFields();
+        populateAppointments();
+        renderReviews();
+
+        if (liveData && liveData.getMyAppointments) {
+            try {
+                saveJson(appointmentsKey, await liveData.getMyAppointments());
+                populateAppointments();
+            } catch (error) {
+                // Keep local completed appointment choices available if live data is unavailable.
+            }
+        }
+
+        if (liveData && liveData.getPublicReviews) {
+            try {
+                reviews = await liveData.getPublicReviews();
+                saveReviews();
+                renderReviews();
+            } catch (error) {
+                // Local reviews remain visible if the live backend is waking up.
+            }
+        }
+    };
+
+    loadReviewsPage();
 });

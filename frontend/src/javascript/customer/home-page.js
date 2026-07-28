@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const appointmentsKey = "glow-grace-appointments";
     const servicesKey = "glow-grace-services";
     const reviewsKey = "glow-grace-reviews";
+    const liveData = window.GlowGraceLiveData;
     const defaultActiveServiceCount = 9;
     const demoReviewIds = new Set([
         "review-apt-gg063515",
@@ -116,6 +117,30 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    const loadLiveHomeData = async () => {
+        if (!liveData || !liveData.getSummary) {
+            return;
+        }
+
+        try {
+            const summary = await liveData.getSummary();
+            const liveReviews = Array.isArray(summary.reviews) ? summary.reviews : [];
+
+            if (completedClientsCounter) {
+                setCounterValue(completedClientsCounter, Number(summary.completedClients) || 0);
+            }
+
+            if (averageRating) {
+                averageRating.textContent = (Number(summary.averageRating) || 0).toFixed(1);
+            }
+
+            localStorage.setItem(reviewsKey, JSON.stringify(liveReviews));
+            renderHomeReviews();
+        } catch (error) {
+            // Local home stats stay visible if the live backend is waking up.
+        }
+    };
+
     const renderHomeReviews = () => {
         if (!homeReviews) return;
 
@@ -198,6 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateHomeStats();
     renderHomeReviews();
+    loadLiveHomeData();
     counters.forEach((counter) => counterObserver.observe(counter));
 
     window.addEventListener("storage", (event) => {

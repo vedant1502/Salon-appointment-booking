@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const historyCount = document.querySelector("[data-history-count]");
     const revealItems = document.querySelectorAll(".reveal");
     const appointmentsKey = "glow-grace-appointments";
+    const liveData = window.GlowGraceLiveData;
     let selectedPaymentId = "";
 
     const formatCurrency = (amount) => `Rs. ${(Number(amount) || 0).toLocaleString("en-IN")}`;
@@ -156,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const getPaymentId = (payment = {}) => String(payment.id || payment.paymentRef || "");
 
-    const saveAppointment = (appointment) => {
+    const saveAppointment = async (appointment) => {
         const appointments = readAppointments();
         const existingIndex = appointments.findIndex((item) => item.id === appointment.id);
 
@@ -176,9 +177,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         saveAppointments(appointments);
+
+        if (liveData && liveData.saveAppointment) {
+            const syncedAppointment = await liveData.saveAppointment(appointment);
+
+            if (syncedAppointment) {
+                const syncedIndex = appointments.findIndex((item) => item.id === syncedAppointment.id);
+                if (syncedIndex >= 0) {
+                    appointments[syncedIndex] = syncedAppointment;
+                    saveAppointments(appointments);
+                }
+            }
+        }
     };
 
-    const savePaymentFromUrl = () => {
+    const savePaymentFromUrl = async () => {
         const params = new URLSearchParams(window.location.search);
 
         if (!params.has("status") && !params.has("appointmentId")) {
@@ -207,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return "";
         }
 
-        saveAppointment({
+        await saveAppointment({
             id: appointmentId,
             paymentRef: ref,
             customerName: params.get("customerName") || "",
@@ -450,7 +463,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     revealItems.forEach((item) => revealObserver.observe(item));
 
-    savePaymentFromUrl();
-    selectedPaymentId = "";
-    renderPaymentHistory();
+    const loadPaymentHistory = async () => {
+        try {
+            await savePaymentFromUrl();
+        } catch (error) {
+            // Existing local payment records still render if live save is temporarily unavailable.
+        }
+
+        if (liveData && liveData.getMyAppointments) {
+            try {
+                saveAppointments(await liveData.getMyAppointments());
+            } catch (error) {
+                // Keep local history visible if the live backend is waking up.
+            }
+        }
+
+        selectedPaymentId = "";
+        renderPaymentHistory();
+    };
+
+    loadPaymentHistory();
 });

@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const profileKey = "glow-grace-profile";
     const notificationsKey = "glow-grace-notifications";
     const activityDateKey = "glow-grace-admin-activity-date";
+    const liveData = window.GlowGraceLiveData;
     const appointmentList = document.querySelector("[data-appointment-list]");
     const filterButtons = document.querySelectorAll("[data-filter]");
     const searchInput = document.querySelector("[data-search]");
@@ -238,18 +239,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    const updateAppointment = (appointmentId, updater, notificationBuilder) => {
+    const updateAppointment = async (appointmentId, updater, notificationBuilder) => {
         let notification = null;
+        let updates = null;
 
         appointments = appointments.map((appointment) => {
             if (appointment.id !== appointmentId) {
                 return appointment;
             }
 
-            const updatedAppointment = {
-                ...appointment,
+            updates = {
                 ...updater(appointment),
                 updatedAt: new Date().toISOString(),
+            };
+            const updatedAppointment = {
+                ...appointment,
+                ...updates,
             };
 
             if (notificationBuilder) {
@@ -266,8 +271,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         renderAppointments();
-    };
 
+        if (liveData && liveData.updateAppointment && updates) {
+            try {
+                const syncedAppointment = await liveData.updateAppointment(appointmentId, updates, { admin: true });
+
+                if (syncedAppointment) {
+                    appointments = appointments.map((appointment) => (
+                        appointment.id === appointmentId ? { ...appointment, ...syncedAppointment } : appointment
+                    ));
+                    saveAppointments();
+                    renderAppointments();
+                }
+            } catch (error) {
+                // Keep the admin screen usable if the live backend is temporarily unavailable.
+            }
+        }
+    };
     const buildSearchText = (appointment, customerName) => [
         appointment.id,
         appointment.paymentRef,
@@ -512,6 +532,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    appointments = getAppointments();
-    renderAppointments();
+    const loadAppointments = async () => {
+        appointments = getAppointments();
+        renderAppointments();
+
+        if (liveData && liveData.getAdminAppointments) {
+            try {
+                appointments = await liveData.getAdminAppointments();
+                saveAppointments();
+                renderAppointments();
+            } catch (error) {
+                // Local appointment records remain visible if the live backend is waking up.
+            }
+        }
+    };
+
+    loadAppointments();
 });

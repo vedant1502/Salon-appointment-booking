@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const profileKey = "glow-grace-profile";
     const servicesKey = "glow-grace-services";
     const staffKey = "glow-grace-staff";
+    const liveData = window.GlowGraceLiveData;
     const recentBookings = document.querySelector("[data-recent-bookings]");
     const todayList = document.querySelector("[data-today-list]");
     const dateInput = document.querySelector("[data-date-filter]");
@@ -315,14 +316,21 @@ document.addEventListener("DOMContentLoaded", () => {
     if (logoutButton) {
         logoutButton.addEventListener("click", async () => {
             try {
-                await fetch("/api/auth/logout", {
-                    method: "POST",
-                    credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: "{}",
-                });
+                if (liveData && liveData.request) {
+                    await liveData.request("/auth/logout", {
+                        method: "POST",
+                        body: "{}",
+                    });
+                } else {
+                    await fetch("/api/auth/logout", {
+                        method: "POST",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: "{}",
+                    });
+                }
             } catch (error) {
                 // Local admin state is cleared even if the backend is not reachable.
             } finally {
@@ -332,8 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-
-    const appointments = getAppointments();
+    let appointments = getAppointments();
     const renderDashboard = () => {
         const selectedActivity = getActivityForSelectedDate(appointments);
 
@@ -350,6 +357,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    renderSession();
-    renderDashboard();
+    const loadDashboard = async () => {
+        renderSession();
+        renderDashboard();
+
+        if (liveData && liveData.getAdminAppointments) {
+            try {
+                appointments = await liveData.getAdminAppointments();
+                localStorage.setItem(appointmentsKey, JSON.stringify(appointments));
+                renderDashboard();
+            } catch (error) {
+                // Local dashboard data remains visible if the live backend is waking up.
+            }
+        }
+    };
+
+    loadDashboard();
 });

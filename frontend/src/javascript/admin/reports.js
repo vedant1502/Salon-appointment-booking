@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const profileKey = "glow-grace-profile";
     const servicesKey = "glow-grace-services";
     const staffKey = "glow-grace-staff";
+    const liveData = window.GlowGraceLiveData;
     const periodFilter = document.querySelector("[data-period-filter]");
     const statusFilter = document.querySelector("[data-status-filter]");
     const paymentFilter = document.querySelector("[data-payment-filter]");
@@ -561,6 +562,20 @@ document.addEventListener("DOMContentLoaded", () => {
         exportButton.addEventListener("click", exportReport);
     }
 
-    appointments = readArray(appointmentsKey, []);
-    renderReports();
+    const loadReports = async () => {
+        appointments = readArray(appointmentsKey, []);
+        renderReports();
+
+        if (liveData && liveData.getAdminAppointments) {
+            try {
+                appointments = await liveData.getAdminAppointments();
+                localStorage.setItem(appointmentsKey, JSON.stringify(appointments));
+                renderReports();
+            } catch (error) {
+                // Local reports remain visible if the live backend is waking up.
+            }
+        }
+    };
+
+    loadReports();
 });
