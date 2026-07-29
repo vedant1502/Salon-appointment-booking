@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="238" viewBox="0 0 1180 238">
+<rect width="100%" height="100%" fill="#fffaf7"/>
+<text x="34" y="36" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#813244">3.2.2 Customer Appointment Booking Flow</text>
+<text x="34" y="64" font-family="Arial, sans-serif" font-size="13" fill="#6d6265">Flow Representation</text>
+<defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#b64a62"/></marker></defs>
+<rect x="34.0" y="98" width="148" height="70" rx="8" fill="#fff4f1" stroke="#eadfe1" stroke-width="2"/>
+<circle cx="54.0" cy="119" r="13" fill="#b64a62"/>
+<text x="54.0" y="123" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#ffffff">1</text>
+<text x="108.0" y="132" text-anchor="middle" font-family="Arial, sans-serif" font-size="12.4" font-weight="700" fill="#201b1d">Customer Login</text>
+<line x1="187.0" y1="133.0" x2="194.0" y2="133.0" stroke="#b64a62" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="202.0" y="98" width="148" height="70" rx="8" fill="#eef8f7" stroke="#eadfe1" stroke-width="2"/>
+<circle cx="222.0" cy="119" r="13" fill="#b64a62"/>
+<text x="222.0" y="123" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#ffffff">2</text>
+<text x="276.0" y="132" text-anchor="middle" font-family="Arial, sans-serif" font-size="12.4" font-weight="700" fill="#201b1d">Select Service</text>
+<line x1="355.0" y1="133.0" x2="362.0" y2="133.0" stroke="#b64a62" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="370.0" y="98" width="148" height="70" rx="8" fill="#fff4f1" stroke="#eadfe1" stroke-width="2"/>
+<circle cx="390.0" cy="119" r="13" fill="#b64a62"/>
+<text x="390.0" y="123" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#ffffff">3</text>
+<text x="444.0" y="132" text-anchor="middle" font-family="Arial, sans-serif" font-size="12.4" font-weight="700" fill="#201b1d">Choose Stylist</text>
+<line x1="523.0" y1="133.0" x2="530.0" y2="133.0" stroke="#b64a62" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="538.0" y="98" width="148" height="70" rx="8" fill="#eef8f7" stroke="#eadfe1" stroke-width="2"/>
+<circle cx="558.0" cy="119" r="13" fill="#b64a62"/>
+<text x="558.0" y="123" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#ffffff">4</text>
+<text x="612.0" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="12.4" font-weight="700" fill="#201b1d">Select Date and</text>
+<text x="612.0" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="12.4" font-weight="700" fill="#201b1d">Time</text>
+<line x1="691.0" y1="133.0" x2="698.0" y2="133.0" stroke="#b64a62" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="706.0" y="98" width="148" height="70" rx="8" fill="#fff4f1" stroke="#eadfe1" stroke-width="2"/>
+<circle cx="726.0" cy="119" r="13" fill="#b64a62"/>
+<text x="726.0" y="123" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#ffffff">5</text>
+<text x="780.0" y="132" text-anchor="middle" font-family="Arial, sans-serif" font-size="12.4" font-weight="700" fill="#201b1d">Review Summary</text>
+<line x1="859.0" y1="133.0" x2="866.0" y2="133.0" stroke="#b64a62" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="874.0" y="98" width="148" height="70" rx="8" fill="#eef8f7" stroke="#eadfe1" stroke-width="2"/>
+<circle cx="894.0" cy="119" r="13" fill="#b64a62"/>
+<text x="894.0" y="123" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#ffffff">6</text>
+<text x="948.0" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="12.4" font-weight="700" fill="#201b1d">Continue to</text>
+<text x="948.0" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="12.4" font-weight="700" fill="#201b1d">Payment</text>
+<line x1="1027.0" y1="133.0" x2="1034.0" y2="133.0" stroke="#b64a62" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1042.0" y="98" width="148" height="70" rx="8" fill="#fff4f1" stroke="#eadfe1" stroke-width="2"/>
+<circle cx="1062.0" cy="119" r="13" fill="#b64a62"/>
+<text x="1062.0" y="123" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#ffffff">7</text>
+<text x="1116.0" y="132" text-anchor="middle" font-family="Arial, sans-serif" font-size="12.4" font-weight="700" fill="#201b1d">Booking Saved</text>
+</svg>
