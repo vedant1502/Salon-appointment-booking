@@ -488,6 +488,10 @@ input {
     gap: 16px;
 }
 
+.detail-panel.is-open {
+    border-color: rgba(29, 118, 111, 0.5);
+}
+
 .contact-grid,
 .detail-stats {
     display: grid;

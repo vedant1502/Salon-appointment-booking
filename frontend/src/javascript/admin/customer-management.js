@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedCustomerId = "";
     let pendingDeleteId = "";
     let customers = [];
+    let shouldFocusDetails = false;
 
     const readJson = (key, fallback) => {
         try {
@@ -286,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 </div>
                 <div class="card-actions">
-                    <button type="button" data-action="details">Open details</button>
+                    <button type="button" data-action="details" aria-expanded="${selectedCustomerId === customer.id ? "true" : "false"}">${selectedCustomerId === customer.id ? "Viewing details" : "View details"}</button>
                     <button class="${isActive ? "danger" : ""}" type="button" data-action="toggle">${isActive ? "Mark inactive" : "Mark active"}</button>
                     ${pendingDeleteId === customer.id
                         ? `
@@ -338,11 +339,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!customer) {
             customerDetails.innerHTML = '<div class="empty-state">Select a customer to view full details.</div>';
+            customerDetails.classList.remove("is-open");
             return;
         }
 
         const stats = getCustomerStats(customer);
         const isActive = customer.status !== "inactive";
+        customerDetails.classList.add("is-open");
 
         customerDetails.innerHTML = `
             <div class="detail-header">
@@ -389,6 +392,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             </div>
         `;
+
+        if (shouldFocusDetails) {
+            shouldFocusDetails = false;
+            customerDetails.scrollIntoView({ behavior: "smooth", block: "start" });
+            customerDetails.focus({ preventScroll: true });
+        }
     };
 
     const renderCustomers = () => {
@@ -467,6 +476,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (button.dataset.action === "details") {
                 selectedCustomerId = customerId;
+                shouldFocusDetails = true;
                 renderCustomers();
                 return;
             }
