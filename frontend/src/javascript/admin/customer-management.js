@@ -263,9 +263,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const renderCustomerCard = (customer) => {
         const stats = getCustomerStats(customer);
         const isActive = customer.status !== "inactive";
+        const isSelected = selectedCustomerId === customer.id;
 
         return `
-            <article class="customer-card ${selectedCustomerId === customer.id ? "selected" : ""}" data-customer-id="${escapeHtml(customer.id)}">
+            <article class="customer-card ${isSelected ? "selected" : ""}" data-customer-id="${escapeHtml(customer.id)}">
                 <div class="customer-avatar" aria-hidden="true">${escapeHtml(getInitials(customer.name))}</div>
                 <div class="customer-info">
                     <div class="status-row">
@@ -287,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 </div>
                 <div class="card-actions">
-                    <button type="button" data-action="details" aria-expanded="${selectedCustomerId === customer.id ? "true" : "false"}">${selectedCustomerId === customer.id ? "Viewing details" : "View details"}</button>
+                    <button type="button" data-action="details" aria-expanded="${isSelected ? "true" : "false"}">${isSelected ? "Viewing details" : "View details"}</button>
                     <button class="${isActive ? "danger" : ""}" type="button" data-action="toggle">${isActive ? "Mark inactive" : "Mark active"}</button>
                     ${pendingDeleteId === customer.id
                         ? `
@@ -296,6 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         `
                         : '<button class="danger" type="button" data-action="delete">Delete</button>'}
                 </div>
+                ${isSelected ? `<div class="customer-inline-details" data-inline-details tabindex="-1">${renderCustomerDetailsMarkup(customer)}</div>` : ""}
             </article>
         `;
     };
@@ -332,22 +334,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }).join("");
     };
 
-    const renderCustomerDetails = () => {
-        if (!customerDetails) return;
-
-        const customer = customers.find((item) => item.id === selectedCustomerId);
-
-        if (!customer) {
-            customerDetails.innerHTML = '<div class="empty-state">Select a customer to view full details.</div>';
-            customerDetails.classList.remove("is-open");
-            return;
-        }
-
+    const renderCustomerDetailsMarkup = (customer) => {
         const stats = getCustomerStats(customer);
         const isActive = customer.status !== "inactive";
-        customerDetails.classList.add("is-open");
 
-        customerDetails.innerHTML = `
+        return `
             <div class="detail-header">
                 <div class="detail-avatar" aria-hidden="true">${escapeHtml(getInitials(customer.name))}</div>
                 <div>
@@ -392,11 +383,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             </div>
         `;
+    };
+
+    const renderCustomerDetails = () => {
+        if (!customerDetails) return;
+
+        const customer = customers.find((item) => item.id === selectedCustomerId);
+
+        if (!customer) {
+            customerDetails.innerHTML = '<div class="empty-state">Select a customer to view full details.</div>';
+            customerDetails.classList.remove("is-open");
+            return;
+        }
+
+        customerDetails.classList.add("is-open");
+        customerDetails.innerHTML = renderCustomerDetailsMarkup(customer);
 
         if (shouldFocusDetails) {
             shouldFocusDetails = false;
-            customerDetails.scrollIntoView({ behavior: "smooth", block: "start" });
-            customerDetails.focus({ preventScroll: true });
+            const inlineDetails = customerList ? customerList.querySelector("[data-inline-details]") : null;
+            const focusTarget = inlineDetails || customerDetails;
+            focusTarget.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            focusTarget.focus({ preventScroll: true });
         }
     };
 
