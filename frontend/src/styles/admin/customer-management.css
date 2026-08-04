@@ -501,6 +501,47 @@ input {
     padding-top: 16px;
 }
 
+.customer-detail-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(6, 12, 14, 0.68);
+}
+
+.customer-detail-dialog {
+    display: grid;
+    gap: 16px;
+    width: min(780px, 100%);
+    max-height: min(86vh, 780px);
+    overflow: auto;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px;
+    color: var(--ink);
+    background: var(--panel);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+.modal-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.modal-heading button {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 16px;
+    color: var(--brand-dark);
+    background: var(--page-bg);
+    font-weight: 900;
+    cursor: pointer;
+}
+
 .contact-grid,
 .detail-stats {
     display: grid;

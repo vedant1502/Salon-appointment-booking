@@ -27,6 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem(key, JSON.stringify(value));
     };
 
+    const closeCustomerModal = () => {
+        document.querySelector("[data-customer-modal]")?.remove();
+    };
+
     const escapeHtml = (value) => String(value || "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
@@ -385,6 +389,31 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     };
 
+    const openCustomerModal = (customer) => {
+        if (!customer) return;
+
+        closeCustomerModal();
+
+        const modal = document.createElement("div");
+        modal.className = "customer-detail-modal";
+        modal.dataset.customerModal = "true";
+        modal.innerHTML = `
+            <section class="customer-detail-dialog" role="dialog" aria-modal="true" aria-label="Customer details">
+                <div class="modal-heading">
+                    <div>
+                        <p class="eyebrow">Selected customer</p>
+                        <h2>${escapeHtml(customer.name)}</h2>
+                    </div>
+                    <button type="button" data-modal-close>Close</button>
+                </div>
+                ${renderCustomerDetailsMarkup(customer)}
+            </section>
+        `;
+
+        document.body.append(modal);
+        modal.querySelector("[data-modal-close]")?.focus();
+    };
+
     const renderCustomerDetails = () => {
         if (!customerDetails) return;
 
@@ -486,6 +515,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 selectedCustomerId = customerId;
                 shouldFocusDetails = true;
                 renderCustomers();
+                openCustomerModal(customers.find((item) => item.id === customerId));
                 return;
             }
 
@@ -530,6 +560,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (searchInput) {
         searchInput.addEventListener("input", renderCustomers);
     }
+
+    document.addEventListener("click", (event) => {
+        if (event.target.matches("[data-customer-modal]") || event.target.closest("[data-modal-close]")) {
+            closeCustomerModal();
+        }
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeCustomerModal();
+        }
+    });
 
     const loadCustomers = async () => {
         if (window.GlowGraceAdminAuth) {
